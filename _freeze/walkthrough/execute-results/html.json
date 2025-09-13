@@ -1,0 +1,12 @@
+{
+  "hash": "efaa1a4402739b868dfce61adb5815e7",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Hello, Quarto\"\nformat: html\n---\n\n## Markdown\n\nMarkdown is an easy to read and write text format:\n\n- It's _plain text_ so works well with version control\n- It can be **rendered** into HTML, PDF, and more\n- Learn more at: <https://quarto.org/docs/authoring/>\n\n## Code Cell\n\nHere is a Python code cell:\n\n::: {#06629120 .cell execution_count=1}\n``` {.python .cell-code}\nimport os\nos.cpu_count()\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n12\n```\n:::\n:::\n\n\n## Equation\n\nUse LaTeX to write equations:\n\n$$\n\\chi' = \\sum_{i=1}^n k_i s_i^2\n$$\n\n## Results\n\n::: {#aa27149b .cell execution_count=2}\n``` {.python .cell-code}\nfor i in range(10):\n    print(i+1)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "walkthrough_files/figure-html"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

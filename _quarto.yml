@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  title: "My Blog"
+  description: "A personal blog built with Quarto"
+  site-url: "https://rohanrajput04.github.io"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: posts.qmd
+        text: Posts
+  page-footer:
+    center: "© 2024 My Blog"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto

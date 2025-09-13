@@ -1,0 +1,13 @@
+/* Custom styles for the blog */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.post-preview {
+  margin-bottom: 2rem;
+}
