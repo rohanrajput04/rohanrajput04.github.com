@@ -1,0 +1,11 @@
+---
+title: "About Me"
+---
+
+# About
+
+Hello! I'm Rohan Rajput, and this is my personal blog where I share my thoughts on technology, programming, and various topics that interest me.
+
+This blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites.
+
+Feel free to explore the posts and get in touch!

@@ -1,0 +1,13 @@
+---
+title: "Welcome to My Blog"
+---
+
+Welcome to my personal blog! This site is built with Quarto and showcases my thoughts, projects, and experiences.
+
+## Latest Posts
+
+{{< include posts.qmd >}}
+
+## About
+
+Learn more [about me](about.qmd).
