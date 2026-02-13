@@ -1,0 +1,43 @@
+---
+title: "Parallelism in AI - Part 3: Tensor Parallelism"
+description: "Part 3 of the Parallelism in AI series — understanding Tensor Parallelism and how individual tensors are split across GPUs"
+author: "Rohan Rajput"
+date: "2024-09-28"
+categories: [distributed-training, deep-learning, parallelism-in-ai]
+---
+
+*This is Part 3 of the **Parallelism in AI** series. In this series, we explore the different parallelism strategies used to train large-scale AI models.*
+
+# What is Tensor Parallelism?
+
+<!-- Write your introduction here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Splitting Linear Layers
+
+<!-- Write about column and row parallel linear layers here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Tensor Parallelism in Transformers
+
+<!-- Write about how attention and MLP layers are parallelized here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Communication Overhead
+
+<!-- Write about the all-reduce and all-gather operations required here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Tensor Parallelism in Practice
+
+<!-- Write about practical considerations, trade-offs, and when to use it -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Summary
+
+<!-- Write summary here -->
