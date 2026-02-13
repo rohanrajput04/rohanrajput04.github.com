@@ -1,0 +1,43 @@
+---
+title: "Parallelism in AI - Part 2: Pipeline Parallelism"
+description: "Part 2 of the Parallelism in AI series — understanding Pipeline Parallelism and how models are split across stages"
+author: "Rohan Rajput"
+date: "2024-09-21"
+categories: [distributed-training, deep-learning, parallelism-in-ai]
+---
+
+*This is Part 2 of the **Parallelism in AI** series. In this series, we explore the different parallelism strategies used to train large-scale AI models.*
+
+# What is Pipeline Parallelism?
+
+<!-- Write your introduction here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Naive Pipeline Parallelism
+
+<!-- Write about the naive approach and the bubble problem here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Micro-batching (GPipe)
+
+<!-- Write about GPipe's micro-batching approach here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Interleaved Scheduling (PipeDream)
+
+<!-- Write about PipeDream's 1F1B schedule here -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Pipeline Parallelism in Practice
+
+<!-- Write about practical considerations, trade-offs, and when to use it -->
+
+<!-- ![](assets/your-animation.gif) -->
+
+# Summary
+
+<!-- Write summary here -->
