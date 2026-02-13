@@ -1,5 +1,5 @@
 ---
-title: "Welcome to My Blog"
+title: "Welcome to AI With Rohan"
 description: "My first blog post introducing the site"
 author: "Rohan Rajput"
 date: "2024-09-13"

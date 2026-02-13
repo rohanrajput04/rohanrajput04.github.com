@@ -1,0 +1,53 @@
+---
+title: "Parallelism in AI - Part 1: Data Parallelism & FSDP"
+description: "Part 1 of the Parallelism in AI series — a visual guide to Data Parallelism, AllReduce, and Fully Sharded Data Parallel (FSDP)"
+author: "Rohan Rajput"
+date: "2024-09-14"
+categories: [distributed-training, deep-learning, parallelism-in-ai]
+---
+
+*This is Part 1 of the **Parallelism in AI** series. In this series, we explore the different parallelism strategies used to train large-scale AI models.*
+
+<!-- Write series overview / introduction here -->
+
+# Introduction to Data Parallelism
+
+<!-- Write your introduction here -->
+
+![](assets/DataParallelismIntro_ManimCE_v0.19.2.gif)
+
+# Data Parallelism in Detail
+
+<!-- Write detailed explanation here -->
+
+![](assets/DataParallelismDetailed_ManimCE_v0.19.2.gif)
+
+# AllReduce Explained
+
+<!-- Write about the AllReduce operation here -->
+
+![](assets/AllReduceExplained_ManimCE_v0.19.2.gif)
+
+# What is FSDP?
+
+<!-- Write about Fully Sharded Data Parallel here -->
+
+![](assets/FSDPExplained_ManimCE_v0.19.2.gif)
+
+# FSDP Workflow
+
+<!-- Write about the FSDP workflow here -->
+
+![](assets/FSDPWorkflow_ManimCE_v0.19.2.gif)
+
+# FSDP vs Data Parallel
+
+<!-- Write comparison here -->
+
+![](assets/FSDPvsDataParallel_ManimCE_v0.19.2.gif)
+
+# FSDP Summary
+
+<!-- Write summary here -->
+
+![](assets/FSDPSummary_ManimCE_v0.19.2.gif)
