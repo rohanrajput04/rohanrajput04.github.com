@@ -10,10 +10,10 @@
 <atom:link href="https://rohanrajput04.github.io/posts.xml" rel="self" type="application/rss+xml"/>
 <description>Deep dives into AI, ML, and distributed systems</description>
 <generator>quarto-1.8.24</generator>
-<lastBuildDate>Fri, 13 Feb 2026 06:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Sep 2024 05:00:00 GMT</lastBuildDate>
 <item>
   <title>Parallelism in AI - Part 1: Data Parallelism &amp; FSDP</title>
-  <dc:creator>Rohan Singh Rajput</dc:creator>
+  <dc:creator>Rohan Rajput</dc:creator>
   <link>https://rohanrajput04.github.io/posts/data-parallelism/</link>
   <description><![CDATA[ 
 
@@ -148,15 +148,6 @@
 <!-- Write summary here -->
 <p>In summary, Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that allows for training larger AI models by sharding the model parameters across multiple devices. It incorporates efficient communication and synchronization techniques to manage the training process effectively. FSDP is a powerful tool for training large-scale AI models while managing memory constraints and ensuring efficient communication between devices.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/FSDPSummary_ManimCE_v0.19.2.gif" class="img-fluid"></p>
-</section>
-<section id="references" class="level1">
-<h1>References</h1>
-<ul>
-<li>Li, M., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2006.15704">PyTorch Distributed: Experiences on Accelerating Data Parallel Training</a>. <em>arXiv:2006.15704</em></li>
-<li>Zhao, Y., et al.&nbsp;(2023). <a href="https://arxiv.org/abs/2304.11277">PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel</a>. <em>arXiv:2304.11277</em></li>
-<li><a href="https://github.com/ManimCommunity/manim">Manim Community Edition</a> — Animation engine used for the visuals in this post</li>
-<li><a href="https://github.com/hexgrad/kokoro">Kokoro TTS</a> — Text-to-speech model used to generate the audio narration</li>
-</ul>
 
 
 <!-- -->
@@ -168,13 +159,14 @@
   <category>deep-learning</category>
   <category>parallelism-in-ai</category>
   <guid>https://rohanrajput04.github.io/posts/data-parallelism/</guid>
-  <pubDate>Fri, 13 Feb 2026 06:00:00 GMT</pubDate>
+  <pubDate>Sat, 14 Sep 2024 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Welcome to AI With Rohan</title>
   <dc:creator>Rohan Rajput</dc:creator>
   <link>https://rohanrajput04.github.io/posts/welcome-post/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -187,6 +179,8 @@
 <p>I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development</p>
 <p>Stay tuned for more content!</p>
 
+
+<!-- -->
 
 </section>
 </section>
