@@ -1,27 +1,60 @@
 project:
   type: website
-  output-dir: .
+  output-dir: _site
 
 website:
-  title: "My Blog"
-  description: "A personal blog built with Quarto"
+  title: "AI With Rohan"
+  description: "Deep dives into AI, ML, and distributed systems"
   site-url: "https://rohanrajput04.github.io"
+
+  # SEO: Open Graph & Twitter Cards
+  open-graph: true
+  twitter-card:
+    card-style: summary_large_image
+
+  # Search
+  search:
+    location: navbar
+    type: overlay
+
+  # Navigation
   navbar:
+    background: primary
     left:
       - href: index.qmd
         text: Home
+      - href: posts.qmd
+        text: Blog
       - href: about.qmd
         text: About
-      - href: posts.qmd
-        text: Posts
+    right:
+      - icon: github
+        href: https://github.com/rohanrajput04
+      - icon: rss
+        href: posts.xml
+
+  # Footer
   page-footer:
-    center: "© 2024 My Blog"
+    left: "Built with [Quarto](https://quarto.org)"
+    right: "&copy; 2024 AI With Rohan"
 
 format:
   html:
-    theme: lumen
+    theme:
+      light: flatly
+      dark: darkly
+    highlight-style:
+      light: github
+      dark: monokai
     css: styles.css
     toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    code-line-numbers: true
+    fontsize: 1.05em
+    linestretch: 1.6
 
 execute:
   freeze: auto

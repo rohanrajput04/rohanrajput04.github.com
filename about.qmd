@@ -2,52 +2,14 @@
 title: "About Me"
 ---
 
-# About Rohan Singh Rajput
+# About Me
 
-Hello! I'm **Rohan Singh Rajput**, a Senior Machine Learning Engineer at **Capital One** based in the Dallas-Fort Worth Metroplex. I specialize in building scalable ML systems and have a passion for leveraging data science and artificial intelligence to solve complex problems.
-
-## Professional Background
-
-With over 8 years of experience in machine learning, data science, and software engineering, I focus on:
-
-- **Machine Learning Engineering**: Developing production-ready ML systems and scalable solutions
-- **Recommender Systems**: Designing and optimizing recommendation algorithms
-- **Deep Learning**: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow
-- **Data Science**: Analyzing large-scale datasets and extracting actionable insights
-- **Cloud Computing**: Experience with AWS, distributed computing, and HPC environments
-
-## Education & Certifications
-
-- **Master's in Computer Science** - University of Central Florida
-- **Machine Learning** - Stanford University (Coursera)
-- **Data Science Certifications** - DataCamp, Coursera
-- **GRE**: Quantitative 151, Verbal 151
-
-## Key Projects & Achievements
-
-- **Solar Power Forecasting**: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting
-- **HPC ML Implementation**: Large-scale machine learning on supercomputers and GPU clusters
-- **Patent**: "System and Method for Scaling Content Across Multiple Form Factors" (US10825134B2)
-- **Hackathon Winner**: Royal Bank of Canada & Microsoft Hackathon (2017)
-- **Research Publications**: Presented at international conferences on electrical engineering
-
-## Technical Expertise
-
-**Programming Languages**: Python, R, Java, MATLAB, JavaScript  
-**ML Frameworks**: TensorFlow, Keras, PyTorch, Scikit-learn  
-**Data Tools**: Pandas, NumPy, Apache Spark, Hadoop  
-**Cloud Platforms**: AWS, Azure  
-**Databases**: SQL, NoSQL  
-
-## Writing & Community
-
-I regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I've spoken at conferences like RecSys 2022.
+<!-- Write your about me here -->
 
 ## Connect With Me
 
-- **LinkedIn**: [linkedin.com/in/rohan3](https://www.linkedin.com/in/rohan3)
-- **Location**: Dallas-Fort Worth Metroplex
+<!-- Add your social links here -->
 
-This blog is built using **Quarto**, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.
+This blog is built using **Quarto**. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.
 
 Feel free to explore the posts and get in touch!

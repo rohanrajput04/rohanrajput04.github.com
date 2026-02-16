@@ -39,7 +39,7 @@
     "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "About\nHello! I’m Rohan Rajput, and this is my personal blog where I share my thoughts on technology, programming, and various topics that interest me.\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites.\nFeel free to explore the posts and get in touch!"
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
   },
   {
     "objectID": "posts/welcome-post.html",
@@ -58,9 +58,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Blog Posts",
+    "title": "AI With Rohan",
     "section": "",
-    "text": "Welcome to my personal blog! This site is built with Quarto and showcases my thoughts, projects, and experiences."
+    "text": "Parallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\ndistributed-training\n\ndeep-learning\n\nparallelism-in-ai\n\n\n\nPart 1 of the Parallelism in AI series — a visual guide to Data Parallelism, AllReduce, and Fully Sharded Data Parallel (FSDP)\n\n\n\n\n\nFeb 13, 2026\n\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#latest-posts",
@@ -79,8 +79,78 @@
   {
     "objectID": "posts.html",
     "href": "posts.html",
-    "title": "Blog Posts",
+    "title": "Blog",
     "section": "",
-    "text": "Welcome to My Blog\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\nRohan Rajput\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\ndistributed-training\n\ndeep-learning\n\nparallelism-in-ai\n\n\n\nPart 1 of the Parallelism in AI series — a visual guide to Data Parallelism, AllReduce, and Fully Sharded Data Parallel (FSDP)\n\n\n\n\n\nFeb 13, 2026\n\n6 min\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/data-parallelism/index.html",
+    "href": "posts/data-parallelism/index.html",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "",
+    "text": "One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models."
+  },
+  {
+    "objectID": "posts/welcome-post/index.html",
+    "href": "posts/welcome-post/index.html",
+    "title": "Welcome to AI With Rohan",
+    "section": "",
+    "text": "This is my first blog post on this new site built with Quarto.\n\n\nI’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
+  },
+  {
+    "objectID": "posts/welcome-post/index.html#what-to-expect",
+    "href": "posts/welcome-post/index.html#what-to-expect",
+    "title": "Welcome to AI With Rohan",
+    "section": "",
+    "text": "I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
+  },
+  {
+    "objectID": "about.html#professional-background",
+    "href": "about.html#professional-background",
+    "title": "About Me",
+    "section": "",
+    "text": "With over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments"
+  },
+  {
+    "objectID": "about.html#education-certifications",
+    "href": "about.html#education-certifications",
+    "title": "About Me",
+    "section": "",
+    "text": "Master’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151"
+  },
+  {
+    "objectID": "about.html#key-projects-achievements",
+    "href": "about.html#key-projects-achievements",
+    "title": "About Me",
+    "section": "",
+    "text": "Solar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering"
+  },
+  {
+    "objectID": "about.html#technical-expertise",
+    "href": "about.html#technical-expertise",
+    "title": "About Me",
+    "section": "",
+    "text": "Programming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL"
+  },
+  {
+    "objectID": "about.html#writing-community",
+    "href": "about.html#writing-community",
+    "title": "About Me",
+    "section": "",
+    "text": "I regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022."
+  },
+  {
+    "objectID": "about.html#connect-with-me",
+    "href": "about.html#connect-with-me",
+    "title": "About Me",
+    "section": "",
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
+    "objectID": "posts/data-parallelism/index.html#example",
+    "href": "posts/data-parallelism/index.html#example",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "Example",
+    "text": "Example\nSuppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism (DP)\nFSDP\n\n\n\n\nModel storage\nFull copy on every GPU\nSharded across GPUs\n\n\nParams per GPU\n7B (all)\n1.75B (1/4th)\n\n\nMemory per GPU\n~42 GB\n~10.5 GB\n\n\nFits on 40GB A100?\nNo\nYes\n\n\nCommunication\nAllReduce (gradients only)\nAllGather + ReduceScatter\n\n\nCommunication cost\nLower\nHigher (overlapped with compute)\n\n\nComplexity\nSimple\nMore complex\n\n\nScalability\nLimited by GPU memory\nScales to much larger models"
   }
 ]
