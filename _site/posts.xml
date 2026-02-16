@@ -21,7 +21,6 @@
 
 
 
-<!-- Write series overview / introduction here -->
 <section id="why-do-we-need-parallelism-in-ai" class="level1">
 <h1>Why do we need parallelism in AI?</h1>
 <audio controls="" class="section-audio">
@@ -34,13 +33,11 @@
 <audio controls="" class="section-audio">
 <source src="audio/intro_data_parallelism.wav" type="audio/wav">
 </audio>
-<!-- Write your introduction here -->
 <p>There are many parallelism techniques that exist for training and inference of AI models. In this section, we will focus on Data Parallelism. This technique is specifically useful during model training. As the name suggests, we shard (or divide) our data into smaller batches and each batch is processed in parallel across multiple devices. Compared to single device batching where we process the entire data one by one in batches, here we utilize multiple devices to speed up the model training process.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/DataParallelismIntro_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 <audio controls="" class="section-audio">
 <source src="audio/data_parallelism_detail.wav" type="audio/wav">
 </audio>
-<!-- Write detailed explanation here -->
 <p>In data parallelism, each device maintains a copy of the model parameters. During training, each device processes a different subset of the training data and computes the gradients independently. After computing the gradients, an AllReduce operation is performed to aggregate the gradients across all devices. This ensures that all devices have the same updated model parameters for the next iteration.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/DataParallelismDetailed_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
@@ -49,7 +46,6 @@
 <audio controls="" class="section-audio">
 <source src="audio/allreduce_explained.wav" type="audio/wav">
 </audio>
-<!-- Write about the AllReduce operation here -->
 <p>We can think of AllReduce as a communication operation that takes the gradients computed by each device and combines them (e.g., by summing) across all devices. This allows each device to have the same updated gradients, which are then used to update the model parameters. AllReduce is a critical component of data parallelism, as it ensures that all devices stay in sync during training.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/AllReduceExplained_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
@@ -58,7 +54,6 @@
 <audio controls="" class="section-audio">
 <source src="audio/what_is_fsdp.wav" type="audio/wav">
 </audio>
-<!-- Write about Fully Sharded Data Parallel here -->
 <p>Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that goes beyond traditional data parallelism. In FSDP, the model parameters are sharded (i.e., divided) across multiple devices, rather than each device maintaining a full copy of the model. This allows for training larger models that may not fit into the memory of a single device. FSDP also incorporates techniques to efficiently manage communication and synchronization between devices, making it a powerful tool for training large-scale AI models.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/FSDPExplained_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
@@ -67,7 +62,6 @@
 <audio controls="" class="section-audio">
 <source src="audio/fsdp_workflow.wav" type="audio/wav">
 </audio>
-<!-- Write about the FSDP workflow here -->
 <p>In the FSDP workflow, the model parameters are sharded across multiple devices. During training, each device computes gradients for its shard of the model parameters. The gradients are then communicated between devices to ensure that all devices have the necessary information to update their respective shards of the model. This allows for efficient training of large models while managing memory constraints effectively.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/FSDPWorkflow_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
@@ -76,7 +70,6 @@
 <audio controls="" class="section-audio">
 <source src="audio/fsdp_vs_data_parallel.wav" type="audio/wav">
 </audio>
-<!-- Write comparison here -->
 <p>The difference between FSDP and traditional data parallelism lies in how the model parameters are managed. In data parallelism, each device maintains a full copy of the model parameters, which can lead to memory constraints when training large models. In contrast, FSDP shards the model parameters across multiple devices, allowing for larger models to be trained without running into memory issues. Additionally, FSDP incorporates more efficient communication strategies to manage synchronization between devices, making it a more scalable solution for training large-scale AI models.</p>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
@@ -145,7 +138,6 @@
 <audio controls="" class="section-audio">
 <source src="audio/fsdp_summary.wav" type="audio/wav">
 </audio>
-<!-- Write summary here -->
 <p>In summary, Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that allows for training larger AI models by sharding the model parameters across multiple devices. It incorporates efficient communication and synchronization techniques to manage the training process effectively. FSDP is a powerful tool for training large-scale AI models while managing memory constraints and ensuring efficient communication between devices.</p>
 <p><img src="https://rohanrajput04.github.io/posts/data-parallelism/assets/FSDPSummary_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
@@ -162,9 +154,6 @@
 </section>
 
  ]]></description>
-  <category>distributed-training</category>
-  <category>deep-learning</category>
-  <category>parallelism-in-ai</category>
   <guid>https://rohanrajput04.github.io/posts/data-parallelism/</guid>
   <pubDate>Fri, 13 Feb 2026 06:00:00 GMT</pubDate>
 </item>
