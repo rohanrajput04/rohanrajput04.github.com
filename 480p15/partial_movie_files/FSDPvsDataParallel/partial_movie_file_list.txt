@@ -1,0 +1,11 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/1584795214_472949193_223132457.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_1163518147_816965592.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_1556408327_165213030.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_1839128356_154862463.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_780690673_1655732535.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_1723364617_1610523353.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_439653779_2543044865.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_2408024828_32637710.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_2599892149_1731180867.mp4'
+file 'file:/Users/rohanrajput/rohan_work/manim/media/videos/data_parallelism/480p15/partial_movie_files/FSDPvsDataParallel/4072820271_2408024828_235545396.mp4'

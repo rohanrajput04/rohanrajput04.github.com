@@ -39,7 +39,49 @@
     "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "About\nHello! I’m Rohan Rajput, and this is my personal blog where I share my thoughts on technology, programming, and various topics that interest me.\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites.\nFeel free to explore the posts and get in touch!"
+    "text": "Hello! I’m Rohan Singh Rajput, a Senior Machine Learning Engineer at Capital One based in the Dallas-Fort Worth Metroplex. I specialize in building scalable ML systems and have a passion for leveraging data science and artificial intelligence to solve complex problems.\n\n\nWith over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments\n\n\n\n\n\nMaster’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151\n\n\n\n\n\nSolar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering\n\n\n\n\nProgramming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL\n\n\n\nI regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022.\n\n\n\n\nLinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
+    "objectID": "about.html#professional-background",
+    "href": "about.html#professional-background",
+    "title": "About Me",
+    "section": "",
+    "text": "With over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments"
+  },
+  {
+    "objectID": "about.html#education-certifications",
+    "href": "about.html#education-certifications",
+    "title": "About Me",
+    "section": "",
+    "text": "Master’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151"
+  },
+  {
+    "objectID": "about.html#key-projects-achievements",
+    "href": "about.html#key-projects-achievements",
+    "title": "About Me",
+    "section": "",
+    "text": "Solar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering"
+  },
+  {
+    "objectID": "about.html#technical-expertise",
+    "href": "about.html#technical-expertise",
+    "title": "About Me",
+    "section": "",
+    "text": "Programming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL"
+  },
+  {
+    "objectID": "about.html#writing-community",
+    "href": "about.html#writing-community",
+    "title": "About Me",
+    "section": "",
+    "text": "I regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022."
+  },
+  {
+    "objectID": "about.html#connect-with-me",
+    "href": "about.html#connect-with-me",
+    "title": "About Me",
+    "section": "",
+    "text": "LinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
   },
   {
     "objectID": "posts/welcome-post.html",
