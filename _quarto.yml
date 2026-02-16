@@ -50,7 +50,7 @@ format:
     toc: true
     toc-depth: 3
     code-fold: true
-    code-tools: true
+    code-tools: false
     code-copy: true
     code-line-numbers: true
     fontsize: 1.05em
