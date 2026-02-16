@@ -1,10 +1,16 @@
 [
   {
     "listing": "/posts.html",
-    "items": []
+    "items": [
+      "/posts/data-parallelism/index.html",
+      "/posts/welcome-post/index.html"
+    ]
   },
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/data-parallelism/index.html",
+      "/posts/welcome-post/index.html"
+    ]
   }
 ]
