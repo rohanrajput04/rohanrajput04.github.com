@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const options = {
       valueNames: ['listing-date','listing-title','listing-description','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -410,7 +410,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZGVlcC1sZWFybmluZw==">deep-learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGlzdHJpYnV0ZWQtdHJhaW5pbmc=">distributed-training <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2VuZXJhbA==">general <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGFyYWxsZWxpc20taW4tYWk=">parallelism-in-ai <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -449,56 +449,7 @@ window.Quarto = {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZGlzdHJpYnV0ZWQtdHJhaW5pbmclMkNkZWVwLWxlYXJuaW5nJTJDcGFyYWxsZWxpc20taW4tYWk=" data-listing-date-sort="1726290000000" data-listing-file-modified-sort="1771283039358" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="89">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/data-parallelism/index.html" class="no-external">Parallelism in AI - Part 1: Data Parallelism &amp; FSDP</a>
-</h3>
-<div class="listing-categories">
 
-<div class="listing-category" onclick="window.quartoListingCategory('ZGlzdHJpYnV0ZWQtdHJhaW5pbmc='); return false;">distributed-training</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGVlcC1sZWFybmluZw=='); return false;">deep-learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cGFyYWxsZWxpc20taW4tYWk='); return false;">parallelism-in-ai</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/data-parallelism/index.html" class="no-external">
-<p>Part 1 of the Parallelism in AI series — a visual guide to Data Parallelism, AllReduce, and Fully Sharded Data Parallel (FSDP)</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/data-parallelism/index.html" class="no-external">
-<div class="listing-date">
-Sep 14, 2024
-</div>
-<div class="listing-reading-time">1 min</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Z2VuZXJhbA==" data-listing-date-sort="1726203600000" data-listing-file-modified-sort="1771283039359" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome-post/index.html" class="no-external">Welcome to AI With Rohan</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2VuZXJhbA=='); return false;">general</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/welcome-post/index.html" class="no-external">
-<p>My first blog post introducing the site</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome-post/index.html" class="no-external">
-<div class="listing-date">
-Sep 13, 2024
-</div>
-<div class="listing-reading-time">1 min</div>
-</a>
-</div>
-</div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div></main> <!-- /main -->
@@ -967,17 +918,19 @@ Sep 13, 2024
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Blog Posts"</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Blog"</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="an">listing:</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="co">  contents: posts</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="co">  sort: "date desc"</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="co">  type: default</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="co">  categories: true</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">  sort-ui: false</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">  filter-ui: false</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="an">page-layout:</span><span class="co"> full</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">  feed: true</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">  sort-ui: true</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">  filter-ui: true</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">  fields: [date, title, description, categories, reading-time]</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="an">page-layout:</span><span class="co"> full</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
