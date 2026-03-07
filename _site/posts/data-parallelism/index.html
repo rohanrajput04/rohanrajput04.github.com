@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Rohan Singh Rajput">
+<meta name="dcterms.date" content="2026-02-13">
 
-<title>Hello, Quarto – AI With Rohan</title>
+<title>Parallelism in AI - Part 1: Data Parallelism &amp; FSDP – AI With Rohan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,66 +22,31 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,42 +74,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Hello, Quarto – AI With Rohan">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Parallelism in AI - Part 1: Data Parallelism &amp; FSDP – AI With Rohan">
 <meta property="og:description" content="Deep dives into AI, ML, and distributed systems">
+<meta property="og:image" content="https://rohanrajput04.github.io/posts/data-parallelism/assets/DataParallelismIntro_ManimCE_v0.19.2.gif">
 <meta property="og:site_name" content="AI With Rohan">
-<meta name="twitter:title" content="Hello, Quarto – AI With Rohan">
+<meta name="twitter:title" content="Parallelism in AI - Part 1: Data Parallelism &amp; FSDP – AI With Rohan">
 <meta name="twitter:description" content="Deep dives into AI, ML, and distributed systems">
+<meta name="twitter:image" content="https://rohanrajput04.github.io/posts/data-parallelism/assets/DataParallelismIntro_ManimCE_v0.19.2.gif">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -315,9 +255,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">AI With Rohan</span>
     </a>
   </div>
@@ -328,15 +268,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html"> 
+    <a class="nav-link" href="../../posts.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -347,7 +287,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -368,10 +308,17 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#markdown" id="toc-markdown" class="nav-link active" data-scroll-target="#markdown">Markdown</a></li>
-  <li><a href="#code-cell" id="toc-code-cell" class="nav-link" data-scroll-target="#code-cell">Code Cell</a></li>
-  <li><a href="#equation" id="toc-equation" class="nav-link" data-scroll-target="#equation">Equation</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#why-do-we-need-parallelism-in-ai" id="toc-why-do-we-need-parallelism-in-ai" class="nav-link active" data-scroll-target="#why-do-we-need-parallelism-in-ai">Why do we need parallelism in AI?</a></li>
+  <li><a href="#introduction-to-data-parallelism" id="toc-introduction-to-data-parallelism" class="nav-link" data-scroll-target="#introduction-to-data-parallelism">Introduction to Data Parallelism</a></li>
+  <li><a href="#what-is-allreduce" id="toc-what-is-allreduce" class="nav-link" data-scroll-target="#what-is-allreduce">What is AllReduce?</a></li>
+  <li><a href="#lets-talk-about-fsdp" id="toc-lets-talk-about-fsdp" class="nav-link" data-scroll-target="#lets-talk-about-fsdp">Let’s talk about FSDP</a></li>
+  <li><a href="#fsdp-workflow" id="toc-fsdp-workflow" class="nav-link" data-scroll-target="#fsdp-workflow">FSDP Workflow</a></li>
+  <li><a href="#fsdp-vs-data-parallel" id="toc-fsdp-vs-data-parallel" class="nav-link" data-scroll-target="#fsdp-vs-data-parallel">FSDP vs Data Parallel</a>
+  <ul class="collapse">
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
+  </ul></li>
+  <li><a href="#fsdp-summary" id="toc-fsdp-summary" class="nav-link" data-scroll-target="#fsdp-summary">FSDP Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -381,14 +328,26 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hello, Quarto</h1>
+<h1 class="title">Parallelism in AI - Part 1: Data Parallelism &amp; FSDP</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rohan Singh Rajput </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 13, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -398,57 +357,134 @@ window.Quarto = {
 </header>
 
 
-<section id="markdown" class="level2">
-<h2 class="anchored" data-anchor-id="markdown">Markdown</h2>
-<p>Markdown is an easy to read and write text format:</p>
+<section id="why-do-we-need-parallelism-in-ai" class="level1">
+<h1>Why do we need parallelism in AI?</h1>
+<audio controls="" class="section-audio">
+<source src="audio/what_is_parallelism.wav" type="audio/wav">
+</audio>
+<p>One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models.</p>
+</section>
+<section id="introduction-to-data-parallelism" class="level1">
+<h1>Introduction to Data Parallelism</h1>
+<audio controls="" class="section-audio">
+<source src="audio/intro_data_parallelism.wav" type="audio/wav">
+</audio>
+<p>There are many parallelism techniques that exist for training and inference of AI models. In this section, we will focus on Data Parallelism. This technique is specifically useful during model training. As the name suggests, we shard (or divide) our data into smaller batches and each batch is processed in parallel across multiple devices. Compared to single device batching where we process the entire data one by one in batches, here we utilize multiple devices to speed up the model training process.</p>
+<p><img src="assets/DataParallelismIntro_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+<audio controls="" class="section-audio">
+<source src="audio/data_parallelism_detail.wav" type="audio/wav">
+</audio>
+<p>In data parallelism, each device maintains a copy of the model parameters. During training, each device processes a different subset of the training data and computes the gradients independently. After computing the gradients, an AllReduce operation is performed to aggregate the gradients across all devices. This ensures that all devices have the same updated model parameters for the next iteration.</p>
+<p><img src="assets/DataParallelismDetailed_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="what-is-allreduce" class="level1">
+<h1>What is AllReduce?</h1>
+<audio controls="" class="section-audio">
+<source src="audio/allreduce_explained.wav" type="audio/wav">
+</audio>
+<p>We can think of AllReduce as a communication operation that takes the gradients computed by each device and combines them (e.g., by summing) across all devices. This allows each device to have the same updated gradients, which are then used to update the model parameters. AllReduce is a critical component of data parallelism, as it ensures that all devices stay in sync during training.</p>
+<p><img src="assets/AllReduceExplained_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="lets-talk-about-fsdp" class="level1">
+<h1>Let’s talk about FSDP</h1>
+<audio controls="" class="section-audio">
+<source src="audio/what_is_fsdp.wav" type="audio/wav">
+</audio>
+<p>Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that goes beyond traditional data parallelism. In FSDP, the model parameters are sharded (i.e., divided) across multiple devices, rather than each device maintaining a full copy of the model. This allows for training larger models that may not fit into the memory of a single device. FSDP also incorporates techniques to efficiently manage communication and synchronization between devices, making it a powerful tool for training large-scale AI models.</p>
+<p><img src="assets/FSDPExplained_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="fsdp-workflow" class="level1">
+<h1>FSDP Workflow</h1>
+<audio controls="" class="section-audio">
+<source src="audio/fsdp_workflow.wav" type="audio/wav">
+</audio>
+<p>In the FSDP workflow, the model parameters are sharded across multiple devices. During training, each device computes gradients for its shard of the model parameters. The gradients are then communicated between devices to ensure that all devices have the necessary information to update their respective shards of the model. This allows for efficient training of large models while managing memory constraints effectively.</p>
+<p><img src="assets/FSDPWorkflow_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="fsdp-vs-data-parallel" class="level1">
+<h1>FSDP vs Data Parallel</h1>
+<audio controls="" class="section-audio">
+<source src="audio/fsdp_vs_data_parallel.wav" type="audio/wav">
+</audio>
+<p>The difference between FSDP and traditional data parallelism lies in how the model parameters are managed. In data parallelism, each device maintains a full copy of the model parameters, which can lead to memory constraints when training large models. In contrast, FSDP shards the model parameters across multiple devices, allowing for larger models to be trained without running into memory issues. Additionally, FSDP incorporates more efficient communication strategies to manage synchronization between devices, making it a more scalable solution for training large-scale AI models.</p>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>Suppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 35%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Data Parallelism (DP)</th>
+<th>FSDP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model storage</td>
+<td>Full copy on every GPU</td>
+<td>Sharded across GPUs</td>
+</tr>
+<tr class="even">
+<td>Params per GPU</td>
+<td>7B (all)</td>
+<td>1.75B (1/4th)</td>
+</tr>
+<tr class="odd">
+<td>Memory per GPU</td>
+<td>~42 GB</td>
+<td>~10.5 GB</td>
+</tr>
+<tr class="even">
+<td>Fits on 40GB A100?</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Communication</td>
+<td>AllReduce (gradients only)</td>
+<td>AllGather + ReduceScatter</td>
+</tr>
+<tr class="even">
+<td>Communication cost</td>
+<td>Lower</td>
+<td>Higher (overlapped with compute)</td>
+</tr>
+<tr class="odd">
+<td>Complexity</td>
+<td>Simple</td>
+<td>More complex</td>
+</tr>
+<tr class="even">
+<td>Scalability</td>
+<td>Limited by GPU memory</td>
+<td>Scales to much larger models</td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/FSDPvsDataParallel_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+</section>
+<section id="fsdp-summary" class="level1">
+<h1>FSDP Summary</h1>
+<audio controls="" class="section-audio">
+<source src="audio/fsdp_summary.wav" type="audio/wav">
+</audio>
+<p>In summary, Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that allows for training larger AI models by sharding the model parameters across multiple devices. It incorporates efficient communication and synchronization techniques to manage the training process effectively. FSDP is a powerful tool for training large-scale AI models while managing memory constraints and ensuring efficient communication between devices.</p>
+<p><img src="assets/FSDPSummary_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li>It’s <em>plain text</em> so works well with version control</li>
-<li>It can be <strong>rendered</strong> into HTML, PDF, and more</li>
-<li>Learn more at: <a href="https://quarto.org/docs/authoring/" class="uri">https://quarto.org/docs/authoring/</a></li>
+<li>Li, M., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2006.15704">PyTorch Distributed: Experiences on Accelerating Data Parallel Training</a>. <em>arXiv:2006.15704</em></li>
+<li>Zhao, Y., et al.&nbsp;(2023). <a href="https://arxiv.org/abs/2304.11277">PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel</a>. <em>arXiv:2304.11277</em></li>
+<li><a href="https://github.com/ManimCommunity/manim">Manim Community Edition</a> — Animation engine used for the visuals in this post</li>
+<li><a href="https://github.com/hexgrad/kokoro">Kokoro TTS</a> — Text-to-speech model used to generate the audio narration</li>
 </ul>
-</section>
-<section id="code-cell" class="level2">
-<h2 class="anchored" data-anchor-id="code-cell">Code Cell</h2>
-<p>Here is a Python code cell:</p>
-<div id="b290897a" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2"></a>os.cpu_count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>12</code></pre>
-</div>
-</div>
-</section>
-<section id="equation" class="level2">
-<h2 class="anchored" data-anchor-id="equation">Equation</h2>
-<p>Use LaTeX to write equations:</p>
-<p><span class="math display">\[
-\chi' = \sum_{i=1}^n k_i s_i^2
-\]</span></p>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="84c315f6" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    <span class="bu">print</span>(i<span class="op">+</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>1
-2
-3
-4
-5
-6
-7
-8
-9
-10</code></pre>
-</div>
-</div>
 
 
 </section>

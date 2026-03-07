@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n6 min\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "AI With Rohan",
+    "section": "",
+    "text": "Parallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Me",
+    "section": "",
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
+    "objectID": "about.html#connect-with-me",
+    "href": "about.html#connect-with-me",
+    "title": "About Me",
+    "section": "",
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
     "objectID": "walkthrough.html",
     "href": "walkthrough.html",
     "title": "Hello, Quarto",
@@ -18,7 +46,7 @@
     "href": "walkthrough.html#code-cell",
     "title": "Hello, Quarto",
     "section": "Code Cell",
-    "text": "Code Cell\nHere is a Python code cell:\n\nimport os\nos.cpu_count()\n\n12"
+    "text": "Code Cell\nHere is a Python code cell:\n\n\nCode\nimport os\nos.cpu_count()\n\n\n12"
   },
   {
     "objectID": "walkthrough.html#equation",
@@ -32,55 +60,34 @@
     "href": "walkthrough.html#results",
     "title": "Hello, Quarto",
     "section": "Results",
-    "text": "Results\n\nfor i in range(10):\n    print(i+1)\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+    "text": "Results\n\n\nCode\nfor i in range(10):\n    print(i+1)\n\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Me",
+    "objectID": "posts/data-parallelism/index.html",
+    "href": "posts/data-parallelism/index.html",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
     "section": "",
-    "text": "About\nHello! I’m Rohan Rajput, and this is my personal blog where I share my thoughts on technology, programming, and various topics that interest me.\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites.\nFeel free to explore the posts and get in touch!"
+    "text": "One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models."
   },
   {
-    "objectID": "posts/welcome-post.html",
-    "href": "posts/welcome-post.html",
-    "title": "Welcome to My Blog",
+    "objectID": "posts/data-parallelism/index.html#example",
+    "href": "posts/data-parallelism/index.html#example",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "Example",
+    "text": "Example\nSuppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism (DP)\nFSDP\n\n\n\n\nModel storage\nFull copy on every GPU\nSharded across GPUs\n\n\nParams per GPU\n7B (all)\n1.75B (1/4th)\n\n\nMemory per GPU\n~42 GB\n~10.5 GB\n\n\nFits on 40GB A100?\nNo\nYes\n\n\nCommunication\nAllReduce (gradients only)\nAllGather + ReduceScatter\n\n\nCommunication cost\nLower\nHigher (overlapped with compute)\n\n\nComplexity\nSimple\nMore complex\n\n\nScalability\nLimited by GPU memory\nScales to much larger models"
+  },
+  {
+    "objectID": "posts/welcome-post/index.html",
+    "href": "posts/welcome-post/index.html",
+    "title": "Welcome to AI With Rohan",
     "section": "",
     "text": "This is my first blog post on this new site built with Quarto.\n\n\nI’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
   },
   {
-    "objectID": "posts/welcome-post.html#what-to-expect",
-    "href": "posts/welcome-post.html#what-to-expect",
-    "title": "Welcome to My Blog",
+    "objectID": "posts/welcome-post/index.html#what-to-expect",
+    "href": "posts/welcome-post/index.html#what-to-expect",
+    "title": "Welcome to AI With Rohan",
     "section": "",
     "text": "I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog Posts",
-    "section": "",
-    "text": "Welcome to my personal blog! This site is built with Quarto and showcases my thoughts, projects, and experiences."
-  },
-  {
-    "objectID": "index.html#latest-posts",
-    "href": "index.html#latest-posts",
-    "title": "Blog Posts",
-    "section": "Latest Posts",
-    "text": "Latest Posts"
-  },
-  {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Blog Posts",
-    "section": "About",
-    "text": "About\nLearn more about me."
-  },
-  {
-    "objectID": "posts.html",
-    "href": "posts.html",
-    "title": "Blog Posts",
-    "section": "",
-    "text": "Welcome to My Blog\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\nRohan Rajput\n\n\n\n\n\nNo matching items"
   }
 ]

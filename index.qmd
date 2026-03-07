@@ -1,13 +1,9 @@
 ---
-title: "Welcome to My Blog"
+title: "AI With Rohan"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  max-items: 5
+  fields: [date, title, description, categories]
 ---
-
-Welcome to my personal blog! This site is built with Quarto and showcases my thoughts, projects, and experiences.
-
-## Latest Posts
-
-{{< include posts.qmd >}}
-
-## About
-
-Learn more [about me](about.qmd).
