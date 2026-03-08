@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rohanrajput04.github.io/posts.html</loc>
-    <lastmod>2026-02-16T23:12:05.262Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rohanrajput04.github.io/index.html</loc>
-    <lastmod>2026-02-16T23:12:05.262Z</lastmod>
+    <loc>https://rohanrajput04.github.io/walkthrough.html</loc>
+    <lastmod>2025-09-11T02:22:00.568Z</lastmod>
   </url>
   <url>
     <loc>https://rohanrajput04.github.io/about.html</loc>
-    <lastmod>2026-02-16T23:12:05.261Z</lastmod>
+    <lastmod>2026-03-07T19:17:18.122Z</lastmod>
   </url>
   <url>
-    <loc>https://rohanrajput04.github.io/walkthrough.html</loc>
-    <lastmod>2026-02-16T23:12:05.334Z</lastmod>
+    <loc>https://rohanrajput04.github.io/posts/welcome-post.html</loc>
+    <lastmod>2026-03-07T19:17:18.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/index.html</loc>
+    <lastmod>2026-03-07T19:48:23.292Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/posts.html</loc>
+    <lastmod>2026-03-07T19:48:23.293Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/posts/pipeline-parallelism/index.html</loc>
+    <lastmod>2026-03-08T23:37:30.316Z</lastmod>
   </url>
   <url>
     <loc>https://rohanrajput04.github.io/posts/data-parallelism/index.html</loc>
-    <lastmod>2026-02-16T23:56:21.098Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rohanrajput04.github.io/posts/welcome-post/index.html</loc>
-    <lastmod>2026-02-16T23:12:05.332Z</lastmod>
+    <lastmod>2026-03-08T23:36:18.072Z</lastmod>
   </url>
 </urlset>
