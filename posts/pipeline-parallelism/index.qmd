@@ -1,43 +1,105 @@
 ---
 title: "Parallelism in AI - Part 2: Pipeline Parallelism"
-description: "Part 2 of the Parallelism in AI series — understanding Pipeline Parallelism and how models are split across stages"
+
 author: "Rohan Rajput"
-date: "2024-09-21"
-categories: [distributed-training, deep-learning, parallelism-in-ai]
+date: "2026-03-08"
+
 ---
 
-*This is Part 2 of the **Parallelism in AI** series. In this series, we explore the different parallelism strategies used to train large-scale AI models.*
 
 # What is Pipeline Parallelism?
 
-<!-- Write your introduction here -->
+<audio controls class="section-audio">
+  <source src="audio/what_is_pipeline_parallelism.wav" type="audio/wav">
+</audio>
 
-<!-- ![](assets/your-animation.gif) -->
+In [Part 1](../data-parallelism/index.qmd), we saw how Data Parallelism replicates the entire model across devices and splits the data. But what happens when a model is too large to fit on a single device, even with FSDP? Pipeline Parallelism takes a different approach. Instead of replicating the model, it partitions the model itself across multiple devices. Each device holds a subset of the model's layers (called a **stage**), and data flows through the stages sequentially, much like an assembly line in a factory.
+
+![](assets/PipelineParallelismIntro_ManimCE_v0.19.2.gif)
+
+# How Pipeline Parallelism Works
+
+<audio controls class="section-audio">
+  <source src="audio/how_pipeline_parallelism_works.wav" type="audio/wav">
+</audio>
+
+In pipeline parallelism, the model is split into consecutive groups of layers, and each group is assigned to a different device. During the forward pass, each device processes its layers and sends the activations to the next device. During the backward pass, gradients flow in the reverse direction. This allows us to train models that are too large for a single device's memory, since each device only needs to store a fraction of the total parameters.
+
+![](assets/PipelineParallelismDetailed_ManimCE_v0.19.2.gif)
 
 # Naive Pipeline Parallelism
 
-<!-- Write about the naive approach and the bubble problem here -->
+<audio controls class="section-audio">
+  <source src="audio/naive_pipeline_parallelism.wav" type="audio/wav">
+</audio>
 
-<!-- ![](assets/your-animation.gif) -->
+The simplest form of pipeline parallelism processes one mini-batch at a time through all stages sequentially. While straightforward, this approach has a major drawback: at any given time, only one device is actively computing while all others sit idle. This means device utilization is roughly 1/N, where N is the number of stages. The idle time wasted across devices is known as the **pipeline bubble**.
+
+![](assets/NaivePipelineParallelism_ManimCE_v0.19.2.gif)
+
+# The Bubble Problem
+
+<audio controls class="section-audio">
+  <source src="audio/bubble_problem.wav" type="audio/wav">
+</audio>
+
+The pipeline bubble is the key inefficiency of naive pipeline parallelism. If we have 4 stages and it takes time *t* for each stage to process a mini-batch, then during the forward pass, stage 1 finishes at *t* but stage 4 doesn't start until *3t*. The total idle time across all devices grows linearly with the number of stages. Reducing this bubble is the primary goal of more advanced pipeline scheduling strategies.
+
+![](assets/PipelineBubbleAnalysis_ManimCE_v0.19.2.gif)
 
 # Micro-batching (GPipe)
 
-<!-- Write about GPipe's micro-batching approach here -->
+<audio controls class="section-audio">
+  <source src="audio/gpipe_microbatching.wav" type="audio/wav">
+</audio>
 
-<!-- ![](assets/your-animation.gif) -->
+GPipe addresses the bubble problem by splitting each mini-batch into smaller **micro-batches**. Instead of waiting for an entire mini-batch to pass through all stages, GPipe injects multiple micro-batches into the pipeline in quick succession. This way, while stage 2 is processing micro-batch 1, stage 1 can already start on micro-batch 2. The more micro-batches we use, the smaller the bubble becomes relative to the total computation. Gradients are accumulated across all micro-batches and synchronized at the end.
 
-# Interleaved Scheduling (PipeDream)
+![](assets/GPipeSchedule_ManimCE_v0.19.2.gif)
 
-<!-- Write about PipeDream's 1F1B schedule here -->
+# 1F1B Schedule (PipeDream)
 
-<!-- ![](assets/your-animation.gif) -->
+<audio controls class="section-audio">
+  <source src="audio/one_f_one_b_schedule.wav" type="audio/wav">
+</audio>
 
-# Pipeline Parallelism in Practice
+The **1F1B (One Forward, One Backward)** schedule, introduced by PipeDream, further improves pipeline efficiency. After an initial warm-up phase where forward passes fill the pipeline, each device alternates between one forward pass and one backward pass. This interleaved scheduling reduces peak memory usage compared to GPipe, since devices don't need to store activations for all micro-batches simultaneously, while maintaining similar pipeline utilization.
 
-<!-- Write about practical considerations, trade-offs, and when to use it -->
+![](assets/OneFOneBSchedule_ManimCE_v0.19.2.gif)
 
-<!-- ![](assets/your-animation.gif) -->
+# Pipeline Parallelism vs Data Parallelism
+
+<audio controls class="section-audio">
+  <source src="audio/pipeline_vs_data_parallelism.wav" type="audio/wav">
+</audio>
+
+Pipeline parallelism and data parallelism solve different problems and are often used together. Data parallelism replicates the model and splits the data, which is ideal when the model fits on a single device but you want faster training. Pipeline parallelism splits the model across devices, which is necessary when the model is too large for one device. In practice, large-scale training combines both: the model is partitioned across pipeline stages, and each stage is replicated across multiple devices using data parallelism.
+
+| Feature              | Data Parallelism            | Pipeline Parallelism         |
+|----------------------|-----------------------------|------------------------------|
+| What is split        | Data (batches)              | Model (layers)               |
+| Model per device     | Full copy                   | Subset of layers             |
+| Primary benefit      | Faster training             | Enables larger models        |
+| Communication        | AllReduce (gradients)       | Activations between stages   |
+| Idle time            | Minimal                     | Pipeline bubble              |
+| Memory per device    | Full model + optimizer      | Partial model + optimizer    |
+| Scalability          | Limited by model size       | Limited by number of layers  |
+
+![](assets/PipelineVsDataParallelism_ManimCE_v0.19.2.gif)
 
 # Summary
 
-<!-- Write summary here -->
+<audio controls class="section-audio">
+  <source src="audio/summary.wav" type="audio/wav">
+</audio>
+
+Pipeline Parallelism enables training of models too large for a single device by partitioning layers across multiple devices. The naive approach suffers from the pipeline bubble, where devices sit idle waiting for data to flow through the pipeline. GPipe reduces this bubble through micro-batching, and PipeDream's 1F1B schedule further optimizes memory usage with interleaved forward and backward passes. Combined with data parallelism, pipeline parallelism is a core building block for training today's largest AI models.
+
+![](assets/PipelineParallelismSummary_ManimCE_v0.19.2.gif)
+
+# References
+
+- Huang, Y., et al. (2019). [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism](https://arxiv.org/abs/1811.06965). *NeurIPS 2019*
+- Narayanan, D., et al. (2019). [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://arxiv.org/abs/1806.03377). *SOSP 2019*
+- Narayanan, D., et al. (2021). [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473). *arXiv:2104.04473*
+- [Manim Community Edition](https://github.com/ManimCommunity/manim), the animation engine used for the visuals in this post

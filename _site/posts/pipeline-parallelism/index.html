@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Rohan Rajput">
-<meta name="dcterms.date" content="2024-09-21">
-<meta name="description" content="Part 2 of the Parallelism in AI series — understanding Pipeline Parallelism and how models are split across stages">
+<meta name="dcterms.date" content="2026-03-08">
 
-<title>Parallelism in AI - Part 2: Pipeline Parallelism – My Blog</title>
+<title>Parallelism in AI - Part 2: Pipeline Parallelism – AI With Rohan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,10 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-250a0ad726c327aed60c1b8aba93cc6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,7 +59,6 @@ ul.task-list li input[type="checkbox"] {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -74,9 +76,179 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Parallelism in AI - Part 2: Pipeline Parallelism – AI With Rohan">
+<meta property="og:description" content="Deep dives into AI, ML, and distributed systems">
+<meta property="og:image" content="https://rohanrajput04.github.io/posts/pipeline-parallelism/assets/PipelineParallelismIntro_ManimCE_v0.19.2.gif">
+<meta property="og:site_name" content="AI With Rohan">
+<meta name="twitter:title" content="Parallelism in AI - Part 2: Pipeline Parallelism – AI With Rohan">
+<meta name="twitter:description" content="Deep dives into AI, ML, and distributed systems">
+<meta name="twitter:image" content="https://rohanrajput04.github.io/posts/pipeline-parallelism/assets/PipelineParallelismIntro_ManimCE_v0.19.2.gif">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -86,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">My Blog</span>
+    <span class="navbar-title">AI With Rohan</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -100,16 +272,29 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../posts.html"> 
-<span class="menu-text">Posts</span></a>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rohanrajput04"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -124,32 +309,26 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#what-is-pipeline-parallelism" id="toc-what-is-pipeline-parallelism" class="nav-link active" data-scroll-target="#what-is-pipeline-parallelism">What is Pipeline Parallelism?</a></li>
+  <li><a href="#how-pipeline-parallelism-works" id="toc-how-pipeline-parallelism-works" class="nav-link" data-scroll-target="#how-pipeline-parallelism-works">How Pipeline Parallelism Works</a></li>
   <li><a href="#naive-pipeline-parallelism" id="toc-naive-pipeline-parallelism" class="nav-link" data-scroll-target="#naive-pipeline-parallelism">Naive Pipeline Parallelism</a></li>
+  <li><a href="#the-bubble-problem" id="toc-the-bubble-problem" class="nav-link" data-scroll-target="#the-bubble-problem">The Bubble Problem</a></li>
   <li><a href="#micro-batching-gpipe" id="toc-micro-batching-gpipe" class="nav-link" data-scroll-target="#micro-batching-gpipe">Micro-batching (GPipe)</a></li>
-  <li><a href="#interleaved-scheduling-pipedream" id="toc-interleaved-scheduling-pipedream" class="nav-link" data-scroll-target="#interleaved-scheduling-pipedream">Interleaved Scheduling (PipeDream)</a></li>
-  <li><a href="#pipeline-parallelism-in-practice" id="toc-pipeline-parallelism-in-practice" class="nav-link" data-scroll-target="#pipeline-parallelism-in-practice">Pipeline Parallelism in Practice</a></li>
+  <li><a href="#f1b-schedule-pipedream" id="toc-f1b-schedule-pipedream" class="nav-link" data-scroll-target="#f1b-schedule-pipedream">1F1B Schedule (PipeDream)</a></li>
+  <li><a href="#pipeline-parallelism-vs-data-parallelism" id="toc-pipeline-parallelism-vs-data-parallelism" class="nav-link" data-scroll-target="#pipeline-parallelism-vs-data-parallelism">Pipeline Parallelism vs Data Parallelism</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Parallelism in AI - Part 2: Pipeline Parallelism</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">distributed-training</div>
-    <div class="quarto-category">deep-learning</div>
-    <div class="quarto-category">parallelism-in-ai</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    Part 2 of the Parallelism in AI series — understanding Pipeline Parallelism and how models are split across stages
-  </div>
 </div>
+
 
 
 <div class="quarto-title-meta">
@@ -164,7 +343,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 21, 2024</p>
+      <p class="date">March 8, 2026</p>
     </div>
   </div>
   
@@ -176,35 +355,129 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em>This is Part 2 of the <strong>Parallelism in AI</strong> series. In this series, we explore the different parallelism strategies used to train large-scale AI models.</em></p>
 <section id="what-is-pipeline-parallelism" class="level1">
 <h1>What is Pipeline Parallelism?</h1>
-<!-- Write your introduction here -->
-<!-- ![](assets/your-animation.gif) -->
+<audio controls="" class="section-audio">
+<source src="audio/what_is_pipeline_parallelism.wav" type="audio/wav">
+</audio>
+<p>In <a href="../../posts/data-parallelism/index.html">Part 1</a>, we saw how Data Parallelism replicates the entire model across devices and splits the data. But what happens when a model is too large to fit on a single device, even with FSDP? Pipeline Parallelism takes a different approach. Instead of replicating the model, it partitions the model itself across multiple devices. Each device holds a subset of the model’s layers (called a <strong>stage</strong>), and data flows through the stages sequentially, much like an assembly line in a factory.</p>
+<p><img src="assets/PipelineParallelismIntro_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="how-pipeline-parallelism-works" class="level1">
+<h1>How Pipeline Parallelism Works</h1>
+<audio controls="" class="section-audio">
+<source src="audio/how_pipeline_parallelism_works.wav" type="audio/wav">
+</audio>
+<p>In pipeline parallelism, the model is split into consecutive groups of layers, and each group is assigned to a different device. During the forward pass, each device processes its layers and sends the activations to the next device. During the backward pass, gradients flow in the reverse direction. This allows us to train models that are too large for a single device’s memory, since each device only needs to store a fraction of the total parameters.</p>
+<p><img src="assets/PipelineParallelismDetailed_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="naive-pipeline-parallelism" class="level1">
 <h1>Naive Pipeline Parallelism</h1>
-<!-- Write about the naive approach and the bubble problem here -->
-<!-- ![](assets/your-animation.gif) -->
+<audio controls="" class="section-audio">
+<source src="audio/naive_pipeline_parallelism.wav" type="audio/wav">
+</audio>
+<p>The simplest form of pipeline parallelism processes one mini-batch at a time through all stages sequentially. While straightforward, this approach has a major drawback: at any given time, only one device is actively computing while all others sit idle. This means device utilization is roughly 1/N, where N is the number of stages. The idle time wasted across devices is known as the <strong>pipeline bubble</strong>.</p>
+<p><img src="assets/NaivePipelineParallelism_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="the-bubble-problem" class="level1">
+<h1>The Bubble Problem</h1>
+<audio controls="" class="section-audio">
+<source src="audio/bubble_problem.wav" type="audio/wav">
+</audio>
+<p>The pipeline bubble is the key inefficiency of naive pipeline parallelism. If we have 4 stages and it takes time <em>t</em> for each stage to process a mini-batch, then during the forward pass, stage 1 finishes at <em>t</em> but stage 4 doesn’t start until <em>3t</em>. The total idle time across all devices grows linearly with the number of stages. Reducing this bubble is the primary goal of more advanced pipeline scheduling strategies.</p>
+<p><img src="assets/PipelineBubbleAnalysis_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="micro-batching-gpipe" class="level1">
 <h1>Micro-batching (GPipe)</h1>
-<!-- Write about GPipe's micro-batching approach here -->
-<!-- ![](assets/your-animation.gif) -->
+<audio controls="" class="section-audio">
+<source src="audio/gpipe_microbatching.wav" type="audio/wav">
+</audio>
+<p>GPipe addresses the bubble problem by splitting each mini-batch into smaller <strong>micro-batches</strong>. Instead of waiting for an entire mini-batch to pass through all stages, GPipe injects multiple micro-batches into the pipeline in quick succession. This way, while stage 2 is processing micro-batch 1, stage 1 can already start on micro-batch 2. The more micro-batches we use, the smaller the bubble becomes relative to the total computation. Gradients are accumulated across all micro-batches and synchronized at the end.</p>
+<p><img src="assets/GPipeSchedule_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
-<section id="interleaved-scheduling-pipedream" class="level1">
-<h1>Interleaved Scheduling (PipeDream)</h1>
-<!-- Write about PipeDream's 1F1B schedule here -->
-<!-- ![](assets/your-animation.gif) -->
+<section id="f1b-schedule-pipedream" class="level1">
+<h1>1F1B Schedule (PipeDream)</h1>
+<audio controls="" class="section-audio">
+<source src="audio/one_f_one_b_schedule.wav" type="audio/wav">
+</audio>
+<p>The <strong>1F1B (One Forward, One Backward)</strong> schedule, introduced by PipeDream, further improves pipeline efficiency. After an initial warm-up phase where forward passes fill the pipeline, each device alternates between one forward pass and one backward pass. This interleaved scheduling reduces peak memory usage compared to GPipe, since devices don’t need to store activations for all micro-batches simultaneously, while maintaining similar pipeline utilization.</p>
+<p><img src="assets/OneFOneBSchedule_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
-<section id="pipeline-parallelism-in-practice" class="level1">
-<h1>Pipeline Parallelism in Practice</h1>
-<!-- Write about practical considerations, trade-offs, and when to use it -->
-<!-- ![](assets/your-animation.gif) -->
+<section id="pipeline-parallelism-vs-data-parallelism" class="level1">
+<h1>Pipeline Parallelism vs Data Parallelism</h1>
+<audio controls="" class="section-audio">
+<source src="audio/pipeline_vs_data_parallelism.wav" type="audio/wav">
+</audio>
+<p>Pipeline parallelism and data parallelism solve different problems and are often used together. Data parallelism replicates the model and splits the data, which is ideal when the model fits on a single device but you want faster training. Pipeline parallelism splits the model across devices, which is necessary when the model is too large for one device. In practice, large-scale training combines both: the model is partitioned across pipeline stages, and each stage is replicated across multiple devices using data parallelism.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 35%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Data Parallelism</th>
+<th>Pipeline Parallelism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What is split</td>
+<td>Data (batches)</td>
+<td>Model (layers)</td>
+</tr>
+<tr class="even">
+<td>Model per device</td>
+<td>Full copy</td>
+<td>Subset of layers</td>
+</tr>
+<tr class="odd">
+<td>Primary benefit</td>
+<td>Faster training</td>
+<td>Enables larger models</td>
+</tr>
+<tr class="even">
+<td>Communication</td>
+<td>AllReduce (gradients)</td>
+<td>Activations between stages</td>
+</tr>
+<tr class="odd">
+<td>Idle time</td>
+<td>Minimal</td>
+<td>Pipeline bubble</td>
+</tr>
+<tr class="even">
+<td>Memory per device</td>
+<td>Full model + optimizer</td>
+<td>Partial model + optimizer</td>
+</tr>
+<tr class="odd">
+<td>Scalability</td>
+<td>Limited by model size</td>
+<td>Limited by number of layers</td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/PipelineVsDataParallelism_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<!-- Write summary here -->
+<audio controls="" class="section-audio">
+<source src="audio/summary.wav" type="audio/wav">
+</audio>
+<p>Pipeline Parallelism enables training of models too large for a single device by partitioning layers across multiple devices. The naive approach suffers from the pipeline bubble, where devices sit idle waiting for data to flow through the pipeline. GPipe reduces this bubble through micro-batching, and PipeDream’s 1F1B schedule further optimizes memory usage with interleaved forward and backward passes. Combined with data parallelism, pipeline parallelism is a core building block for training today’s largest AI models.</p>
+<p><img src="assets/PipelineParallelismSummary_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Huang, Y., et al.&nbsp;(2019). <a href="https://arxiv.org/abs/1811.06965">GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism</a>. <em>NeurIPS 2019</em></li>
+<li>Narayanan, D., et al.&nbsp;(2019). <a href="https://arxiv.org/abs/1806.03377">PipeDream: Generalized Pipeline Parallelism for DNN Training</a>. <em>SOSP 2019</em></li>
+<li>Narayanan, D., et al.&nbsp;(2021). <a href="https://arxiv.org/abs/2104.04473">Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM</a>. <em>arXiv:2104.04473</em></li>
+<li><a href="https://github.com/ManimCommunity/manim">Manim Community Edition</a>, the animation engine used for the visuals in this post</li>
+</ul>
 
 
 </section>
@@ -212,6 +485,19 @@ ul.task-list li input[type="checkbox"] {
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -614,14 +900,14 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>   
     <div class="nav-footer-center">
-<p>© 2024 My Blog</p>
-</div>
-    <div class="nav-footer-right">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+<p>© 2024 AI With Rohan</p>
+</div>
   </div>
 </footer>
 
