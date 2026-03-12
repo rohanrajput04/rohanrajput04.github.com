@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Rohan Rajput">
+<meta name="dcterms.date" content="2026-03-11">
 
-<title>Blog – AI With Rohan</title>
+<title>Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,30 +25,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,70 +73,16 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="AI With Rohan" href="posts.xml" data-external="1"><meta property="og:title" content="Blog – AI With Rohan">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan">
+<meta property="og:description" content="Deep dives into AI, ML, and distributed systems">
+<meta property="og:image" content="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/TensorParallelismIntro_ManimCE_v0.19.2.gif">
 <meta property="og:site_name" content="AI With Rohan">
-<meta name="twitter:title" content="Blog – AI With Rohan">
+<meta name="twitter:title" content="Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan">
+<meta name="twitter:description" content="Deep dives into AI, ML, and distributed systems">
+<meta name="twitter:image" content="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/TensorParallelismIntro_ManimCE_v0.19.2.gif">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -305,13 +251,13 @@ window.Quarto = {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">AI With Rohan</span>
     </a>
   </div>
@@ -322,15 +268,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./posts.html" aria-current="page"> 
+    <a class="nav-link" href="../../posts.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -341,7 +287,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -354,144 +300,206 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Blog</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Z2VuZXJhbA==">general <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title" data-direction="asc">
-        Title
-      </option>
-      <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
-      </option>
-      <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-tensor-parallelism" id="toc-what-is-tensor-parallelism" class="nav-link active" data-scroll-target="#what-is-tensor-parallelism">What is Tensor Parallelism?</a></li>
+  <li><a href="#column-parallel-linear-layer" id="toc-column-parallel-linear-layer" class="nav-link" data-scroll-target="#column-parallel-linear-layer">Column Parallel Linear Layer</a></li>
+  <li><a href="#row-parallel-linear-layer" id="toc-row-parallel-linear-layer" class="nav-link" data-scroll-target="#row-parallel-linear-layer">Row Parallel Linear Layer</a></li>
+  <li><a href="#tensor-parallelism-in-the-mlp-block" id="toc-tensor-parallelism-in-the-mlp-block" class="nav-link" data-scroll-target="#tensor-parallelism-in-the-mlp-block">Tensor Parallelism in the MLP Block</a></li>
+  <li><a href="#tensor-parallelism-in-the-attention-block" id="toc-tensor-parallelism-in-the-attention-block" class="nav-link" data-scroll-target="#tensor-parallelism-in-the-attention-block">Tensor Parallelism in the Attention Block</a></li>
+  <li><a href="#communication-the-allreduce-cost" id="toc-communication-the-allreduce-cost" class="nav-link" data-scroll-target="#communication-the-allreduce-cost">Communication: The AllReduce Cost</a></li>
+  <li><a href="#tensor-vs-pipeline-vs-data-parallelism" id="toc-tensor-vs-pipeline-vs-data-parallelism" class="nav-link" data-scroll-target="#tensor-vs-pipeline-vs-data-parallelism">Tensor vs Pipeline vs Data Parallelism</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
-</div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1773205200000" data-listing-file-modified-sort="1773276174799" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1358">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/tensor-parallelism/index.html" class="no-external">Parallelism in AI - Part 3: Tensor Parallelism</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/tensor-parallelism/index.html" class="no-external">
-<em>This is Part 3 of the <strong>Parallelism in AI</strong> series. In Part 1, we covered Data Parallelism &amp; FSDP, and in Part 2, we explored Pipeline Parallelism. Now, we dive into Tensor…</em>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/tensor-parallelism/index.html" class="no-external">
-<div class="listing-date">
-Mar 11, 2026
-</div>
-<div class="listing-reading-time">7 min</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1772949600000" data-listing-file-modified-sort="1773275960701" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1006">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/pipeline-parallelism/index.html" class="no-external">Parallelism in AI - Part 2: Pipeline Parallelism</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/pipeline-parallelism/index.html" class="no-external">
-In Part 1, we saw how Data Parallelism replicates the entire model across devices and splits the data. But what happens when a model is too large to fit on a single device…<strong></strong>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/pipeline-parallelism/index.html" class="no-external">
-<div class="listing-date">
-Mar 8, 2026
-</div>
-<div class="listing-reading-time">6 min</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1770962400000" data-listing-file-modified-sort="1773275960644" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1140">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/data-parallelism/index.html" class="no-external">Parallelism in AI - Part 1: Data Parallelism &amp; FSDP</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/data-parallelism/index.html" class="no-external">
-One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/data-parallelism/index.html" class="no-external">
-<div class="listing-date">
-Feb 13, 2026
-</div>
-<div class="listing-reading-time">6 min</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Z2VuZXJhbA==" data-listing-date-sort="1726203600000" data-listing-file-modified-sort="1773275960701" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/welcome-post/index.html" class="no-external">Welcome to AI With Rohan</a>
-</h3>
-<div class="listing-categories">
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<div class="listing-category" onclick="window.quartoListingCategory('Z2VuZXJhbA=='); return false;">general</div>
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Parallelism in AI - Part 3: Tensor Parallelism</h1>
 </div>
-<div class="delink listing-description"><a href="./posts/welcome-post/index.html" class="no-external">
-<p>My first blog post introducing the site</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/welcome-post/index.html" class="no-external">
-<div class="listing-date">
-Sep 13, 2024
-</div>
-<div class="listing-reading-time">1 min</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rohan Rajput </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 11, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>This is Part 3 of the <strong>Parallelism in AI</strong> series. In <a href="../../posts/data-parallelism/index.html">Part 1</a>, we covered Data Parallelism &amp; FSDP, and in <a href="../../posts/pipeline-parallelism/index.html">Part 2</a>, we explored Pipeline Parallelism. Now, we dive into Tensor Parallelism by splitting individual layers across devices.</em></p>
+<section id="what-is-tensor-parallelism" class="level1">
+<h1>What is Tensor Parallelism?</h1>
+<audio controls="" class="section-audio">
+<source src="audio/what_is_tensor_parallelism.wav" type="audio/wav">
+</audio>
+<p>In the previous parts, we saw how Data Parallelism replicates the model and splits data, and how Pipeline Parallelism partitions the model by layers. Tensor Parallelism takes this a step further: instead of splitting at the layer level, it splits <strong>individual tensors</strong> (weight matrices) within a single layer across multiple devices. Each device computes a portion of a layer’s operation simultaneously, enabling us to parallelize even within a single transformer block. This is especially powerful for very large layers that are too memory-intensive for a single GPU.</p>
+<p><img src="assets/TensorParallelismIntro_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="column-parallel-linear-layer" class="level1">
+<h1>Column Parallel Linear Layer</h1>
+<audio controls="" class="section-audio">
+<source src="audio/column_parallel_linear.wav" type="audio/wav">
+</audio>
+<p>The first building block of tensor parallelism is the <strong>Column Parallel Linear</strong> layer. Given a weight matrix <strong>W</strong>, we split it along the column dimension into N partitions, one per device. Each device holds a slice <strong>W_i</strong> and computes <strong>Y_i = X · W_i</strong> independently using the full input <strong>X</strong>. Since the columns are independent, no communication is needed during the forward computation itself as each device produces a partial output that corresponds to a subset of the output features. The partial outputs are then concatenated (or used directly by the next layer) to form the complete result.</p>
+<p><img src="assets/ColumnParallelLinear_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="row-parallel-linear-layer" class="level1">
+<h1>Row Parallel Linear Layer</h1>
+<audio controls="" class="section-audio">
+<source src="audio/row_parallel_linear.wav" type="audio/wav">
+</audio>
+<p>The complement to column parallelism is the <strong>Row Parallel Linear</strong> layer. Here, the weight matrix is split along the row dimension. Each device holds a horizontal slice <strong>W_i</strong> and receives a corresponding partition of the input. Each device computes a partial matrix multiplication, producing a partial result. These partial results are then summed across devices using an <strong>AllReduce</strong> operation to produce the final output. Row parallel layers are typically paired with column parallel layers so that the output partitioning of one naturally feeds into the input partitioning of the other, minimizing communication.</p>
+<p><img src="assets/RowParallelLinear_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="tensor-parallelism-in-the-mlp-block" class="level1">
+<h1>Tensor Parallelism in the MLP Block</h1>
+<audio controls="" class="section-audio">
+<source src="audio/mlp_tensor_parallel.wav" type="audio/wav">
+</audio>
+<p>In a Transformer’s <strong>MLP (Feed-Forward)</strong> block, there are typically two linear layers with a non-linearity (e.g., GeLU) in between. Tensor parallelism applies column parallelism to the first linear layer and row parallelism to the second. The first layer splits its output features across devices, and the GeLU activation is applied locally on each device. The second layer then takes these partitioned activations as input and performs a row-parallel computation, finishing with an AllReduce to synchronize the output. This design requires only <strong>one AllReduce per MLP block</strong> in the forward pass, keeping communication overhead minimal.</p>
+<p><img src="assets/MLPTensorParallel_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="tensor-parallelism-in-the-attention-block" class="level1">
+<h1>Tensor Parallelism in the Attention Block</h1>
+<audio controls="" class="section-audio">
+<source src="audio/attention_tensor_parallel.wav" type="audio/wav">
+</audio>
+<p>The multi-head attention mechanism is naturally suited for tensor parallelism because attention heads are <strong>independent</strong> computations. Each device is assigned a subset of the attention heads. The Query, Key, and Value projection matrices are split column-wise so that each device computes projections for its assigned heads. After computing attention independently, the output projection is applied as a row-parallel linear layer, with an AllReduce to combine the results. Just like the MLP block, this requires only <strong>one AllReduce per attention block</strong> in the forward pass.</p>
+<p><img src="assets/AttentionTensorParallel_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="communication-the-allreduce-cost" class="level1">
+<h1>Communication: The AllReduce Cost</h1>
+<audio controls="" class="section-audio">
+<source src="audio/allreduce_cost.wav" type="audio/wav">
+</audio>
+<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>all-to-all communication</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
+<p><img src="assets/AllReduceVisualization_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="tensor-vs-pipeline-vs-data-parallelism" class="level1">
+<h1>Tensor vs Pipeline vs Data Parallelism</h1>
+<audio controls="" class="section-audio">
+<source src="audio/tensor_vs_pipeline_vs_data.wav" type="audio/wav">
+</audio>
+<p>Each parallelism strategy operates at a different granularity and serves a different purpose. In practice, state-of-the-art training systems like Megatron-LM combine all three in a <strong>3D parallelism</strong> configuration: tensor parallelism within a node (leveraging fast NVLink), pipeline parallelism across nodes, and data parallelism across pipeline replicas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 25%">
+<col style="width: 26%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Data Parallelism</th>
+<th>Pipeline Parallelism</th>
+<th>Tensor Parallelism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What is split</td>
+<td>Data (batches)</td>
+<td>Model (layers)</td>
+<td>Model (tensors within layers)</td>
+</tr>
+<tr class="even">
+<td>Granularity</td>
+<td>Coarse</td>
+<td>Medium</td>
+<td>Fine</td>
+</tr>
+<tr class="odd">
+<td>Model per device</td>
+<td>Full copy (or sharded/FSDP)</td>
+<td>Subset of layers</td>
+<td>Subset of each layer</td>
+</tr>
+<tr class="even">
+<td>Communication</td>
+<td>AllReduce (gradients)</td>
+<td>Activations between stages</td>
+<td>AllReduce (activations)</td>
+</tr>
+<tr class="odd">
+<td>Best interconnect</td>
+<td>Any</td>
+<td>Moderate bandwidth</td>
+<td>High bandwidth (NVLink)</td>
+</tr>
+<tr class="even">
+<td>Idle time</td>
+<td>Minimal</td>
+<td>Pipeline bubble</td>
+<td>Minimal</td>
+</tr>
+<tr class="odd">
+<td>Primary benefit</td>
+<td>Faster training</td>
+<td>Enables larger models</td>
+<td>Parallelizes single layers</td>
+</tr>
+<tr class="even">
+<td>Typical scope</td>
+<td>Across nodes</td>
+<td>Across nodes</td>
+<td>Within a node</td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/TensorVsPipelineVsData_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<audio controls="" class="section-audio">
+<source src="audio/summary.wav" type="audio/wav">
+</audio>
+<p>Tensor Parallelism splits individual weight matrices across devices, enabling parallelism at the finest granularity. Column parallel layers split output features, row parallel layers split input features, and the two are paired together within Transformer MLP and attention blocks to minimize communication. Each transformer block requires only two AllReduce operations in the forward pass. Because of its high communication requirements, tensor parallelism works best within a single node with fast interconnects. Combined with pipeline and data parallelism in a 3D parallelism setup, it is essential for training today’s largest language models.</p>
+<p><img src="assets/TensorParallelismSummary_ManimCE_v0.19.2.gif" class="img-fluid"></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Shoeybi, M., et al.&nbsp;(2019). <a href="https://arxiv.org/abs/1909.08053">Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism</a>. <em>arXiv:1909.08053</em></li>
+<li>Narayanan, D., et al.&nbsp;(2021). <a href="https://arxiv.org/abs/2104.04473">Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM</a>. <em>arXiv:2104.04473</em></li>
+<li>Korthikanti, V., et al.&nbsp;(2022). <a href="https://arxiv.org/abs/2205.05198">Reducing Activation Recomputation in Large Transformer Models</a>. <em>arXiv:2205.05198</em></li>
+<li><a href="https://github.com/ManimCommunity/manim">Manim Community Edition</a> — Animation engine used for the visuals in this post</li>
+<li><a href="https://github.com/hexgrad/kokoro">Kokoro TTS</a> — Text-to-speech model used to generate the audio narration</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
