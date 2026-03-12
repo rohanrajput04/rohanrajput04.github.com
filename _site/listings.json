@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/tensor-parallelism/index.html",
       "/posts/pipeline-parallelism/index.html",
       "/posts/data-parallelism/index.html",
       "/posts/welcome-post/index.html"
@@ -10,6 +11,7 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/tensor-parallelism/index.html",
       "/posts/pipeline-parallelism/index.html",
       "/posts/data-parallelism/index.html",
       "/posts/welcome-post/index.html"

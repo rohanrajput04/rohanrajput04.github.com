@@ -1,43 +1,106 @@
 ---
 title: "Parallelism in AI - Part 3: Tensor Parallelism"
-description: "Part 3 of the Parallelism in AI series — understanding Tensor Parallelism and how individual tensors are split across GPUs"
 author: "Rohan Rajput"
-date: "2024-09-28"
-categories: [distributed-training, deep-learning, parallelism-in-ai]
+date: "2026-03-11"
 ---
 
-*This is Part 3 of the **Parallelism in AI** series. In this series, we explore the different parallelism strategies used to train large-scale AI models.*
+*This is Part 3 of the **Parallelism in AI** series. In [Part 1](../data-parallelism/index.qmd), we covered Data Parallelism & FSDP, and in [Part 2](../pipeline-parallelism/index.qmd), we explored Pipeline Parallelism. Now, we dive into Tensor Parallelism by splitting individual layers across devices.*
 
 # What is Tensor Parallelism?
 
-<!-- Write your introduction here -->
+<audio controls class="section-audio">
+  <source src="audio/what_is_tensor_parallelism.wav" type="audio/wav">
+</audio>
 
-<!-- ![](assets/your-animation.gif) -->
+In the previous parts, we saw how Data Parallelism replicates the model and splits data, and how Pipeline Parallelism partitions the model by layers. Tensor Parallelism takes this a step further: instead of splitting at the layer level, it splits **individual tensors** (weight matrices) within a single layer across multiple devices. Each device computes a portion of a layer's operation simultaneously, enabling us to parallelize even within a single transformer block. This is especially powerful for very large layers that are too memory-intensive for a single GPU.
 
-# Splitting Linear Layers
+![](assets/TensorParallelismIntro_ManimCE_v0.19.2.gif)
 
-<!-- Write about column and row parallel linear layers here -->
+# Column Parallel Linear Layer
 
-<!-- ![](assets/your-animation.gif) -->
+<audio controls class="section-audio">
+  <source src="audio/column_parallel_linear.wav" type="audio/wav">
+</audio>
 
-# Tensor Parallelism in Transformers
+The first building block of tensor parallelism is the **Column Parallel Linear** layer. Given a weight matrix **W**, we split it along the column dimension into N partitions, one per device. Each device holds a slice **W_i** and computes **Y_i = X · W_i** independently using the full input **X**. Since the columns are independent, no communication is needed during the forward computation itself as each device produces a partial output that corresponds to a subset of the output features. The partial outputs are then concatenated (or used directly by the next layer) to form the complete result.
 
-<!-- Write about how attention and MLP layers are parallelized here -->
+![](assets/ColumnParallelLinear_ManimCE_v0.19.2.gif)
 
-<!-- ![](assets/your-animation.gif) -->
+# Row Parallel Linear Layer
 
-# Communication Overhead
+<audio controls class="section-audio">
+  <source src="audio/row_parallel_linear.wav" type="audio/wav">
+</audio>
 
-<!-- Write about the all-reduce and all-gather operations required here -->
+The complement to column parallelism is the **Row Parallel Linear** layer. Here, the weight matrix is split along the row dimension. Each device holds a horizontal slice **W_i** and receives a corresponding partition of the input. Each device computes a partial matrix multiplication, producing a partial result. These partial results are then summed across devices using an **AllReduce** operation to produce the final output. Row parallel layers are typically paired with column parallel layers so that the output partitioning of one naturally feeds into the input partitioning of the other, minimizing communication.
 
-<!-- ![](assets/your-animation.gif) -->
+![](assets/RowParallelLinear_ManimCE_v0.19.2.gif)
 
-# Tensor Parallelism in Practice
+# Tensor Parallelism in the MLP Block
 
-<!-- Write about practical considerations, trade-offs, and when to use it -->
+<audio controls class="section-audio">
+  <source src="audio/mlp_tensor_parallel.wav" type="audio/wav">
+</audio>
 
-<!-- ![](assets/your-animation.gif) -->
+In a Transformer's **MLP (Feed-Forward)** block, there are typically two linear layers with a non-linearity (e.g., GeLU) in between. Tensor parallelism applies column parallelism to the first linear layer and row parallelism to the second. The first layer splits its output features across devices, and the GeLU activation is applied locally on each device. The second layer then takes these partitioned activations as input and performs a row-parallel computation, finishing with an AllReduce to synchronize the output. This design requires only **one AllReduce per MLP block** in the forward pass, keeping communication overhead minimal.
+
+![](assets/MLPTensorParallel_ManimCE_v0.19.2.gif)
+
+# Tensor Parallelism in the Attention Block
+
+<audio controls class="section-audio">
+  <source src="audio/attention_tensor_parallel.wav" type="audio/wav">
+</audio>
+
+The multi-head attention mechanism is naturally suited for tensor parallelism because attention heads are **independent** computations. Each device is assigned a subset of the attention heads. The Query, Key, and Value projection matrices are split column-wise so that each device computes projections for its assigned heads. After computing attention independently, the output projection is applied as a row-parallel linear layer, with an AllReduce to combine the results. Just like the MLP block, this requires only **one AllReduce per attention block** in the forward pass.
+
+![](assets/AttentionTensorParallel_ManimCE_v0.19.2.gif)
+
+# Communication: The AllReduce Cost
+
+<audio controls class="section-audio">
+  <source src="audio/allreduce_cost.wav" type="audio/wav">
+</audio>
+
+Tensor parallelism relies on **AllReduce** operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires **all-to-all communication** within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.
+
+![](assets/AllReduceVisualization_ManimCE_v0.19.2.gif)
+
+# Tensor vs Pipeline vs Data Parallelism
+
+<audio controls class="section-audio">
+  <source src="audio/tensor_vs_pipeline_vs_data.wav" type="audio/wav">
+</audio>
+
+Each parallelism strategy operates at a different granularity and serves a different purpose. In practice, state-of-the-art training systems like Megatron-LM combine all three in a **3D parallelism** configuration: tensor parallelism within a node (leveraging fast NVLink), pipeline parallelism across nodes, and data parallelism across pipeline replicas.
+
+| Feature              | Data Parallelism            | Pipeline Parallelism         | Tensor Parallelism            |
+|----------------------|-----------------------------|------------------------------|-------------------------------|
+| What is split        | Data (batches)              | Model (layers)               | Model (tensors within layers) |
+| Granularity          | Coarse                      | Medium                       | Fine                          |
+| Model per device     | Full copy (or sharded/FSDP) | Subset of layers             | Subset of each layer          |
+| Communication        | AllReduce (gradients)       | Activations between stages   | AllReduce (activations)       |
+| Best interconnect    | Any                         | Moderate bandwidth           | High bandwidth (NVLink)       |
+| Idle time            | Minimal                     | Pipeline bubble              | Minimal                       |
+| Primary benefit      | Faster training             | Enables larger models         | Parallelizes single layers   |
+| Typical scope        | Across nodes                | Across nodes                 | Within a node                 |
+
+![](assets/TensorVsPipelineVsData_ManimCE_v0.19.2.gif)
 
 # Summary
 
-<!-- Write summary here -->
+<audio controls class="section-audio">
+  <source src="audio/summary.wav" type="audio/wav">
+</audio>
+
+Tensor Parallelism splits individual weight matrices across devices, enabling parallelism at the finest granularity. Column parallel layers split output features, row parallel layers split input features, and the two are paired together within Transformer MLP and attention blocks to minimize communication. Each transformer block requires only two AllReduce operations in the forward pass. Because of its high communication requirements, tensor parallelism works best within a single node with fast interconnects. Combined with pipeline and data parallelism in a 3D parallelism setup, it is essential for training today's largest language models.
+
+![](assets/TensorParallelismSummary_ManimCE_v0.19.2.gif)
+
+# References
+
+- Shoeybi, M., et al. (2019). [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). *arXiv:1909.08053*
+- Narayanan, D., et al. (2021). [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473). *arXiv:2104.04473*
+- Korthikanti, V., et al. (2022). [Reducing Activation Recomputation in Large Transformer Models](https://arxiv.org/abs/2205.05198). *arXiv:2205.05198*
+- [Manim Community Edition](https://github.com/ManimCommunity/manim) — Animation engine used for the visuals in this post
+- [Kokoro TTS](https://github.com/hexgrad/kokoro) — Text-to-speech model used to generate the audio narration
