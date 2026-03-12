@@ -1,0 +1,120 @@
+---
+title: "Parallelism in AI - Part 1: Data Parallelism & FSDP"
+author: "Rohan Singh Rajput"
+date: "2026-02-13"
+---
+
+
+
+# Why do we need parallelism in AI?
+
+<audio controls class="section-audio">
+  <source src="audio/what_is_parallelism.wav" type="audio/wav">
+</audio>
+
+One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models.
+
+# Introduction to Data Parallelism
+
+<audio controls class="section-audio">
+  <source src="audio/intro_data_parallelism.wav" type="audio/wav">
+</audio>
+
+
+
+There are many parallelism techniques that exist for training and inference of AI models. In this section, we will focus on Data Parallelism. This technique is specifically useful during model training. As the name suggests, we shard (or divide) our data into smaller batches and each batch is processed in parallel across multiple devices. Compared to single device batching where we process the entire data one by one in batches, here we utilize multiple devices to speed up the model training process.
+
+![](assets/DataParallelismIntro_ManimCE_v0.19.2.gif)
+
+
+<audio controls class="section-audio">
+  <source src="audio/data_parallelism_detail.wav" type="audio/wav">
+</audio>
+
+
+
+In data parallelism, each device maintains a copy of the model parameters. During training, each device processes a different subset of the training data and computes the gradients independently. After computing the gradients, an AllReduce operation is performed to aggregate the gradients across all devices. This ensures that all devices have the same updated model parameters for the next iteration.
+
+![](assets/DataParallelismDetailed_ManimCE_v0.19.2.gif)
+
+# What is AllReduce? 
+
+<audio controls class="section-audio">
+  <source src="audio/allreduce_explained.wav" type="audio/wav">
+</audio>
+
+
+
+We can think of AllReduce as a communication operation that takes the gradients computed by each device and combines them (e.g., by summing) across all devices. This allows each device to have the same updated gradients, which are then used to update the model parameters. AllReduce is a critical component of data parallelism, as it ensures that all devices stay in sync during training.
+
+![](assets/AllReduceExplained_ManimCE_v0.19.2.gif)
+
+# Let's talk about FSDP
+
+<audio controls class="section-audio">
+  <source src="audio/what_is_fsdp.wav" type="audio/wav">
+</audio>
+
+
+
+Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that goes beyond traditional data parallelism. In FSDP, the model parameters are sharded (i.e., divided) across multiple devices, rather than each device maintaining a full copy of the model. This allows for training larger models that may not fit into the memory of a single device. FSDP also incorporates techniques to efficiently manage communication and synchronization between devices, making it a powerful tool for training large-scale AI models.
+
+![](assets/FSDPExplained_ManimCE_v0.19.2.gif)
+
+# FSDP Workflow
+
+<audio controls class="section-audio">
+  <source src="audio/fsdp_workflow.wav" type="audio/wav">
+</audio>
+
+
+
+In the FSDP workflow, the model parameters are sharded across multiple devices. During training, each device computes gradients for its shard of the model parameters. The gradients are then communicated between devices to ensure that all devices have the necessary information to update their respective shards of the model. This allows for efficient training of large models while managing memory constraints effectively.
+
+![](assets/FSDPWorkflow_ManimCE_v0.19.2.gif)
+
+# FSDP vs Data Parallel
+
+<audio controls class="section-audio">
+  <source src="audio/fsdp_vs_data_parallel.wav" type="audio/wav">
+</audio>
+
+
+
+The difference between FSDP and traditional data parallelism lies in how the model parameters are managed. In data parallelism, each device maintains a full copy of the model parameters, which can lead to memory constraints when training large models. In contrast, FSDP shards the model parameters across multiple devices, allowing for larger models to be trained without running into memory issues. Additionally, FSDP incorporates more efficient communication strategies to manage synchronization between devices, making it a more scalable solution for training large-scale AI models. 
+
+## Example
+
+Suppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.
+
+| Feature              | Data Parallelism (DP)       | FSDP                          |
+|----------------------|-----------------------------|-------------------------------|
+| Model storage        | Full copy on every GPU      | Sharded across GPUs           |
+| Params per GPU       | 7B (all)                    | 1.75B (1/4th)                 |
+| Memory per GPU       | ~42 GB                      | ~10.5 GB                      |
+| Fits on 40GB A100?   | No                          | Yes                           |
+| Communication        | AllReduce (gradients only)  | AllGather + ReduceScatter     |
+| Communication cost   | Lower                       | Higher (overlapped with compute) |
+| Complexity           | Simple                      | More complex                  |
+| Scalability          | Limited by GPU memory       | Scales to much larger models  |
+
+![](assets/FSDPvsDataParallel_ManimCE_v0.19.2.gif)
+
+# FSDP Summary
+
+<audio controls class="section-audio">
+  <source src="audio/fsdp_summary.wav" type="audio/wav">
+</audio>
+
+
+
+In summary, Fully Sharded Data Parallel (FSDP) is an advanced parallelism strategy that allows for training larger AI models by sharding the model parameters across multiple devices. It incorporates efficient communication and synchronization techniques to manage the training process effectively. FSDP is a powerful tool for training large-scale AI models while managing memory constraints and ensuring efficient communication between devices.
+
+![](assets/FSDPSummary_ManimCE_v0.19.2.gif)
+
+# References
+
+- Li, M., et al. (2020). [PyTorch Distributed: Experiences on Accelerating Data Parallel Training](https://arxiv.org/abs/2006.15704). *arXiv:2006.15704*
+- Zhao, Y., et al. (2023). [PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel](https://arxiv.org/abs/2304.11277). *arXiv:2304.11277*
+- [Manim Community Edition](https://github.com/ManimCommunity/manim) — Animation engine used for the visuals in this post
+- [Kokoro TTS](https://github.com/hexgrad/kokoro) — Text-to-speech model used to generate the audio narration

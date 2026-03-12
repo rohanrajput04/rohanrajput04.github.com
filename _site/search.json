@@ -39,7 +39,7 @@
     "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "About\nHello! I’m Rohan Rajput, and this is my personal blog where I share my thoughts on technology, programming, and various topics that interest me.\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites.\nFeel free to explore the posts and get in touch!"
+    "text": "Hello! I’m Rohan Singh Rajput, a Senior Machine Learning Engineer at Capital One based in the Dallas-Fort Worth Metroplex. I specialize in building scalable ML systems and have a passion for leveraging data science and artificial intelligence to solve complex problems.\n\n\nWith over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments\n\n\n\n\n\nMaster’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151\n\n\n\n\n\nSolar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering\n\n\n\n\nProgramming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL\n\n\n\nI regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022.\n\n\n\n\nLinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
   },
   {
     "objectID": "posts/welcome-post.html",
@@ -58,9 +58,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Blog Posts",
+    "title": "AI With Rohan",
     "section": "",
-    "text": "Welcome to my personal blog! This site is built with Quarto and showcases my thoughts, projects, and experiences."
+    "text": "Parallelism in AI - Part 2: Pipeline Parallelism\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n\n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#latest-posts",
@@ -79,8 +79,71 @@
   {
     "objectID": "posts.html",
     "href": "posts.html",
-    "title": "Blog Posts",
+    "title": "Blog",
     "section": "",
-    "text": "Welcome to My Blog\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\nRohan Rajput\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nParallelism in AI - Part 2: Pipeline Parallelism\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n6 min\n\n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n6 min\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/pipeline-parallelism/index.html",
+    "href": "posts/pipeline-parallelism/index.html",
+    "title": "Parallelism in AI - Part 2: Pipeline Parallelism",
+    "section": "",
+    "text": "What is Pipeline Parallelism?\n\n\n\nIn Part 1, we saw how Data Parallelism replicates the entire model across devices and splits the data. But what happens when a model is too large to fit on a single device, even with FSDP? Pipeline Parallelism takes a different approach. Instead of replicating the model, it partitions the model itself across multiple devices. Each device holds a subset of the model’s layers (called a stage), and data flows through the stages sequentially, much like an assembly line in a factory.\n\n\n\nHow Pipeline Parallelism Works\n\n\n\nIn pipeline parallelism, the model is split into consecutive groups of layers, and each group is assigned to a different device. During the forward pass, each device processes its layers and sends the activations to the next device. During the backward pass, gradients flow in the reverse direction. This allows us to train models that are too large for a single device’s memory, since each device only needs to store a fraction of the total parameters.\n\n\n\nNaive Pipeline Parallelism\n\n\n\nThe simplest form of pipeline parallelism processes one mini-batch at a time through all stages sequentially. While straightforward, this approach has a major drawback: at any given time, only one device is actively computing while all others sit idle. This means device utilization is roughly 1/N, where N is the number of stages. The idle time wasted across devices is known as the pipeline bubble.\n\n\n\nThe Bubble Problem\n\n\n\nThe pipeline bubble is the key inefficiency of naive pipeline parallelism. If we have 4 stages and it takes time t for each stage to process a mini-batch, then during the forward pass, stage 1 finishes at t but stage 4 doesn’t start until 3t. The total idle time across all devices grows linearly with the number of stages. Reducing this bubble is the primary goal of more advanced pipeline scheduling strategies.\n\n\n\nMicro-batching (GPipe)\n\n\n\nGPipe addresses the bubble problem by splitting each mini-batch into smaller micro-batches. Instead of waiting for an entire mini-batch to pass through all stages, GPipe injects multiple micro-batches into the pipeline in quick succession. This way, while stage 2 is processing micro-batch 1, stage 1 can already start on micro-batch 2. The more micro-batches we use, the smaller the bubble becomes relative to the total computation. Gradients are accumulated across all micro-batches and synchronized at the end.\n\n\n\n1F1B Schedule (PipeDream)\n\n\n\nThe 1F1B (One Forward, One Backward) schedule, introduced by PipeDream, further improves pipeline efficiency. After an initial warm-up phase where forward passes fill the pipeline, each device alternates between one forward pass and one backward pass. This interleaved scheduling reduces peak memory usage compared to GPipe, since devices don’t need to store activations for all micro-batches simultaneously, while maintaining similar pipeline utilization.\n\n\n\nPipeline Parallelism vs Data Parallelism\n\n\n\nPipeline parallelism and data parallelism solve different problems and are often used together. Data parallelism replicates the model and splits the data, which is ideal when the model fits on a single device but you want faster training. Pipeline parallelism splits the model across devices, which is necessary when the model is too large for one device. In practice, large-scale training combines both: the model is partitioned across pipeline stages, and each stage is replicated across multiple devices using data parallelism.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism\nPipeline Parallelism\n\n\n\n\nWhat is split\nData (batches)\nModel (layers)\n\n\nModel per device\nFull copy\nSubset of layers\n\n\nPrimary benefit\nFaster training\nEnables larger models\n\n\nCommunication\nAllReduce (gradients)\nActivations between stages\n\n\nIdle time\nMinimal\nPipeline bubble\n\n\nMemory per device\nFull model + optimizer\nPartial model + optimizer\n\n\nScalability\nLimited by model size\nLimited by number of layers\n\n\n\n\n\n\nSummary\n\n\n\nPipeline Parallelism enables training of models too large for a single device by partitioning layers across multiple devices. The naive approach suffers from the pipeline bubble, where devices sit idle waiting for data to flow through the pipeline. GPipe reduces this bubble through micro-batching, and PipeDream’s 1F1B schedule further optimizes memory usage with interleaved forward and backward passes. Combined with data parallelism, pipeline parallelism is a core building block for training today’s largest AI models.\n\n\n\nReferences\n\nHuang, Y., et al. (2019). GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism. NeurIPS 2019\nNarayanan, D., et al. (2019). PipeDream: Generalized Pipeline Parallelism for DNN Training. SOSP 2019\nNarayanan, D., et al. (2021). Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM. arXiv:2104.04473\nManim Community Edition, the animation engine used for the visuals in this post"
+  },
+  {
+    "objectID": "about.html#professional-background",
+    "href": "about.html#professional-background",
+    "title": "About Me",
+    "section": "",
+    "text": "With over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments"
+  },
+  {
+    "objectID": "about.html#education-certifications",
+    "href": "about.html#education-certifications",
+    "title": "About Me",
+    "section": "",
+    "text": "Master’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151"
+  },
+  {
+    "objectID": "about.html#key-projects-achievements",
+    "href": "about.html#key-projects-achievements",
+    "title": "About Me",
+    "section": "",
+    "text": "Solar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering"
+  },
+  {
+    "objectID": "about.html#technical-expertise",
+    "href": "about.html#technical-expertise",
+    "title": "About Me",
+    "section": "",
+    "text": "Programming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL"
+  },
+  {
+    "objectID": "about.html#writing-community",
+    "href": "about.html#writing-community",
+    "title": "About Me",
+    "section": "",
+    "text": "I regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022."
+  },
+  {
+    "objectID": "about.html#connect-with-me",
+    "href": "about.html#connect-with-me",
+    "title": "About Me",
+    "section": "",
+    "text": "LinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
+    "objectID": "posts/data-parallelism/index.html",
+    "href": "posts/data-parallelism/index.html",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "",
+    "text": "One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models."
+  },
+  {
+    "objectID": "posts/data-parallelism/index.html#example",
+    "href": "posts/data-parallelism/index.html#example",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "Example",
+    "text": "Example\nSuppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism (DP)\nFSDP\n\n\n\n\nModel storage\nFull copy on every GPU\nSharded across GPUs\n\n\nParams per GPU\n7B (all)\n1.75B (1/4th)\n\n\nMemory per GPU\n~42 GB\n~10.5 GB\n\n\nFits on 40GB A100?\nNo\nYes\n\n\nCommunication\nAllReduce (gradients only)\nAllGather + ReduceScatter\n\n\nCommunication cost\nLower\nHigher (overlapped with compute)\n\n\nComplexity\nSimple\nMore complex\n\n\nScalability\nLimited by GPU memory\nScales to much larger models"
   }
 ]

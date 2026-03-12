@@ -2,13 +2,17 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/welcome-post.html"
+      "/posts/pipeline-parallelism/index.html",
+      "/posts/data-parallelism/index.html",
+      "/posts/welcome-post/index.html"
     ]
   },
   {
     "listing": "/posts.html",
     "items": [
-      "/posts/welcome-post.html"
+      "/posts/pipeline-parallelism/index.html",
+      "/posts/data-parallelism/index.html",
+      "/posts/welcome-post/index.html"
     ]
   }
 ]
