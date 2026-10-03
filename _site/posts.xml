@@ -8,7 +8,7 @@
 <title>AI With Rohan</title>
 <link>https://rohanrajput04.github.io/posts.html</link>
 <atom:link href="https://rohanrajput04.github.io/posts.xml" rel="self" type="application/rss+xml"/>
-<description>Deep dives into AI, ML, and distributed systems</description>
+<description>Visual deep dives into how large AI systems are trained, served, and turned into agents.</description>
 <generator>quarto-1.8.24</generator>
 <lastBuildDate>Sun, 09 Aug 2026 05:00:00 GMT</lastBuildDate>
 <item>
@@ -713,7 +713,7 @@
 <audio controls="" class="section-audio">
 <source src="audio/allreduce_cost.wav" type="audio/wav">
 </audio>
-<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>all-to-all communication</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
+<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>collective communication across every device in the tensor-parallel group</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
 <p><img src="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/AllReduceVisualization_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="tensor-vs-pipeline-vs-data-parallelism" class="level1">
@@ -812,6 +812,9 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>tensor-parallelism</category>
   <guid>https://rohanrajput04.github.io/posts/tensor-parallelism/</guid>
   <pubDate>Wed, 11 Mar 2026 05:00:00 GMT</pubDate>
 </item>
@@ -953,6 +956,9 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>pipeline-parallelism</category>
   <guid>https://rohanrajput04.github.io/posts/pipeline-parallelism/</guid>
   <pubDate>Sun, 08 Mar 2026 06:00:00 GMT</pubDate>
 </item>
@@ -1099,32 +1105,17 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>fsdp</category>
   <guid>https://rohanrajput04.github.io/posts/data-parallelism/</guid>
   <pubDate>Fri, 13 Feb 2026 06:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Welcome to AI With Rohan</title>
+  <title></title>
   <dc:creator>Rohan Rajput</dc:creator>
   <link>https://rohanrajput04.github.io/posts/welcome-post/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="welcome" class="level1">
-<h1>Welcome!</h1>
-<p>This is my first blog post on this new site built with Quarto.</p>
-<section id="what-to-expect" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-expect">What to expect</h2>
-<p>I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development</p>
-<p>Stay tuned for more content!</p>
-
-
-</section>
-</section>
-
- ]]></description>
+  <description><![CDATA[ undefined ]]></description>
   <category>general</category>
   <guid>https://rohanrajput04.github.io/posts/welcome-post/</guid>
   <pubDate>Fri, 13 Sep 2024 05:00:00 GMT</pubDate>

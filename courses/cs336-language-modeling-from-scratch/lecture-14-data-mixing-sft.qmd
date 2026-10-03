@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Lecture 14: Data mixing, rewriting, SFT"
 author: "Rohan Rajput"
 date: "2026-05-13"

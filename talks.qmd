@@ -1,0 +1,19 @@
+---
+title: "Talks & Mentoring"
+draft: true
+toc: false
+---
+
+## Talks
+
+- *[Placeholder]* **Talk title** — Event name, City · Month YYYY · [slides](#) · [video](#)
+
+## Panels & podcasts
+
+- *[Placeholder]* **Panel or episode title** — Host or event · Month YYYY · [link](#)
+
+## Mentoring
+
+I'm happy to help engineers moving into ML. If that's you, reach out on [LinkedIn](https://www.linkedin.com/in/rohan3).
+
+- *[Placeholder]* Mentoring program or community — role · years

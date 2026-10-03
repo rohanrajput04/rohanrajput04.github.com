@@ -1,5 +1,18 @@
 [
   {
+    "listing": "/posts.html",
+    "items": [
+      "/posts/llm-from-scratch-4-leaderboard/index.html",
+      "/posts/llm-from-scratch-3-training-dynamics/index.html",
+      "/posts/llm-from-scratch-2-flops/index.html",
+      "/posts/llm-from-scratch-1-tokenizer/index.html",
+      "/posts/tensor-parallelism/index.html",
+      "/posts/pipeline-parallelism/index.html",
+      "/posts/data-parallelism/index.html",
+      "/posts/welcome-post/index.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/llm-from-scratch-4-leaderboard/index.html",
@@ -14,9 +27,7 @@
   },
   {
     "listing": "/courses/example-course/index.html",
-    "items": [
-      "/courses/example-course/lecture-01-intro.html"
-    ]
+    "items": []
   },
   {
     "listing": "/courses/cs336-language-modeling-from-scratch/index.html",
@@ -56,27 +67,26 @@
   },
   {
     "listing": "/books.html",
-    "items": [
-      "/books/example-book/index.html"
-    ]
+    "items": []
   },
   {
     "listing": "/books/example-book/index.html",
-    "items": [
-      "/books/example-book/chapter-01-intro.html"
-    ]
+    "items": []
   },
   {
-    "listing": "/posts.html",
+    "listing": "/notes.html",
+    "items": []
+  },
+  {
+    "listing": "/series.html",
     "items": [
-      "/posts/llm-from-scratch-4-leaderboard/index.html",
-      "/posts/llm-from-scratch-3-training-dynamics/index.html",
-      "/posts/llm-from-scratch-2-flops/index.html",
       "/posts/llm-from-scratch-1-tokenizer/index.html",
-      "/posts/tensor-parallelism/index.html",
-      "/posts/pipeline-parallelism/index.html",
+      "/posts/llm-from-scratch-2-flops/index.html",
+      "/posts/llm-from-scratch-3-training-dynamics/index.html",
+      "/posts/llm-from-scratch-4-leaderboard/index.html",
       "/posts/data-parallelism/index.html",
-      "/posts/welcome-post/index.html"
+      "/posts/pipeline-parallelism/index.html",
+      "/posts/tensor-parallelism/index.html"
     ]
   }
 ]

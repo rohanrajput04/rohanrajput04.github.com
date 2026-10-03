@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Example Course"
 author: "Rohan Rajput"
 date: "2026-04-17"

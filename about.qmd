@@ -1,15 +1,23 @@
 ---
 title: "About Me"
+toc: false
 ---
 
-# About Me
+I build AI agents that work in the real world, under real constraints.
 
-<!-- Write your about me here -->
+I'm a Senior Lead Machine Learning Engineer at Capital One, where I work on agentic AI: retrieval and search systems, vision-language models, and the evaluation and observability layers that make LLM systems safe to ship in a regulated environment.
 
-## Connect With Me
+Over the past decade I've built production ML across fintech, media, health tech, and live events, at Capital One, Headspace, Ticketmaster, and others: recommendation systems, A/B testing platforms, LLM pipelines, and ML infrastructure. Along the way I've co-authored a patent, published research, and won the RBC & Microsoft Hackathon.
 
-<!-- Add your social links here -->
+## What I write about here
 
-This blog is built using **Quarto**. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.
+This site is where I work through how large AI systems actually function, usually by building them or animating them. So far that's meant [training a language model from scratch](series.qmd#building-a-language-model-from-scratch) and [how training is parallelized across GPUs](series.qmd#parallelism-in-ai). Next up: agents, evaluation, and LLM inference.
 
-Feel free to explore the posts and get in touch!
+## Get in touch
+
+I'm always happy to talk about agents, evals, and LLM inference, or to help engineers moving into AI.
+
+- [LinkedIn](https://www.linkedin.com/in/rohan3)
+- [GitHub](https://github.com/rohanrajput04)
+
+*Views expressed on this site are my own and do not represent my employer.*

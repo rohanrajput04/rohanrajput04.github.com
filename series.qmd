@@ -1,0 +1,57 @@
+---
+title: "Series"
+toc: false
+listing:
+  - id: llm-series
+    contents:
+      - posts/llm-from-scratch-1-tokenizer/index.qmd
+      - posts/llm-from-scratch-2-flops/index.qmd
+      - posts/llm-from-scratch-3-training-dynamics/index.qmd
+      - posts/llm-from-scratch-4-leaderboard/index.qmd
+    sort: "date asc"
+    type: default
+    fields: [title, description, reading-time]
+    sort-ui: false
+    filter-ui: false
+  - id: parallelism-series
+    contents:
+      - posts/data-parallelism/index.qmd
+      - posts/pipeline-parallelism/index.qmd
+      - posts/tensor-parallelism/index.qmd
+    sort: "date asc"
+    type: default
+    fields: [title, description, reading-time]
+    sort-ui: false
+    filter-ui: false
+---
+
+## Building a Language Model from Scratch {#building-a-language-model-from-scratch}
+
+A tokenizer, a Transformer, a training loop, and a 45-minute leaderboard run, written from PyTorch primitives while working through Stanford's [CS 336](courses/cs336-language-modeling-from-scratch/index.qmd). Every post is built around numbers I measured.
+
+::: {#llm-series}
+:::
+
+## Parallelism in AI {#parallelism-in-ai}
+
+How training is split across many GPUs, from replicating the whole model to slicing weight matrices. Each post is animated and narrated.
+
+::: {#parallelism-series}
+:::
+
+<!--
+To add a future series (e.g. "Agents"):
+1. Add a listing entry to the front matter above, e.g.
+     - id: agents-series
+       contents: [posts/agents-1-slug/index.qmd, posts/agents-2-slug/index.qmd]
+       sort: "date asc"
+       type: default
+       fields: [title, description, reading-time]
+       sort-ui: false
+       filter-ui: false
+2. Add a section here:
+     ## Agents {#agents}
+     One-paragraph intro.
+     ::: {#agents-series}
+     :::
+-->

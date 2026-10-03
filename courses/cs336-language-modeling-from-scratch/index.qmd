@@ -30,12 +30,15 @@ Stanford [CS 336 — Language Modeling from Scratch](https://cs336.stanford.edu/
 
 The course walks through building a modern language model end-to-end: tokenization, architecture, optimization, parallel training, inference, scaling laws, data curation, and post-training alignment (SFT, RLHF, DPO, RL for reasoning).
 
-My notes for each lecture and assignment live on the pages below. They're placeholders until I've actually worked through the material.
+My write-ups for each assignment live below. Lecture notes will appear here as I finish them.
 
+<!-- Lecture notes are hidden until they are written. To restore: remove `draft: true`
+     from the lecture-*.qmd files you've finished, then uncomment this heading and div.
 ## Lectures
 
 ::: {#lectures}
 :::
+-->
 
 ## Assignments
 

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Lecture 6: Kernels, Triton, XLA"
 author: "Rohan Rajput"
 date: "2026-04-15"

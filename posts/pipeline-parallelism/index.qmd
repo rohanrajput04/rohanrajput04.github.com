@@ -3,6 +3,8 @@ title: "Parallelism in AI - Part 2: Pipeline Parallelism"
 
 author: "Rohan Rajput"
 date: "2026-03-08"
+description: "When a model no longer fits on one device: splitting it into stages, the pipeline bubble, and how micro-batching keeps every GPU busy."
+categories: [parallelism, distributed-training, pipeline-parallelism]
 
 ---
 

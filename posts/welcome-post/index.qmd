@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Welcome to AI With Rohan"
 description: "My first blog post introducing the site"
 author: "Rohan Rajput"

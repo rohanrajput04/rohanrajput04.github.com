@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Assignment 4: Data"
 author: "Rohan Rajput"
 date: "2026-05-20"

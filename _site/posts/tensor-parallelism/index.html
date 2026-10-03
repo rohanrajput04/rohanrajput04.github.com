@@ -8,6 +8,7 @@
 
 <meta name="author" content="Rohan Rajput">
 <meta name="dcterms.date" content="2026-03-11">
+<meta name="description" content="Splitting individual weight matrices across GPUs: column- and row-parallel layers, how Megatron-LM shards attention and MLP blocks, and what the AllReduce costs.">
 
 <title>Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan</title>
 <style>
@@ -77,11 +78,11 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan">
-<meta property="og:description" content="Deep dives into AI, ML, and distributed systems">
+<meta property="og:description" content="Splitting individual weight matrices across GPUs: column- and row-parallel layers, how Megatron-LM shards attention and MLP blocks, and what the AllReduce costs.">
 <meta property="og:image" content="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/TensorParallelismIntro_ManimCE_v0.19.2.gif">
 <meta property="og:site_name" content="AI With Rohan">
 <meta name="twitter:title" content="Parallelism in AI - Part 3: Tensor Parallelism – AI With Rohan">
-<meta name="twitter:description" content="Deep dives into AI, ML, and distributed systems">
+<meta name="twitter:description" content="Splitting individual weight matrices across GPUs: column- and row-parallel layers, how Megatron-LM shards attention and MLP blocks, and what the AllReduce costs.">
 <meta name="twitter:image" content="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/TensorParallelismIntro_ManimCE_v0.19.2.gif">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -272,16 +273,16 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../../series.html"> 
+<span class="menu-text">Series</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../posts.html"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">All posts</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../courses.html"> 
 <span class="menu-text">Courses</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../books.html"> 
-<span class="menu-text">Books</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
@@ -290,12 +291,17 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rohanrajput04"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rohan3"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="https://github.com/rohanrajput04"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -335,8 +341,18 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Parallelism in AI - Part 3: Tensor Parallelism</h1>
-</div>
+  <div class="quarto-categories">
+    <div class="quarto-category">parallelism</div>
+    <div class="quarto-category">distributed-training</div>
+    <div class="quarto-category">tensor-parallelism</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    Splitting individual weight matrices across GPUs: column- and row-parallel layers, how Megatron-LM shards attention and MLP blocks, and what the AllReduce costs.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -409,7 +425,7 @@ ul.task-list li input[type="checkbox"] {
 <audio controls="" class="section-audio">
 <source src="audio/allreduce_cost.wav" type="audio/wav">
 </audio>
-<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>all-to-all communication</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
+<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>collective communication across every device in the tensor-parallel group</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
 <p><img src="assets/AllReduceVisualization_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="tensor-vs-pipeline-vs-data-parallelism" class="level1">
@@ -925,13 +941,13 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built with <a href="https://quarto.org">Quarto</a></p>
+<p>Built with <a href="https://quarto.org">Quarto</a> · Views are my own</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>© 2024 AI With Rohan</p>
+<p>© 2024–2026 Rohan Rajput</p>
 </div>
   </div>
 </footer>

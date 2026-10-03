@@ -1,5 +1,6 @@
 ---
 title: "AI With Rohan"
+subtitle: "Visual deep dives into how large AI systems are trained, served, and turned into agents."
 listing:
   contents: posts
   sort: "date desc"
@@ -7,3 +8,9 @@ listing:
   max-items: 5
   fields: [date, title, description, categories]
 ---
+
+I'm Rohan, an ML engineer working on agentic AI. I write from-scratch explanations of the systems behind modern AI, with animations and narration.
+
+**Start with a series:** [Building a Language Model from Scratch](series.qmd#building-a-language-model-from-scratch) · [Parallelism in AI](series.qmd#parallelism-in-ai)
+
+## Latest posts

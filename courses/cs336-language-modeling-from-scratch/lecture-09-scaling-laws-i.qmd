@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Lecture 9: Scaling laws (I)"
 author: "Rohan Rajput"
 date: "2026-04-27"

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Books"
 listing:
   contents: "books/*/index.qmd"
