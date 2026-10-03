@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>AI With Rohan</title>
+<link>https://rohanrajput04.github.io/books.html</link>
+<atom:link href="https://rohanrajput04.github.io/books.xml" rel="self" type="application/rss+xml"/>
+<description>Deep dives into AI, ML, and distributed systems</description>
+<generator>quarto-1.8.24</generator>
+<lastBuildDate>Fri, 17 Apr 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Example Book</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/books/example-book/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Replace this paragraph with a short overview of the book — author, why you picked it up, and what you plan to capture in these notes.</p>
+<section id="chapters" class="level2">
+<h2 class="anchored" data-anchor-id="chapters">Chapters</h2>
+<p>Each chapter below is its own page of notes. The listing is sorted by the <code>order:</code> field in each chapter’s frontmatter.</p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="ZXhhbXBsZQ==" data-listing-date-sort="1776402000000" data-listing-file-modified-sort="1777864645410" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="27">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../../books/example-book/chapter-01-intro.html" class="no-external">Chapter 1: Introduction</a>
+</h3>
+<div class="delink listing-description"><a href="../../books/example-book/chapter-01-intro.html" class="no-external">
+<p>Opening chapter — replace with a one-line summary of what the chapter covered.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../../books/example-book/chapter-01-intro.html" class="no-external">
+<div class="listing-reading-time">1 min</div>
+<div class="metadata-value listing-order">
+1
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div> ]]></description>
+  <category>example</category>
+  <guid>https://rohanrajput04.github.io/books/example-book/</guid>
+  <pubDate>Fri, 17 Apr 2026 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

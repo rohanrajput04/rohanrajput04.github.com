@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "**/*.qmd"
+    - "!CLAUDE.md"
 
 website:
   title: "AI With Rohan"
@@ -25,6 +28,10 @@ website:
         text: Home
       - href: posts.qmd
         text: Blog
+      - href: courses.qmd
+        text: Courses
+      - href: books.qmd
+        text: Books
       - href: about.qmd
         text: About
     right:

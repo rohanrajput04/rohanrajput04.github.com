@@ -1,0 +1,31 @@
+---
+title: "Lecture 16: Alignment — RL algorithms"
+author: "Rohan Rajput"
+date: "2026-05-20"
+order: 16
+description: "Core RL algorithms used in LLM alignment (PPO, GRPO, etc.)."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Tatsunori Hashimoto
+**Date:** 2026-05-20
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

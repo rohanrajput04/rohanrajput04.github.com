@@ -1,0 +1,43 @@
+---
+title: "CS 336: Language Modeling from Scratch"
+author: "Rohan Rajput"
+date: "2026-03-30"
+description: "Stanford CS 336 (Spring 2026). Building language models end-to-end: tokenization, architectures, training systems, scaling, data, and alignment."
+categories: [cs336, stanford, language-models]
+listing:
+  - id: lectures
+    contents: "lecture-*.qmd"
+    sort: "order asc"
+    type: table
+    sort-ui: false
+    filter-ui: false
+    fields: [order, date, title]
+    field-display-names:
+      order: "#"
+  - id: assignments
+    contents: "assignment-*.qmd"
+    sort: "order asc"
+    type: table
+    sort-ui: false
+    filter-ui: false
+    fields: [order, date, title]
+    field-display-names:
+      order: "#"
+      date: "Due"
+---
+
+Stanford [CS 336 — Language Modeling from Scratch](https://cs336.stanford.edu/), Spring 2026. Instructors: Tatsunori Hashimoto and Percy Liang.
+
+The course walks through building a modern language model end-to-end: tokenization, architecture, optimization, parallel training, inference, scaling laws, data curation, and post-training alignment (SFT, RLHF, DPO, RL for reasoning).
+
+My notes for each lecture and assignment live on the pages below. They're placeholders until I've actually worked through the material.
+
+## Lectures
+
+::: {#lectures}
+:::
+
+## Assignments
+
+::: {#assignments}
+:::

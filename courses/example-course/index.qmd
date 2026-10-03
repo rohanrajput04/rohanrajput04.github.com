@@ -1,0 +1,20 @@
+---
+title: "Example Course"
+author: "Rohan Rajput"
+date: "2026-04-17"
+description: "Replace this with the course name and a one-line summary of what it covers."
+categories: [example]
+listing:
+  contents: "*.qmd"
+  sort: "order asc"
+  type: default
+  sort-ui: false
+  filter-ui: false
+  fields: [order, title, description, reading-time]
+---
+
+Replace this paragraph with a short overview of the course — instructor, source (e.g. university, MOOC link), why you took it, and what you plan to capture in these notes.
+
+## Lectures
+
+Each lecture below is its own page of notes. The listing is sorted by the `order:` field in each lecture's frontmatter.

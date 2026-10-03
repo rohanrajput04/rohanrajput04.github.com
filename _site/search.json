@@ -18,7 +18,7 @@
     "href": "walkthrough.html#code-cell",
     "title": "Hello, Quarto",
     "section": "Code Cell",
-    "text": "Code Cell\nHere is a Python code cell:\n\nimport os\nos.cpu_count()\n\n12"
+    "text": "Code Cell\nHere is a Python code cell:\n\n\nCode\nimport os\nos.cpu_count()\n\n\n12"
   },
   {
     "objectID": "walkthrough.html#equation",
@@ -32,56 +32,7 @@
     "href": "walkthrough.html#results",
     "title": "Hello, Quarto",
     "section": "Results",
-    "text": "Results\n\nfor i in range(10):\n    print(i+1)\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Me",
-    "section": "",
-    "text": "Hello! I’m Rohan Singh Rajput, a Senior Machine Learning Engineer at Capital One based in the Dallas-Fort Worth Metroplex. I specialize in building scalable ML systems and have a passion for leveraging data science and artificial intelligence to solve complex problems.\n\n\nWith over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments\n\n\n\n\n\nMaster’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151\n\n\n\n\n\nSolar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering\n\n\n\n\nProgramming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL\n\n\n\nI regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022.\n\n\n\n\nLinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
-  },
-  {
-    "objectID": "posts/welcome-post.html",
-    "href": "posts/welcome-post.html",
-    "title": "Welcome to My Blog",
-    "section": "",
-    "text": "This is my first blog post on this new site built with Quarto.\n\n\nI’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
-  },
-  {
-    "objectID": "posts/welcome-post.html#what-to-expect",
-    "href": "posts/welcome-post.html#what-to-expect",
-    "title": "Welcome to My Blog",
-    "section": "",
-    "text": "I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "AI With Rohan",
-    "section": "",
-    "text": "Parallelism in AI - Part 3: Tensor Parallelism\n\n\n\n\n\n\n\n\nMar 11, 2026\n\n\n\n\n\n\n\nParallelism in AI - Part 2: Pipeline Parallelism\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n\n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html#latest-posts",
-    "href": "index.html#latest-posts",
-    "title": "Blog Posts",
-    "section": "Latest Posts",
-    "text": "Latest Posts"
-  },
-  {
-    "objectID": "index.html#about",
-    "href": "index.html#about",
-    "title": "Blog Posts",
-    "section": "About",
-    "text": "About\nLearn more about me."
-  },
-  {
-    "objectID": "posts.html",
-    "href": "posts.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nParallelism in AI - Part 3: Tensor Parallelism\n\n\n\n\n\n\n\n\nMar 11, 2026\n\n7 min\n\n\n\n\n\n\nParallelism in AI - Part 2: Pipeline Parallelism\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n6 min\n\n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n6 min\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n1 min\n\n\n\n\nNo matching items"
+    "text": "Results\n\n\nCode\nfor i in range(10):\n    print(i+1)\n\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
   },
   {
     "objectID": "posts/tensor-parallelism/index.html",
@@ -91,45 +42,339 @@
     "text": "This is Part 3 of the Parallelism in AI series. In Part 1, we covered Data Parallelism & FSDP, and in Part 2, we explored Pipeline Parallelism. Now, we dive into Tensor Parallelism by splitting individual layers across devices.\n\nWhat is Tensor Parallelism?\n\n\n\nIn the previous parts, we saw how Data Parallelism replicates the model and splits data, and how Pipeline Parallelism partitions the model by layers. Tensor Parallelism takes this a step further: instead of splitting at the layer level, it splits individual tensors (weight matrices) within a single layer across multiple devices. Each device computes a portion of a layer’s operation simultaneously, enabling us to parallelize even within a single transformer block. This is especially powerful for very large layers that are too memory-intensive for a single GPU.\n\n\n\nColumn Parallel Linear Layer\n\n\n\nThe first building block of tensor parallelism is the Column Parallel Linear layer. Given a weight matrix W, we split it along the column dimension into N partitions, one per device. Each device holds a slice W_i and computes Y_i = X · W_i independently using the full input X. Since the columns are independent, no communication is needed during the forward computation itself as each device produces a partial output that corresponds to a subset of the output features. The partial outputs are then concatenated (or used directly by the next layer) to form the complete result.\n\n\n\nRow Parallel Linear Layer\n\n\n\nThe complement to column parallelism is the Row Parallel Linear layer. Here, the weight matrix is split along the row dimension. Each device holds a horizontal slice W_i and receives a corresponding partition of the input. Each device computes a partial matrix multiplication, producing a partial result. These partial results are then summed across devices using an AllReduce operation to produce the final output. Row parallel layers are typically paired with column parallel layers so that the output partitioning of one naturally feeds into the input partitioning of the other, minimizing communication.\n\n\n\nTensor Parallelism in the MLP Block\n\n\n\nIn a Transformer’s MLP (Feed-Forward) block, there are typically two linear layers with a non-linearity (e.g., GeLU) in between. Tensor parallelism applies column parallelism to the first linear layer and row parallelism to the second. The first layer splits its output features across devices, and the GeLU activation is applied locally on each device. The second layer then takes these partitioned activations as input and performs a row-parallel computation, finishing with an AllReduce to synchronize the output. This design requires only one AllReduce per MLP block in the forward pass, keeping communication overhead minimal.\n\n\n\nTensor Parallelism in the Attention Block\n\n\n\nThe multi-head attention mechanism is naturally suited for tensor parallelism because attention heads are independent computations. Each device is assigned a subset of the attention heads. The Query, Key, and Value projection matrices are split column-wise so that each device computes projections for its assigned heads. After computing attention independently, the output projection is applied as a row-parallel linear layer, with an AllReduce to combine the results. Just like the MLP block, this requires only one AllReduce per attention block in the forward pass.\n\n\n\nCommunication: The AllReduce Cost\n\n\n\nTensor parallelism relies on AllReduce operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires all-to-all communication within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.\n\n\n\nTensor vs Pipeline vs Data Parallelism\n\n\n\nEach parallelism strategy operates at a different granularity and serves a different purpose. In practice, state-of-the-art training systems like Megatron-LM combine all three in a 3D parallelism configuration: tensor parallelism within a node (leveraging fast NVLink), pipeline parallelism across nodes, and data parallelism across pipeline replicas.\n\n\n\n\n\n\n\n\n\nFeature\nData Parallelism\nPipeline Parallelism\nTensor Parallelism\n\n\n\n\nWhat is split\nData (batches)\nModel (layers)\nModel (tensors within layers)\n\n\nGranularity\nCoarse\nMedium\nFine\n\n\nModel per device\nFull copy (or sharded/FSDP)\nSubset of layers\nSubset of each layer\n\n\nCommunication\nAllReduce (gradients)\nActivations between stages\nAllReduce (activations)\n\n\nBest interconnect\nAny\nModerate bandwidth\nHigh bandwidth (NVLink)\n\n\nIdle time\nMinimal\nPipeline bubble\nMinimal\n\n\nPrimary benefit\nFaster training\nEnables larger models\nParallelizes single layers\n\n\nTypical scope\nAcross nodes\nAcross nodes\nWithin a node\n\n\n\n\n\n\nSummary\n\n\n\nTensor Parallelism splits individual weight matrices across devices, enabling parallelism at the finest granularity. Column parallel layers split output features, row parallel layers split input features, and the two are paired together within Transformer MLP and attention blocks to minimize communication. Each transformer block requires only two AllReduce operations in the forward pass. Because of its high communication requirements, tensor parallelism works best within a single node with fast interconnects. Combined with pipeline and data parallelism in a 3D parallelism setup, it is essential for training today’s largest language models.\n\n\n\nReferences\n\nShoeybi, M., et al. (2019). Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism. arXiv:1909.08053\nNarayanan, D., et al. (2021). Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM. arXiv:2104.04473\nKorthikanti, V., et al. (2022). Reducing Activation Recomputation in Large Transformer Models. arXiv:2205.05198\nManim Community Edition — Animation engine used for the visuals in this post\nKokoro TTS — Text-to-speech model used to generate the audio narration"
   },
   {
-    "objectID": "about.html#professional-background",
-    "href": "about.html#professional-background",
-    "title": "About Me",
+    "objectID": "posts/llm-from-scratch-4-leaderboard/index.html",
+    "href": "posts/llm-from-scratch-4-leaderboard/index.html",
+    "title": "Building a Language Model from Scratch - Part 4: 45 Minutes on a B200",
     "section": "",
-    "text": "With over 8 years of experience in machine learning, data science, and software engineering, I focus on:\n\nMachine Learning Engineering: Developing production-ready ML systems and scalable solutions\nRecommender Systems: Designing and optimizing recommendation algorithms\nDeep Learning: Working with neural networks, RNNs, LSTMs, and modern frameworks like TensorFlow\nData Science: Analyzing large-scale datasets and extracting actionable insights\nCloud Computing: Experience with AWS, distributed computing, and HPC environments"
+    "text": "This is the last part of Building a Language Model from Scratch. Part 1 built the tokenizer, Part 2 counted the FLOPs, Part 3 ranked the architecture choices. This one throws a stopwatch at all of it.\nEvery experiment so far ran for a fixed number of steps. That is the right way to isolate a variable, and it is not how anyone actually trains. Real training runs have a budget, and the budget is time.\nThe leaderboard task changes the objective to exactly that: one B200, at most 45 minutes wall clock, OpenWebText only, validated at context length 512 with the 32k vocabulary. Minimize validation loss. The public baseline to beat is around 3.3; competitive entries sit near 3.0.\nThe single most useful thing this taught us: under a time budget, the biggest lever was not architectural at all.\n\nThe naive attempt, and why it failed twice\nThe obvious starting point is the model from Part 3 — 4 layers, d_model 512 — pointed at OpenWebText instead of TinyStories.\n\n\n\nOpenWebText vs. TinyStories with identical architecture and step budget. The red curve (OWT) plateaus around 4.5; the green curve (TinyStories) settles near 1.5.\n\n\nIt reached roughly 4.5 validation loss and stopped improving. That is nowhere near 3.3.\nIt also failed a second time, more embarrassingly: it was validated at context length 256, not the required 512. Loss depends on how much context each prediction gets to condition on, so a number measured at 256 is not comparable to a leaderboard measured at 512. Worth stating plainly, because it is the kind of mistake that produces a confident wrong answer rather than an error message.\nThe model was simply too small for the data. TinyStories is narrow and regular; OpenWebText is scraped web text spanning every topic, register, and formatting convention on the internet. A 4-layer model can memorize the first and can only smear itself thinly across the second.\n\n\nScaling up\nThe fix was to stop being clever and build a GPT-2-small-shaped model:\n\n12 layers, d_model 768, 12 heads, d_ff 2,048 — about 134 M parameters\nPre-norm blocks with SwiGLU, RoPE, and RMSNorm — i.e. every ablation from Part 3, all of which we now know are worth keeping\nContext length 512, OpenWebText’s 32k vocabulary\nAdamW, cosine schedule with 1,000 warmup steps, gradient clipping at ℓ2-norm 1.0, lr_max 8e-4, batch size 64\n\nNothing exotic. Under a time budget, a bigger well-understood model beats a smaller model with a clever modification, because the clever modification has to be debugged and the budget does not care.\n\n\nThe lever was data loading\nThis is the part worth generalizing from.\nWe did the expected throughput work: torch.compile for kernel fusion, bfloat16 autocast, TF32 matmuls via set_float32_matmul_precision(\"high\"), and memory-mapped uint16 streaming so batches come out of the page cache rather than a Python loop. All of it helped.\nThen we changed batch size from 32 to 64 and got ≈2.2× the tokens per second.\nA 2× batch increase should not give a 2.2× throughput increase. That it did means the run was not compute-bound at batch 32 — it was bound on overhead and data loading, with the GPU idling between batches. Doubling the batch amortized that fixed per-step cost across twice the work, and the B200 finally got to do what it is for.\nThat one change is what let ~0.7 B tokens fit into 45 minutes. It was worth more than any architectural decision in this post, and we found it by looking at tokens/second rather than at loss.\nThe general lesson: before optimizing the model, check whether the accelerator is actually busy. Part 2 counted FLOPs on the assumption that FLOPs are the constraint. Under a wall-clock budget on a very fast GPU, they frequently are not — the data path is.\n\n\nThe result, stated honestly\n\n\n\nValidation loss against wall-clock time for the leaderboard run. The dashed line is the ~3.3 baseline; the run crosses the 45-minute cutoff at 3.42.\n\n\nAt the 45-minute mark: 3.42. The best single-batch estimate during the run was 3.34, and the measurement fluctuates between roughly 3.34 and 3.47.\nSome care with that number is warranted, so:\n\nIt is a single-batch estimate, not a full validation-set pass. A complete pass would give a cleaner, less noisy figure, and it is the number we would report if the budget allowed it.\n3.42 is at the ~3.3 baseline, not comfortably past it, and not in the ~3.0 competitive range.\nThe improvement over the small model is real and large — roughly 4.5 → 3.4 — but it came from scaling to a known-good configuration, which is the least surprising possible way to improve a result.\n\nThe obvious next moves would be batch 128, which is still throughput-limited by data loading, and budgeting the step count so that torch.compile’s warmup plus training finish comfortably inside 45 minutes rather than right at the edge.\n\n\nWhy the TinyStories number is not the comparison\nIt is tempting to put Part 3’s 1.5 next to this post’s 3.4 and conclude something about the model. That comparison is meaningless, for two reasons.\nThe entropy floors are different. Loss is measured in nats per token, and a random-initialized model sits at the log of the vocabulary size: ln 10,000 ≈ 9.2 for TinyStories, ln 32,000 ≈ 10.4 for OpenWebText. The two runs start from different places and are measured against different-sized prediction problems. You can see both starting points in the figures above.\nThe data is differently predictable. TinyStories is generated text with a constrained vocabulary and repetitive structure — genuinely low-entropy. OpenWebText is the open internet. Cross-entropy measures how surprising the data is under the model, so a higher number on harder data is not a worse model; it may be a much better one.\nComparing loss across tokenizers or corpora is one of the easier ways to fool yourself in this field. The only fair comparisons in this series are the ones inside a single dataset and vocabulary.\n\n\nThe infrastructure that made the sweeps possible\nNone of Part 3’s experiments would have happened at this pace without a bit of plumbing, and it is the most reusable thing here.\nTraining runs execute on Modal, which gives per-run cloud GPUs from a Python decorator, with the pre-tokenized arrays on a persistent volume so nothing re-uploads. Logging goes to Weights & Biases — train loss, validation loss, and wall-clock time every 100 steps, with the full model and optimizer config captured at init so a run is reconstructable months later.\nThe piece that mattered most was the sweep pattern. Each experiment is a local entrypoint that loops over hyperparameter values and calls train.spawn(...) per setting, so the whole learning-rate sweep launches as five concurrent GPU jobs instead of five sequential ones. The five-point LR sweep and the five-point batch-size sweep in Part 3 each cost about as much wall clock as a single run. When experiments are cheap to fan out, you run the sweep instead of guessing the hyperparameter — and that is the actual difference between having an opinion about learning rates and having a chart.\nThat is the series: a tokenizer that is really a compression algorithm, a FLOP budget that inverts as context grows, four architecture choices ranked by what they are worth, and a training run whose bottleneck turned out to be the disk. The parts everyone talks about are rarely the parts that decide the outcome.\nThe full experiment log for these runs is on Weights & Biases.\n\n\nReferences\n\nRadford, A., et al. (2019). Language Models are Unsupervised Multitask Learners — the GPT-2 architecture this run copies.\nGokaslan, A., Cohen, V. (2019). OpenWebText Corpus\nMicikevicius, P., et al. (2017). Mixed Precision Training. arXiv:1710.03740\nAnsel, J., et al. (2024). PyTorch 2: Faster Machine Learning Through Dynamic Python Bytecode Transformation and Graph Compilation — torch.compile and TorchInductor.\nHoffmann, J., et al. (2022). Training Compute-Optimal Large Language Models. arXiv:2203.15556 — on spending a fixed budget between model size and tokens.\nStanford CS 336: Language Modeling from Scratch"
   },
   {
-    "objectID": "about.html#education-certifications",
-    "href": "about.html#education-certifications",
-    "title": "About Me",
+    "objectID": "posts/llm-from-scratch-2-flops/index.html",
+    "href": "posts/llm-from-scratch-2-flops/index.html",
+    "title": "Building a Language Model from Scratch - Part 2: Where the FLOPs Actually Go",
     "section": "",
-    "text": "Master’s in Computer Science - University of Central Florida\nMachine Learning - Stanford University (Coursera)\nData Science Certifications - DataCamp, Coursera\nGRE: Quantitative 151, Verbal 151"
+    "text": "This is Part 2 of Building a Language Model from Scratch. In Part 1 we built a byte-level BPE tokenizer and found that its throughput alone puts a floor under how fast training can start. Now we count what the model itself costs.\nTake GPT-2 XL, train it the way the original paper did — 400,000 steps at batch size 1,024 — and run it on a single H100 rated at 495 TFLOP/s, achieving a respectable 50% model FLOPs utilization. That run takes 4,854 hours. About 202 days.\nNobody trains that way, which is the point. Resource accounting is what turns “we need more GPUs” from a vibe into a number, and the numbers have a shape that is not obvious until you write them down.\n\nThe pieces we are counting\nThe architecture here is a modern pre-norm decoder-only Transformer, which differs from GPT-2 as published in several ways worth naming.\nRMSNorm replaces LayerNorm: it rescales activations by their root-mean-square without subtracting the mean, dropping the bias term and one reduction. SwiGLU replaces the standard two-matrix MLP with three matrices — a gate projection, an up projection multiplied elementwise by the SiLU-activated gate, and a down projection. RoPE replaces learned positional embeddings by rotating query and key vectors by a position-dependent angle, so attention scores depend on relative position by construction. Attention itself is standard causal multi-head self-attention. And the block is pre-norm: normalization sits inside each residual branch, leaving the residual stream itself untouched from embedding to output.\nEvery one of those choices earns its keep in Part 3. Here they only matter as things that cost FLOPs.\n\n\n1.64 billion parameters, 6.56 GB to load\nParameter counting is arithmetic, but it is arithmetic that catches errors. For GPT-2 XL’s shape — vocabulary 50,257, 48 layers, d_model 1,600, 25 heads, d_ff 4,288 — the parts are: a token embedding of vocab × d_model; per block, 2 · d_model RMSNorm gains, 4 · d_model² for the Q/K/V/output projections, and 3 · d_model · d_ff for SwiGLU; a final RMSNorm; and an untied LM head of vocab × d_model.\nThat totals 1.64 billion trainable parameters, or 6.56 GB at fp32 — just to have the weights resident, before a single activation exists.\n(Real GPT-2 XL is 1.5 B. The gap is SwiGLU’s third matrix and the untied LM head, both of which this architecture adds.)\n\n\nAttention is not where the compute goes\nCounting a matmul of shape (m×n)·(n×p) as 2mnp FLOPs, and ignoring elementwise work like norms and softmax, one forward pass through one block at sequence length 1,024 breaks down like this:\n\n\n\nmatmul\nformula\nFLOPs\n\n\n\n\nQ, K, V projections\n3 · 2 · seq · d²\n15.73 B\n\n\nAttention scores QKᵀ\n2 · seq² · d\n3.36 B\n\n\nAttention × V\n2 · seq² · d\n3.36 B\n\n\nOutput projection\n2 · seq · d²\n5.24 B\n\n\nSwiGLU FFN\n6 · seq · d · d_ff\n42.15 B\n\n\nper block\n\n69.84 B\n\n\n× 48 layers\n\n3.352 T\n\n\nLM head\n2 · seq · d · vocab\n164.7 B\n\n\ntotal forward pass\n\n3.52 T\n\n\n\nGrouped, that is ~60% feed-forward, ~30% QKVO projections, ~10% attention proper. The two seq² matmuls that everyone means when they say “attention is quadratic” are the smallest line item in the block.\nThis is a useful corrective. At GPT-2-scale context lengths, a Transformer is a stack of position-wise matrix multiplies with a comparatively cheap mixing step bolted on. If you are optimizing kernels or estimating cost, the FFN is where the money is.\nAs a sanity check, the rule of thumb 2 · params · tokens gives 2 × 1.64B × 1024 ≈ 3.4 TFLOPs against our counted 3.52 — close enough to confirm the arithmetic, and a reminder that the rule of thumb is doing real work.\n\n\nBigger models make attention matter less\nRepeating the count for the four GPT-2 sizes, holding sequence length at 1,024:\n\n\n\nmodel\nd_model\nFFN\nQKVO projections\nattention scores\n\n\n\n\nsmall\n768\n54.5%\n27.3%\n18.2%\n\n\nmedium\n1,024\n57.3%\n28.4%\n14.2%\n\n\nlarge\n1,280\n58.7%\n29.5%\n11.8%\n\n\nXL\n1,600\n60.3%\n30.0%\n9.6%\n\n\n\nAttention’s share halves from small to XL. The reason is in the formulas: projections and FFN scale as d_model², while the attention matmuls scale as seq² · d_model — only linear in width. Widen the model and the quadratic-in-width terms pull away.\nSo at fixed context length, scaling up makes attention relatively cheaper. Which is the exact opposite of the thing everyone knows about attention — and the next section is why.\n\n\nBigger context makes attention everything\nNow hold GPT-2 XL fixed and push its context length from 1,024 to 16,384.\nThat is a 16× increase in sequence length. It is a 38× increase in FLOPs: 3.52 TFLOPs → 133.6 TFLOPs for a single forward pass. The projections, FFN, and LM head all scale linearly with seq (×16), but the attention score and value matmuls scale with seq² (×256), and they drag the total past linear.\nThe composition inverts completely. Attention’s share of a block goes from 9.6% to 63%:\n\n\n\nShare of per-block forward FLOPs for GPT-2 XL as context length grows from 512 to 32,768 tokens. The SwiGLU FFN starts at 63% and falls to 15%; the attention score and value matmuls start at 5% and rise to 77%, crossing the FFN at roughly 6,400 tokens.\n\n\nEverything the previous section said stops being true somewhere around a context length of 6,400 tokens. Below that, you are building a matmul machine and attention is a rounding error. Above it, you are building an attention machine and everything else is overhead.\nThis single crossover explains a decade of systems work. FlashAttention, sliding-window and sparse attention, grouped-query and multi-query attention, KV-cache quantization — none of it would be worth the complexity at context 1,024, where attention is a tenth of the budget. All of it becomes unavoidable at 16k, 128k, 1M. Long context is not “the same model, but longer.” It is a different optimization problem, and the chart above is where it changes.\n\n\nMemory: three parameters’ worth of state per parameter\nFLOPs decide how long training takes; memory decides whether it runs at all. Training with AdamW in fp32 costs 4P bytes for parameters, 4P for gradients, and 8P for the optimizer’s first and second moments — 16 bytes per parameter, before activations.\nFor GPT-2 XL that fixed cost is 26.24 GB. Adding the activation term — the per-layer norms, projections, attention scores, and SwiGLU intermediates, which scale with batch size — gives total memory as:\n16.37 · batch_size + 26.24 GB\nOn an 80 GB H100, solving 16.37 · B + 26.24 ≤ 80 gives B ≤ 3.28. The maximum batch size is 3.\nThree sequences. On a flagship datacenter GPU. That is why nobody trains a 1.6 B model on one card, and why the very first thing a real training stack reaches for is mixed precision, activation checkpointing, an optimizer whose state does not cost 8P, and — when those run out — splitting the model across devices.\nWhich is precisely where the Parallelism in AI series picks up: data parallelism and FSDP to shard that 26 GB of optimizer state, pipeline parallelism to split the 48 layers across nodes, and tensor parallelism to split the individual matmuls this post spent its time counting.\nNext: Part 3 — Training Dynamics: What Actually Moved the Loss, in which four architecture choices get ranked by how much validation loss each one is worth.\n\n\nReferences\n\nZhang, B., Sennrich, R. (2019). Root Mean Square Layer Normalization. arXiv:1910.07467\nShazeer, N. (2020). GLU Variants Improve Transformer. arXiv:2002.05202\nSu, J., et al. (2021). RoFormer: Enhanced Transformer with Rotary Position Embedding. arXiv:2104.09864\nKaplan, J., et al. (2020). Scaling Laws for Neural Language Models. arXiv:2001.08361 — the source of the 2 · params · tokens rule of thumb.\nDao, T., et al. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. arXiv:2205.14135\nLoshchilov, I., Hutter, F. (2017). Decoupled Weight Decay Regularization. arXiv:1711.05101 — AdamW.\nStanford CS 336: Language Modeling from Scratch"
   },
   {
-    "objectID": "about.html#key-projects-achievements",
-    "href": "about.html#key-projects-achievements",
-    "title": "About Me",
+    "objectID": "posts/data-parallelism/index.html",
+    "href": "posts/data-parallelism/index.html",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
     "section": "",
-    "text": "Solar Power Forecasting: Built deep learning models using RNN-LSTM for temporal-spatial energy forecasting\nHPC ML Implementation: Large-scale machine learning on supercomputers and GPU clusters\nPatent: “System and Method for Scaling Content Across Multiple Form Factors” (US10825134B2)\nHackathon Winner: Royal Bank of Canada & Microsoft Hackathon (2017)\nResearch Publications: Presented at international conferences on electrical engineering"
+    "text": "One of the core problems with current neural architecture based AI is that it needs a massive amount of computation during training and inference. To perform these computations, a.k.a. FLOPS (Floating Point Operations), we have to utilize specialized hardware like GPUs, TPUs, NPUs, etc. These hardware devices can take a single instruction and run multiple processes simultaneously. However, there is a limitation of time and memory on a single device that makes training of AI models infeasible. Hence, we leverage multiple devices to speed up our training process and handle large models."
   },
   {
-    "objectID": "about.html#technical-expertise",
-    "href": "about.html#technical-expertise",
-    "title": "About Me",
-    "section": "",
-    "text": "Programming Languages: Python, R, Java, MATLAB, JavaScript\nML Frameworks: TensorFlow, Keras, PyTorch, Scikit-learn\nData Tools: Pandas, NumPy, Apache Spark, Hadoop\nCloud Platforms: AWS, Azure\nDatabases: SQL, NoSQL"
+    "objectID": "posts/data-parallelism/index.html#example",
+    "href": "posts/data-parallelism/index.html#example",
+    "title": "Parallelism in AI - Part 1: Data Parallelism & FSDP",
+    "section": "Example",
+    "text": "Example\nSuppose we have a 7 Billion parameter model which we want to train on a 4 GPU node. In DP, we will place the entire 7B model copy on each GPU. However, in FSDP each device will only hold 1/4th of the model parameters.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism (DP)\nFSDP\n\n\n\n\nModel storage\nFull copy on every GPU\nSharded across GPUs\n\n\nParams per GPU\n7B (all)\n1.75B (1/4th)\n\n\nMemory per GPU\n~42 GB\n~10.5 GB\n\n\nFits on 40GB A100?\nNo\nYes\n\n\nCommunication\nAllReduce (gradients only)\nAllGather + ReduceScatter\n\n\nCommunication cost\nLower\nHigher (overlapped with compute)\n\n\nComplexity\nSimple\nMore complex\n\n\nScalability\nLimited by GPU memory\nScales to much larger models"
   },
   {
-    "objectID": "about.html#writing-community",
-    "href": "about.html#writing-community",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "AI With Rohan",
+    "section": "",
+    "text": "Building a Language Model from Scratch - Part 4: 45 Minutes on a B200\n\n\n\ncs336\n\ntraining\n\nsystems\n\nlanguage-models\n\n\n\nA fixed wall-clock budget turns model training into a throughput problem. The lever that mattered most was a data-loading fix, not an architecture choice.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 3: Training Dynamics\n\n\n\ncs336\n\ntraining\n\nablations\n\nlanguage-models\n\n\n\nAn LR sweep, a batch-size sweep, and four architecture ablations on TinyStories - ranked by how much validation loss each component is actually worth.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 2: Where the FLOPs Actually Go\n\n\n\ncs336\n\ntransformers\n\nperformance\n\nlanguage-models\n\n\n\nCounting every matmul in GPT-2 XL. Attention is only 10% of the compute at context 1,024 - and 63% at 16,384. The crossover is why long context is its own engineering problem.\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm\n\n\n\ncs336\n\ntokenization\n\nbpe\n\nlanguage-models\n\n\n\nByte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.\n\n\n\n\n\nAug 2, 2026\n\n\n\n\n\n\n\nParallelism in AI - Part 3: Tensor Parallelism\n\n\n\n\n\n\n\n\nMar 11, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "courses/example-course/index.html",
+    "href": "courses/example-course/index.html",
+    "title": "Example Course",
+    "section": "",
+    "text": "Replace this paragraph with a short overview of the course — instructor, source (e.g. university, MOOC link), why you took it, and what you plan to capture in these notes."
+  },
+  {
+    "objectID": "courses/example-course/index.html#lectures",
+    "href": "courses/example-course/index.html#lectures",
+    "title": "Example Course",
+    "section": "Lectures",
+    "text": "Lectures\nEach lecture below is its own page of notes. The listing is sorted by the order: field in each lecture’s frontmatter."
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-18-guest-lecture-i.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-18-guest-lecture-i.html",
+    "title": "Lecture 18: Guest lecture (I)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Guest Date: 2026-06-01\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-16-alignment-rl-algorithms.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-16-alignment-rl-algorithms.html",
+    "title": "Lecture 16: Alignment — RL algorithms",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-05-20\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-14-data-mixing-sft.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-14-data-mixing-sft.html",
+    "title": "Lecture 14: Data mixing, rewriting, SFT",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-05-13\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-12-evaluation.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-12-evaluation.html",
+    "title": "Lecture 12: Evaluation",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-05-06\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-10-inference.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-10-inference.html",
+    "title": "Lecture 10: Inference",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-04-29\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-08-parallelism-ii.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-08-parallelism-ii.html",
+    "title": "Lecture 8: Parallelism (II)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-04-22\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-06-kernels-triton-xla.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-06-kernels-triton-xla.html",
+    "title": "Lecture 6: Kernels, Triton, XLA",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-04-15\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-04-attention-alternatives-moe.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-04-attention-alternatives-moe.html",
+    "title": "Lecture 4: Attention alternatives, mixture of experts",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-04-08\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-02-pytorch-resource-accounting.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-02-pytorch-resource-accounting.html",
+    "title": "Lecture 2: PyTorch, resource accounting",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-04-01\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/index.html",
+    "href": "courses/cs336-language-modeling-from-scratch/index.html",
+    "title": "CS 336: Language Modeling from Scratch",
+    "section": "",
+    "text": "Stanford CS 336 — Language Modeling from Scratch, Spring 2026. Instructors: Tatsunori Hashimoto and Percy Liang.\nThe course walks through building a modern language model end-to-end: tokenization, architecture, optimization, parallel training, inference, scaling laws, data curation, and post-training alignment (SFT, RLHF, DPO, RL for reasoning).\nMy notes for each lecture and assignment live on the pages below. They’re placeholders until I’ve actually worked through the material."
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/index.html#lectures",
+    "href": "courses/cs336-language-modeling-from-scratch/index.html#lectures",
+    "title": "CS 336: Language Modeling from Scratch",
+    "section": "Lectures",
+    "text": "Lectures\n\n\n\n\n\n\n#\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\n1\n\n\nMar 30, 2026\n\n\nLecture 1: Overview, tokenization\n\n\n\n\n\n\n2\n\n\nApr 1, 2026\n\n\nLecture 2: PyTorch, resource accounting\n\n\n\n\n\n\n3\n\n\nApr 6, 2026\n\n\nLecture 3: Architectures, hyperparameters\n\n\n\n\n\n\n4\n\n\nApr 8, 2026\n\n\nLecture 4: Attention alternatives, mixture of experts\n\n\n\n\n\n\n5\n\n\nApr 13, 2026\n\n\nLecture 5: GPUs, TPUs\n\n\n\n\n\n\n6\n\n\nApr 15, 2026\n\n\nLecture 6: Kernels, Triton, XLA\n\n\n\n\n\n\n7\n\n\nApr 20, 2026\n\n\nLecture 7: Parallelism (I)\n\n\n\n\n\n\n8\n\n\nApr 22, 2026\n\n\nLecture 8: Parallelism (II)\n\n\n\n\n\n\n9\n\n\nApr 27, 2026\n\n\nLecture 9: Scaling laws (I)\n\n\n\n\n\n\n10\n\n\nApr 29, 2026\n\n\nLecture 10: Inference\n\n\n\n\n\n\n11\n\n\nMay 4, 2026\n\n\nLecture 11: Scaling laws (II)\n\n\n\n\n\n\n12\n\n\nMay 6, 2026\n\n\nLecture 12: Evaluation\n\n\n\n\n\n\n13\n\n\nMay 11, 2026\n\n\nLecture 13: Data sources, transformation, filtering\n\n\n\n\n\n\n14\n\n\nMay 13, 2026\n\n\nLecture 14: Data mixing, rewriting, SFT\n\n\n\n\n\n\n15\n\n\nMay 18, 2026\n\n\nLecture 15: Alignment — RLHF / DPO\n\n\n\n\n\n\n16\n\n\nMay 20, 2026\n\n\nLecture 16: Alignment — RL algorithms\n\n\n\n\n\n\n17\n\n\nMay 27, 2026\n\n\nLecture 17: Alignment — RL systems\n\n\n\n\n\n\n18\n\n\nJun 1, 2026\n\n\nLecture 18: Guest lecture (I)\n\n\n\n\n\n\n19\n\n\nJun 3, 2026\n\n\nLecture 19: Guest lecture (II)\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/index.html#assignments",
+    "href": "courses/cs336-language-modeling-from-scratch/index.html#assignments",
+    "title": "CS 336: Language Modeling from Scratch",
+    "section": "Assignments",
+    "text": "Assignments\n\n\n\n\n\n\n#\n\n\n\nDue\n\n\n\nTitle\n\n\n\n\n\n\n\n\n1\n\n\nApr 15, 2026\n\n\nAssignment 1: Basics\n\n\n\n\n\n\n2\n\n\nApr 29, 2026\n\n\nAssignment 2: Systems\n\n\n\n\n\n\n3\n\n\nMay 6, 2026\n\n\nAssignment 3: Scaling\n\n\n\n\n\n\n4\n\n\nMay 20, 2026\n\n\nAssignment 4: Data\n\n\n\n\n\n\n5\n\n\nJun 3, 2026\n\n\nAssignment 5: Alignment and Reasoning RL\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/assignment-4-data.html",
+    "href": "courses/cs336-language-modeling-from-scratch/assignment-4-data.html",
+    "title": "Assignment 4: Data",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the assignment.\nDue: 2026-05-20 Course policy: 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.\n\nProblem Summary\nTODO — paraphrase the assignment prompt in my own words.\n\n\nApproach\nTODO\n\n\nImplementation Notes\nTODO — code walkthrough, gotchas, things I’d do differently.\n\n\nResults\nTODO — numbers, plots, final model quality.\n\n\nWhat I Learned\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/assignment-2-systems.html",
+    "href": "courses/cs336-language-modeling-from-scratch/assignment-2-systems.html",
+    "title": "Assignment 2: Systems",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the assignment.\nDue: 2026-04-29 Course policy: 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.\n\nProblem Summary\nTODO — paraphrase the assignment prompt in my own words.\n\n\nApproach\nTODO\n\n\nImplementation Notes\nTODO — code walkthrough, gotchas, things I’d do differently.\n\n\nResults\nTODO — numbers, plots, final model quality.\n\n\nWhat I Learned\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses.html",
+    "href": "courses.html",
+    "title": "Courses",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nExample Course\n\n\n\nexample\n\n\n\nReplace this with the course name and a one-line summary of what it covers.\n\n\n\n\n\nApr 17, 2026\n\n1 min\n\n\n\n\n\n\nCS 336: Language Modeling from Scratch\n\n\n\ncs336\n\nstanford\n\nlanguage-models\n\n\n\nStanford CS 336 (Spring 2026). Building language models end-to-end: tokenization, architectures, training systems, scaling, data, and alignment.\n\n\n\n\n\nMar 30, 2026\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "books/example-book/chapter-01-intro.html",
+    "href": "books/example-book/chapter-01-intro.html",
+    "title": "Chapter 1: Introduction",
+    "section": "",
+    "text": "Overview\nReplace this with your notes from the chapter.\n\n\nKey Ideas\n\nPoint one.\nPoint two.\nPoint three.\n\n\n\nTakeaways\nSummarize what you learned and any follow-up threads worth pulling on."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "I regularly write about machine learning, recommender systems, and data science topics. My articles have been featured on LinkedIn and I’ve spoken at conferences like RecSys 2022."
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
   },
   {
     "objectID": "about.html#connect-with-me",
     "href": "about.html#connect-with-me",
     "title": "About Me",
     "section": "",
-    "text": "LinkedIn: linkedin.com/in/rohan3\nLocation: Dallas-Fort Worth Metroplex\n\nThis blog is built using Quarto, a powerful publishing system that allows me to write in Markdown and generate beautiful websites. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+    "text": "This blog is built using Quarto. Here, I share my thoughts on technology, programming, machine learning, and various topics that interest me.\nFeel free to explore the posts and get in touch!"
+  },
+  {
+    "objectID": "books.html",
+    "href": "books.html",
+    "title": "Books",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nExample Book\n\n\n\nexample\n\n\n\nReplace this with the book title, author, and a one-line summary.\n\n\n\n\n\nApr 17, 2026\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "books/example-book/index.html",
+    "href": "books/example-book/index.html",
+    "title": "Example Book",
+    "section": "",
+    "text": "Replace this paragraph with a short overview of the book — author, why you picked it up, and what you plan to capture in these notes."
+  },
+  {
+    "objectID": "books/example-book/index.html#chapters",
+    "href": "books/example-book/index.html#chapters",
+    "title": "Example Book",
+    "section": "Chapters",
+    "text": "Chapters\nEach chapter below is its own page of notes. The listing is sorted by the order: field in each chapter’s frontmatter."
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/assignment-1-basics.html",
+    "href": "courses/cs336-language-modeling-from-scratch/assignment-1-basics.html",
+    "title": "Assignment 1: Basics",
+    "section": "",
+    "text": "Due: 2026-04-15 Course policy: 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.\nBuild a language model end-to-end from PyTorch primitives: a byte-level BPE tokenizer, a pre-norm Transformer with RMSNorm / SwiGLU / RoPE, AdamW with a cosine schedule, a training loop with checkpointing, and a decoder with temperature and top-p sampling. Then use all of it — hyperparameter sweeps, architecture ablations, and a fixed-wall-clock leaderboard run on OpenWebText.\nI wrote this up as a four-part series on the blog. Each part is a standalone read; this page is the index and the numbers.\n\nWrite-up\n\n\n\npart\nwhat it covers\n\n\n\n\nPart 1 — The Tokenizer Is a Compression Algorithm\nWhy UTF-8 bytes, what BPE training actually costs, and reading data quality out of the vocabulary\n\n\nPart 2 — Where the FLOPs Actually Go\nParameter and FLOP accounting for GPT-2 XL; how the breakdown inverts with context length\n\n\nPart 3 — Training Dynamics\nLR and batch-size sweeps, and four architecture ablations ranked by what they’re worth\n\n\nPart 4 — 45 Minutes on a B200\nThe leaderboard run, and why the bottleneck was data loading\n\n\n\n\n\nHeadline results\nTokenizer. TinyStories at 10k vocabulary: 43.7 s, 0.18 GB peak. OpenWebText at 32k: ~35 hours, 27.67 GB peak. Compression 4.05 bytes/token (TinyStories) and 4.25 (OWT) on a 10-document sample; 4.37 across the full OWT training split. Throughput ~1.04 MB/s, which puts the Pile (825 GB) at about 9.2 days.\nResource accounting. GPT-2 XL under this architecture: 1.64 B parameters, 6.56 GB fp32. Forward pass at context 1,024: 3.52 TFLOPs, of which ~60% is the FFN, ~30% the QKVO projections, and ~10% attention proper. At context 16,384 the total is 133.6 TFLOPs and attention is 63%. Training memory is 16.37 · batch + 26.24 GB, so the maximum batch size on an 80 GB card is 3.\nTinyStories. Baseline (4 layers, d_model 512, 5,000 steps, batch 32) reaches validation loss 1.564 at lr_max 1e-3. Best overall run: 1.48 at batch 128.\n\n\n\nablation\nval loss\nΔ\n\n\n\n\nbaseline\n1.564\n—\n\n\nNoPE (no positional information)\n1.802\n+0.24\n\n\npost-norm\n1.769\n+0.21\n\n\nno RMSNorm\n1.715\n+0.15\n\n\nplain SiLU FFN instead of SwiGLU\n1.642\n+0.08\n\n\n\nOpenWebText / leaderboard. The 4-layer model plateaus near 4.5. A GPT-2-small-shaped model (12 layers, d_model 768, ~134 M parameters, context 512) reaches 3.42 at the 45-minute B200 cutoff — a single-batch estimate fluctuating between 3.34 and 3.47, essentially at the ~3.3 baseline rather than past it.\n\n\nWhat I learned\n\nBPE training is embarrassingly parallel during pre-tokenization and strictly serial in the merge loop, so adding cores stops helping at a well-defined point.\nThe longest token in a vocabulary is a free data-quality audit. OpenWebText’s is 64 bytes of mojibake.\nAttention is a tenth of the compute at context 1,024 and two-thirds at 16,384. Which of those regimes you are in determines what is worth optimizing.\nPre-norm and RoPE are each worth about three times what SwiGLU’s gate is worth, at this scale.\nRemoving RMSNorm degraded quality without destabilizing training — it changed the loss at initialization far more than it changed trainability.\nUnder a wall-clock budget, the binding constraint was data loading, not FLOPs. Batch 32 → 64 gave ~2.2× tokens/second because the GPU had been idling.\n\n\n\nReferences\n\nCourse page\nExperiment log (Weights & Biases)"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/assignment-3-scaling.html",
+    "href": "courses/cs336-language-modeling-from-scratch/assignment-3-scaling.html",
+    "title": "Assignment 3: Scaling",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the assignment.\nDue: 2026-05-06 Course policy: 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.\n\nProblem Summary\nTODO — paraphrase the assignment prompt in my own words.\n\n\nApproach\nTODO\n\n\nImplementation Notes\nTODO — code walkthrough, gotchas, things I’d do differently.\n\n\nResults\nTODO — numbers, plots, final model quality.\n\n\nWhat I Learned\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/assignment-5-alignment-reasoning.html",
+    "href": "courses/cs336-language-modeling-from-scratch/assignment-5-alignment-reasoning.html",
+    "title": "Assignment 5: Alignment and Reasoning RL",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the assignment.\nDue: 2026-06-03 Course policy: 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.\n\nProblem Summary\nTODO — paraphrase the assignment prompt in my own words.\n\n\nApproach\nTODO\n\n\nImplementation Notes\nTODO — code walkthrough, gotchas, things I’d do differently.\n\n\nResults\nTODO — numbers, plots, final model quality.\n\n\nWhat I Learned\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-01-overview-tokenization.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-01-overview-tokenization.html",
+    "title": "Lecture 1: Overview, tokenization",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-03-30\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-03-architectures-hyperparameters.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-03-architectures-hyperparameters.html",
+    "title": "Lecture 3: Architectures, hyperparameters",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-04-06\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-05-gpus-tpus.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-05-gpus-tpus.html",
+    "title": "Lecture 5: GPUs, TPUs",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-04-13\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-07-parallelism-i.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-07-parallelism-i.html",
+    "title": "Lecture 7: Parallelism (I)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-04-20\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-09-scaling-laws-i.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-09-scaling-laws-i.html",
+    "title": "Lecture 9: Scaling laws (I)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-04-27\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-11-scaling-laws-ii.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-11-scaling-laws-ii.html",
+    "title": "Lecture 11: Scaling laws (II)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-05-04\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-13-data-sources-filtering.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-13-data-sources-filtering.html",
+    "title": "Lecture 13: Data sources, transformation, filtering",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-05-11\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-15-alignment-rlhf-dpo.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-15-alignment-rlhf-dpo.html",
+    "title": "Lecture 15: Alignment — RLHF / DPO",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Tatsunori Hashimoto Date: 2026-05-18\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-17-alignment-rl-systems.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-17-alignment-rl-systems.html",
+    "title": "Lecture 17: Alignment — RL systems",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Percy Liang Date: 2026-05-27\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/cs336-language-modeling-from-scratch/lecture-19-guest-lecture-ii.html",
+    "href": "courses/cs336-language-modeling-from-scratch/lecture-19-guest-lecture-ii.html",
+    "title": "Lecture 19: Guest lecture (II)",
+    "section": "",
+    "text": "Placeholder — fill in as I work through the lecture.\nInstructor: Guest Date: 2026-06-03\n\nNotes\nTODO\n\n\nKey Ideas\n\nTODO\nTODO\nTODO\n\n\n\nQuestions / Follow-ups\n\nTODO\n\n\n\nReferences\n\nCourse page"
+  },
+  {
+    "objectID": "courses/example-course/lecture-01-intro.html",
+    "href": "courses/example-course/lecture-01-intro.html",
+    "title": "Lecture 1: Introduction",
+    "section": "",
+    "text": "Overview\nReplace this with your notes from the lecture.\n\n\nKey Ideas\n\nPoint one.\nPoint two.\nPoint three.\n\n\n\nTakeaways\nSummarize what you learned and any follow-up questions to chase down."
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nBuilding a Language Model from Scratch - Part 4: 45 Minutes on a B200\n\n\n\ncs336\n\ntraining\n\nsystems\n\nlanguage-models\n\n\n\nA fixed wall-clock budget turns model training into a throughput problem. The lever that mattered most was a data-loading fix, not an architecture choice.\n\n\n\n\n\nAug 9, 2026\n\n7 min\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 3: Training Dynamics\n\n\n\ncs336\n\ntraining\n\nablations\n\nlanguage-models\n\n\n\nAn LR sweep, a batch-size sweep, and four architecture ablations on TinyStories - ranked by how much validation loss each component is actually worth.\n\n\n\n\n\nAug 7, 2026\n\n8 min\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 2: Where the FLOPs Actually Go\n\n\n\ncs336\n\ntransformers\n\nperformance\n\nlanguage-models\n\n\n\nCounting every matmul in GPT-2 XL. Attention is only 10% of the compute at context 1,024 - and 63% at 16,384. The crossover is why long context is its own engineering problem.\n\n\n\n\n\nAug 5, 2026\n\n7 min\n\n\n\n\n\n\nBuilding a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm\n\n\n\ncs336\n\ntokenization\n\nbpe\n\nlanguage-models\n\n\n\nByte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.\n\n\n\n\n\nAug 2, 2026\n\n7 min\n\n\n\n\n\n\nParallelism in AI - Part 3: Tensor Parallelism\n\n\n\n\n\n\n\n\nMar 11, 2026\n\n7 min\n\n\n\n\n\n\nParallelism in AI - Part 2: Pipeline Parallelism\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n6 min\n\n\n\n\n\n\nParallelism in AI - Part 1: Data Parallelism & FSDP\n\n\n\n\n\n\n\n\nFeb 13, 2026\n\n6 min\n\n\n\n\n\n\nWelcome to AI With Rohan\n\n\n\ngeneral\n\n\n\nMy first blog post introducing the site\n\n\n\n\n\nSep 13, 2024\n\n1 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/llm-from-scratch-1-tokenizer/index.html",
+    "href": "posts/llm-from-scratch-1-tokenizer/index.html",
+    "title": "Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm",
+    "section": "",
+    "text": "This is Part 1 of Building a Language Model from Scratch, a four-part series working through Stanford’s CS 336 Assignment 1 — a byte-level BPE tokenizer, a Transformer LM, a training loop, and a fixed-budget leaderboard run, all written from nothing but PyTorch primitives.\nWe measured our tokenizer’s throughput at 1.04 MB/s. The Pile is 825 GB. At that rate, just turning the Pile into token IDs — no model, no gradients, no GPU — takes about 9.2 days of wall clock.\nThat number is the reason this post exists. Tokenization gets described as preprocessing, a thing you do before the interesting part starts. It is not. It is a compression algorithm with a training phase, a throughput budget, and failure modes that leak directly into everything downstream.\n\nWhy bytes, not characters\nThe first decision is what the tokenizer’s alphabet is. Unicode has ~150,000 assigned code points, so a character-level vocabulary is both enormous and full of symbols you will see once. Bytes are the alternative: 256 symbols, and every possible input is representable.\nThat still leaves which byte encoding. We train on UTF-8 for three reasons. It is variable-width, so ordinary English text costs one byte per character rather than the two or four that UTF-16 and UTF-32 spend — shorter byte sequences mean fewer merges to learn and shorter token sequences at the end. It is self-synchronizing: the high bits of each byte mark whether it starts a character or continues one, so a decoder that lands mid-stream can recover, and a corrupted region does not desynchronize the rest of the file. And it is endianness-free, so there is no byte-order mark to strip and no ambiguity about how a file was written.\nThe cost of the byte-level choice is that the tokenizer must learn, from scratch, that certain byte pairs are worth grouping. That is exactly what BPE does.\n\n\nTraining BPE: parallel up front, serial after\nTraining has two phases with completely different performance characteristics.\nPre-tokenization splits the corpus into word-like chunks on a regex, so merges can never cross a word boundary, and counts how often each chunk occurs. This is embarrassingly parallel — we chunk the file on special-token boundaries and fan the pieces out to worker processes.\nThe merge loop is the actual BPE algorithm: count adjacent byte-pair frequencies, merge the most frequent pair into a new token, repeat until the vocabulary hits its target size. Every merge changes the counts for the next one, so this phase is inherently sequential.\nOn TinyStories with a 10,000-token vocabulary, the whole thing takes 43.7 seconds and peaks at 0.18 GB of memory. Profiling splits that as:\n\n\n\nphase\nwall clock\nCPU time\n\n\n\n\npre-tokenization\n19 s\n~200 s across 12 workers\n\n\nmerge loop\n25 s\n25 s (single-threaded)\n\n\n\nPre-tokenization burns ten times more CPU than the merge loop but finishes faster, because it can spend that CPU in parallel. The merge loop cannot. That asymmetry is the whole story of BPE training performance: throwing cores at it helps right up until the merge loop, and then stops helping entirely.\nScale changes the picture dramatically. The same code on OpenWebText at a 32,000-token vocabulary ran for 126,519 seconds — about 35 hours — and peaked at 27.67 GB. Roughly 3,000× the wall clock and 150× the memory of the TinyStories run, for a corpus that is larger and a vocabulary that is only 3× bigger.\n\n\nThe vocabulary is a mirror of your corpus\nThe most useful thing we learned came from a throwaway diagnostic: print the longest token in each vocabulary.\nTinyStories’ longest token is b' accomplishment' — 15 bytes, a real English word with its leading space. That is BPE working exactly as advertised. The corpus is synthetic children’s stories with a small, clean, regular vocabulary, so the merges spend themselves on genuinely frequent words.\nOpenWebText’s longest token is 64 bytes long, and it is this:\nb'\\xc3\\x83\\xc3\\x82\\xc3\\x83\\xc3\\x82...' — the two-byte sequences for Ã and Â, alternating, sixteen times over.\nThere is no word in there. That is mojibake: the residue of a non-breaking space that was UTF-8 encoded and then decoded as Latin-1, more than once, somewhere upstream in the scraping pipeline. It appeared often enough in OpenWebText that BPE decided a 64-byte run of it deserved a dedicated slot in a 32,000-token vocabulary.\nThis is worth sitting with. BPE has no notion of meaning; it allocates vocabulary to whatever is frequent. So the vocabulary is a direct readout of your corpus’s statistics, artifacts included. If your data-cleaning pipeline leaks encoding bugs, the tokenizer will find them, and it will spend capacity memorizing them. Printing the longest few tokens after training is a five-second data-quality audit, and we now run it by default.\n\n\nWhat the compression actually buys\nCompression ratio — bytes of input per token of output — is the number that determines how much text fits in a context window and how much compute a training run costs.\n\n\n\n\n\n\n\n\n\ntokenizer\nvocab\nbytes/token\nlongest token\n\n\n\n\nTinyStories\n10,000\n4.05\nb' accomplishment' (15 bytes)\n\n\nOpenWebText\n32,000\n4.25\n64-byte mojibake run\n\n\nOpenWebText text through the TinyStories tokenizer\n10,000\n3.16\n—\n\n\n\nTwo things stand out.\nFirst, tripling the vocabulary bought almost nothing: 4.05 → 4.25 bytes per token. That is not a bug. OpenWebText is vastly more diverse than TinyStories in topic, style, and formatting, so the extra 22,000 slots go on covering variety — rare words, code, punctuation patterns, encoding artifacts — rather than on compressing any one domain harder. Vocabulary size trades coverage against compression, and past a point you are buying coverage.\nSecond, mismatched tokenizers degrade gracefully but expensively. Running OpenWebText text through the TinyStories tokenizer drops the ratio to 3.16 bytes/token: the merges it learned do not cover this text, so words fragment back toward byte-level pieces. Nothing breaks — byte-level BPE can encode any input — you just pay about 35% more tokens for the same text, forever.\nThose numbers come from a 10-document sample. Encoding the full OpenWebText training split gives a cleaner figure: 11.92 GB of text became 2,727,120,452 tokens, or 4.37 bytes/token across the whole corpus.\n\n\nStoring 2.7 billion tokens\nOnce encoded, token IDs get serialized as NumPy arrays and memory-mapped by the training loop, so the on-disk dtype matters.\nWe use uint16. Both vocabularies fit comfortably inside 0–65,535, so 16 bits is sufficient and anything wider is pure waste. At 2.73 billion tokens, that is a 5.45 GB file; uint32 would have made it 10.9 GB for identical information. The training loop never materializes it — it memory-maps the array and slices batches out of it — but halving the file still halves the page cache pressure and the transfer time to a cloud GPU.\nThat is the tokenizer: a compression algorithm whose training is half-parallel, whose vocabulary is an honest mirror of your data, and whose throughput sets a hard floor on how fast you can start training at all.\nNext: Part 2 — Where the FLOPs Actually Go, in which we count every matmul in GPT-2 XL and find that attention is not where the compute lives.\n\n\nReferences\n\nSennrich, R., Haddow, B., Birch, A. (2015). Neural Machine Translation of Rare Words with Subword Units. arXiv:1508.07909 — the original BPE-for-NLP paper.\nRadford, A., et al. (2019). Language Models are Unsupervised Multitask Learners — introduced byte-level BPE with the regex pre-tokenizer this assignment follows.\nEldan, R., Li, Y. (2023). TinyStories: How Small Can Language Models Be and Still Speak Coherent English?. arXiv:2305.07759\nGao, L., et al. (2020). The Pile: An 800GB Dataset of Diverse Text for Language Modeling. arXiv:2101.00027\nYergeau, F. (2003). RFC 3629: UTF-8, a transformation format of ISO 10646\nStanford CS 336: Language Modeling from Scratch"
+  },
+  {
+    "objectID": "posts/llm-from-scratch-3-training-dynamics/index.html",
+    "href": "posts/llm-from-scratch-3-training-dynamics/index.html",
+    "title": "Building a Language Model from Scratch - Part 3: Training Dynamics",
+    "section": "",
+    "text": "This is Part 3 of Building a Language Model from Scratch. Part 1 built the tokenizer; Part 2 counted the FLOPs. Now we actually train the thing and find out which of its parts matter.\nModern Transformer blocks are a pile of accumulated decisions: pre-norm rather than post-norm, RMSNorm rather than LayerNorm, SwiGLU rather than a plain MLP, RoPE rather than learned positions. Every one is defensible from a paper. None of them tells you how much it is worth on your model, on your data, at your scale.\nSo we measured. Everything below is the same 4-layer, d_model 512 model on TinyStories, trained for 5,000 steps with AdamW and a cosine schedule (500 warmup steps), batch size 32. The baseline lands at validation loss 1.564, and every number is a delta against it.\n\nThe learning rate sits at the edge of stability\nWe swept lr_max over a geometric grid spanning two orders of magnitude, holding everything else fixed:\n\n\n\nlr_max\nfinal val loss\n\n\n\n\n1e-4\n2.32\n\n\n3e-4\n1.88\n\n\n1e-3\n1.56\n\n\n3e-3\n1.86\n\n\n1e-2\n2.55\n\n\n\n\n\n\nLearning-rate sweep on TinyStories. The middle panel is validation loss; 1e-3 (green) settles lowest, while 1e-2 (pink) plateaus around 2.5 and never recovers.\n\n\nThe curve is U-shaped, and both arms fail for different reasons. Below the optimum, training is stable but too slow — 1e-4 is still descending cleanly at step 5,000, it simply has not arrived. Above it, steps start overshooting: 3e-3 is visibly noisier, and 1e-2 flattens out around 2.5 and stays there.\nThe best rate sits directly below where things break. This is the “edge of stability” story, and its practical form is a rule: the fastest useful learning rate is the largest one that does not degrade training. Not the largest that survives — 1e-2 survived, in that it produced a finite loss and never NaN’d. It just trained badly. Divergence is the obvious failure; quiet degradation is the one that costs you a week.\n\n\nBatch size, and an honest caveat\nNext we varied batch size from 1 to 256, scaling the learning rate as lr = 1e-3 · √(B/32) on the theory that lower-variance gradients tolerate — and want — bigger steps.\n\n\n\nbatch size\nlr_max\nfinal val loss\n\n\n\n\n1\n1.8e-4\n≈ 2.6–3.0\n\n\n16\n7.1e-4\n1.91\n\n\n64\n1.4e-3\n1.58\n\n\n128\n2.0e-3\n1.48\n\n\n256\n2.8e-3\ndiverged\n\n\n\n\n\n\nBatch-size sweep. Validation loss (middle panel) improves monotonically from batch 1 (orange, noisy, hovering near 3) down to batch 128 (magenta). The left panel shows wall-clock time, which grows accordingly.\n\n\nBatch 1 never settles — its loss oscillates roughly between 2.6 and 3.0, so quoting a single final number would be false precision. Batch 128 gives the best result of any run in this post, 1.48.\nTwo caveats keep this from being “bigger batches are better.”\nFirst, this is a fixed-steps comparison, not fixed-compute. A batch-128 step processes 128× the tokens of a batch-1 step, so a good chunk of the improvement is simply that the bigger runs did more work. The left panel of the figure makes this concrete: batch 128 took about 3,500 seconds where the baseline took under 200. Under a fixed time budget — which is exactly the constraint in Part 4 — the ranking changes.\nSecond, the √-scaling rule overshot at 256. It worked for three doublings and then handed us a learning rate that diverged. Batch-size scaling laws are heuristics that need re-tuning at their edges, not formulas you can extrapolate.\n\n\nThe ablation ranking\nNow the centerpiece. Four components, removed one at a time, each trained with the identical recipe:\n\n\n\nRemoving RoPE costs the most (+0.24 validation loss), then post-norm (+0.21), then RMSNorm (+0.15), then SwiGLU’s gate (+0.08).\n\n\n\n\n\nremoved\nval loss\nΔ vs baseline\n\n\n\n\nRoPE → NoPE (no positional information)\n1.802\n+0.24\n\n\npre-norm → post-norm\n1.769\n+0.21\n\n\nRMSNorm → none\n1.715\n+0.15\n\n\nSwiGLU → plain SiLU FFN\n1.642\n+0.08\n\n\n\nThe ordering is the interesting part. Positional information and residual-stream design each cost roughly three times what the FFN’s gating mechanism does. SwiGLU is the change people talk about most — it is a named architectural feature with a paper behind it — and at this scale it is the smallest effect of the four. Meanwhile pre-norm, which is close to a formatting detail in how you write the block, is worth 0.21.\nOne methodological note on the SwiGLU comparison: swapping the gated FFN (d_ff 1,344, three matrices) for a plain SiLU FFN (d_ff 2,048, two matrices) keeps parameter count nearly identical — about 2.06 M vs 2.10 M per block. So the +0.08 is attributable to gating itself, not to a smaller model.\n\n\nThe two results worth dwelling on\nThe headline numbers are less interesting than two things that happened around them.\nRemoving all normalization did not destabilize training. We expected the no-RMSNorm run to need a lower learning rate; textbook framing is that normalization is what keeps deep networks trainable. It trained fine at the baseline 1e-3 and simply landed 0.15 worse. What normalization bought here was quality, not survival.\nThe one place instability shows is at initialization. The no-norm run starts from a validation loss around 17, where a well-scaled random init should start near ln 10,000 ≈ 9.2 — the entropy of a uniform distribution over the vocabulary. Without RMSNorm the activation magnitudes at init are simply wrong, and the first few hundred steps get spent fixing that instead of learning. Normalization is doing real work; at four layers, that work is worth 0.15 rather than the difference between training and not.\nNoPE degrades but does not collapse. Self-attention is permutation-invariant, so with no positional signal at all the model should not be able to distinguish “dog bites man” from “man bites dog”. It should be much worse than +0.24.\nThe reason it is not: causal masking leaks position. Token i attends to exactly i previous tokens, so the size of each position’s visible prefix is itself a positional signal, and a decoder-only model can learn to read it. This is why NoPE results exist in the literature at all, and it is a genuinely non-obvious property of decoder-only architectures — encoder models with bidirectional attention have no such fallback.\n\n\n\n\n\n\nNoteIndividual ablation curves\n\n\n\n\n\nEach ablation run on its own axes, from the Weights & Biases sweep. The comparison against baseline is the table and chart above; these show that every ablated variant trained cleanly to convergence rather than falling over.\nThe no-RMSNorm run is the one to look at — note the y-axis starting near 17 rather than 9.\n\n\n\nNo RMSNorm anywhere.\n\n\n\n\n\nPost-norm instead of pre-norm.\n\n\n\n\n\nNoPE — no positional embedding.\n\n\n\n\n\nPlain SiLU FFN instead of SwiGLU.\n\n\n\n\n\n\n\nWhat 1.5 nats of loss sounds like\nNumbers are abstract; here is the baseline model, prompted with “Once upon a time” at temperature 0.8 and top-p 0.9, sampling to the first end-of-text token:\n\nOnce upon a time, there was a beautiful fairy. She lived in a big, pretty garden. The fairy had a pretty garden with many flowers. She liked to look at the flowers and the bugs. One day, the fairy met a boy. The boy was deaf. He could not hear her. The fairy wanted to help the boy. She said, “Please let me play with you. I will teach you how to be nice.” The boy was happy. He started to play with the fairy. They played and had fun. The fairy and the boy became good friends. They played together every day. And they lived happily ever after.\n\nThat is a 4-layer model, trained for under four minutes. It is grammatical, correctly punctuates dialogue, keeps a consistent cast, and produces a complete arc — setup, complication, resolution, ending — then stops on its own. The repetition (“a pretty garden with many flowers”, right after “a big, pretty garden”) is the tell, and so is the fact that the boy’s deafness is introduced and then quietly dropped.\nDecoding parameters change the character of the failure more than its severity. At temperature 0.1 the model collapses toward greedy decoding and repeats itself outright. At 1.0 it invents freely and loses the thread — non-sequiturs, characters that appear once. Temperature 0.8 with top-p 0.9 is the setting where diversity and coherence are both tolerable, and it is what produced the sample above.\nThe honest framing is that TinyStories is a narrow, regular distribution, and a small model can fit it well. The next post is what happens when the data stops cooperating.\nNext: Part 4 — 45 Minutes on a B200, in which a fixed wall-clock budget turns training into a throughput problem and the biggest lever turns out not to be the architecture.\n\n\nReferences\n\nZhang, B., Sennrich, R. (2019). Root Mean Square Layer Normalization. arXiv:1910.07467\nXiong, R., et al. (2020). On Layer Normalization in the Transformer Architecture. arXiv:2002.04745 — the pre-norm vs. post-norm analysis.\nShazeer, N. (2020). GLU Variants Improve Transformer. arXiv:2002.05202\nSu, J., et al. (2021). RoFormer: Enhanced Transformer with Rotary Position Embedding. arXiv:2104.09864\nHaviv, A., et al. (2022). Transformer Language Models without Positional Encodings Still Learn Positional Information. arXiv:2203.16634 — why NoPE works at all.\nHoltzman, A., et al. (2019). The Curious Case of Neural Text Degeneration. arXiv:1904.09751 — top-p sampling.\nCohen, J., et al. (2021). Gradient Descent on Neural Networks Typically Occurs at the Edge of Stability. arXiv:2103.00065\nStanford CS 336: Language Modeling from Scratch"
+  },
+  {
+    "objectID": "posts/pipeline-parallelism/index.html",
+    "href": "posts/pipeline-parallelism/index.html",
+    "title": "Parallelism in AI - Part 2: Pipeline Parallelism",
+    "section": "",
+    "text": "What is Pipeline Parallelism?\n\n\n\nIn Part 1, we saw how Data Parallelism replicates the entire model across devices and splits the data. But what happens when a model is too large to fit on a single device, even with FSDP? Pipeline Parallelism takes a different approach. Instead of replicating the model, it partitions the model itself across multiple devices. Each device holds a subset of the model’s layers (called a stage), and data flows through the stages sequentially, much like an assembly line in a factory.\n\n\n\nHow Pipeline Parallelism Works\n\n\n\nIn pipeline parallelism, the model is split into consecutive groups of layers, and each group is assigned to a different device. During the forward pass, each device processes its layers and sends the activations to the next device. During the backward pass, gradients flow in the reverse direction. This allows us to train models that are too large for a single device’s memory, since each device only needs to store a fraction of the total parameters.\n\n\n\nNaive Pipeline Parallelism\n\n\n\nThe simplest form of pipeline parallelism processes one mini-batch at a time through all stages sequentially. While straightforward, this approach has a major drawback: at any given time, only one device is actively computing while all others sit idle. This means device utilization is roughly 1/N, where N is the number of stages. The idle time wasted across devices is known as the pipeline bubble.\n\n\n\nThe Bubble Problem\n\n\n\nThe pipeline bubble is the key inefficiency of naive pipeline parallelism. If we have 4 stages and it takes time t for each stage to process a mini-batch, then during the forward pass, stage 1 finishes at t but stage 4 doesn’t start until 3t. The total idle time across all devices grows linearly with the number of stages. Reducing this bubble is the primary goal of more advanced pipeline scheduling strategies.\n\n\n\nMicro-batching (GPipe)\n\n\n\nGPipe addresses the bubble problem by splitting each mini-batch into smaller micro-batches. Instead of waiting for an entire mini-batch to pass through all stages, GPipe injects multiple micro-batches into the pipeline in quick succession. This way, while stage 2 is processing micro-batch 1, stage 1 can already start on micro-batch 2. The more micro-batches we use, the smaller the bubble becomes relative to the total computation. Gradients are accumulated across all micro-batches and synchronized at the end.\n\n\n\n1F1B Schedule (PipeDream)\n\n\n\nThe 1F1B (One Forward, One Backward) schedule, introduced by PipeDream, further improves pipeline efficiency. After an initial warm-up phase where forward passes fill the pipeline, each device alternates between one forward pass and one backward pass. This interleaved scheduling reduces peak memory usage compared to GPipe, since devices don’t need to store activations for all micro-batches simultaneously, while maintaining similar pipeline utilization.\n\n\n\nPipeline Parallelism vs Data Parallelism\n\n\n\nPipeline parallelism and data parallelism solve different problems and are often used together. Data parallelism replicates the model and splits the data, which is ideal when the model fits on a single device but you want faster training. Pipeline parallelism splits the model across devices, which is necessary when the model is too large for one device. In practice, large-scale training combines both: the model is partitioned across pipeline stages, and each stage is replicated across multiple devices using data parallelism.\n\n\n\n\n\n\n\n\nFeature\nData Parallelism\nPipeline Parallelism\n\n\n\n\nWhat is split\nData (batches)\nModel (layers)\n\n\nModel per device\nFull copy\nSubset of layers\n\n\nPrimary benefit\nFaster training\nEnables larger models\n\n\nCommunication\nAllReduce (gradients)\nActivations between stages\n\n\nIdle time\nMinimal\nPipeline bubble\n\n\nMemory per device\nFull model + optimizer\nPartial model + optimizer\n\n\nScalability\nLimited by model size\nLimited by number of layers\n\n\n\n\n\n\nSummary\n\n\n\nPipeline Parallelism enables training of models too large for a single device by partitioning layers across multiple devices. The naive approach suffers from the pipeline bubble, where devices sit idle waiting for data to flow through the pipeline. GPipe reduces this bubble through micro-batching, and PipeDream’s 1F1B schedule further optimizes memory usage with interleaved forward and backward passes. Combined with data parallelism, pipeline parallelism is a core building block for training today’s largest AI models.\n\n\n\nReferences\n\nHuang, Y., et al. (2019). GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism. NeurIPS 2019\nNarayanan, D., et al. (2019). PipeDream: Generalized Pipeline Parallelism for DNN Training. SOSP 2019\nNarayanan, D., et al. (2021). Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM. arXiv:2104.04473\nManim Community Edition, the animation engine used for the visuals in this post"
+  },
+  {
+    "objectID": "posts/welcome-post/index.html",
+    "href": "posts/welcome-post/index.html",
+    "title": "Welcome to AI With Rohan",
+    "section": "",
+    "text": "This is my first blog post on this new site built with Quarto.\n\n\nI’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
+  },
+  {
+    "objectID": "posts/welcome-post/index.html#what-to-expect",
+    "href": "posts/welcome-post/index.html#what-to-expect",
+    "title": "Welcome to AI With Rohan",
+    "section": "",
+    "text": "I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development\nStay tuned for more content!"
   }
 ]

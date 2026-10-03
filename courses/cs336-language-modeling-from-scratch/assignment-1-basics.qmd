@@ -1,0 +1,56 @@
+---
+title: "Assignment 1: Basics"
+author: "Rohan Rajput"
+date: "2026-04-15"
+order: 1
+description: "Tokenizer, model architecture, optimizer, and a minimal training loop."
+categories: [cs336, assignment]
+---
+
+**Due:** 2026-04-15
+**Course policy:** 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.
+
+Build a language model end-to-end from PyTorch primitives: a byte-level BPE tokenizer, a pre-norm Transformer with RMSNorm / SwiGLU / RoPE, AdamW with a cosine schedule, a training loop with checkpointing, and a decoder with temperature and top-p sampling. Then use all of it — hyperparameter sweeps, architecture ablations, and a fixed-wall-clock leaderboard run on OpenWebText.
+
+I wrote this up as a four-part series on the blog. Each part is a standalone read; this page is the index and the numbers.
+
+# Write-up
+
+| part | what it covers |
+|---|---|
+| [Part 1 — The Tokenizer Is a Compression Algorithm](../../posts/llm-from-scratch-1-tokenizer/index.qmd) | Why UTF-8 bytes, what BPE training actually costs, and reading data quality out of the vocabulary |
+| [Part 2 — Where the FLOPs Actually Go](../../posts/llm-from-scratch-2-flops/index.qmd) | Parameter and FLOP accounting for GPT-2 XL; how the breakdown inverts with context length |
+| [Part 3 — Training Dynamics](../../posts/llm-from-scratch-3-training-dynamics/index.qmd) | LR and batch-size sweeps, and four architecture ablations ranked by what they're worth |
+| [Part 4 — 45 Minutes on a B200](../../posts/llm-from-scratch-4-leaderboard/index.qmd) | The leaderboard run, and why the bottleneck was data loading |
+
+# Headline results
+
+**Tokenizer.** TinyStories at 10k vocabulary: 43.7 s, 0.18 GB peak. OpenWebText at 32k: ~35 hours, 27.67 GB peak. Compression 4.05 bytes/token (TinyStories) and 4.25 (OWT) on a 10-document sample; 4.37 across the full OWT training split. Throughput ~1.04 MB/s, which puts the Pile (825 GB) at about 9.2 days.
+
+**Resource accounting.** GPT-2 XL under this architecture: 1.64 B parameters, 6.56 GB fp32. Forward pass at context 1,024: 3.52 TFLOPs, of which ~60% is the FFN, ~30% the QKVO projections, and ~10% attention proper. At context 16,384 the total is 133.6 TFLOPs and attention is 63%. Training memory is `16.37 · batch + 26.24` GB, so the maximum batch size on an 80 GB card is 3.
+
+**TinyStories.** Baseline (4 layers, `d_model` 512, 5,000 steps, batch 32) reaches validation loss 1.564 at `lr_max` 1e-3. Best overall run: 1.48 at batch 128.
+
+| ablation | val loss | Δ |
+|---|---|---|
+| baseline | 1.564 | — |
+| NoPE (no positional information) | 1.802 | +0.24 |
+| post-norm | 1.769 | +0.21 |
+| no RMSNorm | 1.715 | +0.15 |
+| plain SiLU FFN instead of SwiGLU | 1.642 | +0.08 |
+
+**OpenWebText / leaderboard.** The 4-layer model plateaus near 4.5. A GPT-2-small-shaped model (12 layers, `d_model` 768, ~134 M parameters, context 512) reaches **3.42** at the 45-minute B200 cutoff — a single-batch estimate fluctuating between 3.34 and 3.47, essentially at the ~3.3 baseline rather than past it.
+
+# What I learned
+
+- BPE training is embarrassingly parallel during pre-tokenization and strictly serial in the merge loop, so adding cores stops helping at a well-defined point.
+- The longest token in a vocabulary is a free data-quality audit. OpenWebText's is 64 bytes of mojibake.
+- Attention is a tenth of the compute at context 1,024 and two-thirds at 16,384. Which of those regimes you are in determines what is worth optimizing.
+- Pre-norm and RoPE are each worth about three times what SwiGLU's gate is worth, at this scale.
+- Removing RMSNorm degraded quality without destabilizing training — it changed the loss at initialization far more than it changed trainability.
+- Under a wall-clock budget, the binding constraint was data loading, not FLOPs. Batch 32 → 64 gave ~2.2× tokens/second because the GPU had been idling.
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)
+- [Experiment log (Weights & Biases)](https://wandb.ai/rohan0401/cs336-tinystories/reports/Experiment-Log--VmlldzoxNzUyMDYxMw)

@@ -1,0 +1,31 @@
+---
+title: "Lecture 3: Architectures, hyperparameters"
+author: "Rohan Rajput"
+date: "2026-04-06"
+order: 3
+description: "Transformer variants and the hyperparameters that matter."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Tatsunori Hashimoto
+**Date:** 2026-04-06
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

@@ -1,0 +1,31 @@
+---
+title: "Lecture 2: PyTorch, resource accounting"
+author: "Rohan Rajput"
+date: "2026-04-01"
+order: 2
+description: "PyTorch mechanics and a careful accounting of compute and memory costs."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Percy Liang
+**Date:** 2026-04-01
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

@@ -1,0 +1,37 @@
+---
+title: "Assignment 4: Data"
+author: "Rohan Rajput"
+date: "2026-05-20"
+order: 4
+description: "Processing Common Crawl — filtering and deduplication pipelines."
+categories: [cs336, assignment]
+---
+
+*Placeholder — fill in as I work through the assignment.*
+
+**Due:** 2026-05-20
+**Course policy:** 6 late days total, max 3 per assignment. Collaboration in study groups allowed; individual submission required.
+
+# Problem Summary
+
+_TODO — paraphrase the assignment prompt in my own words._
+
+# Approach
+
+_TODO_
+
+# Implementation Notes
+
+_TODO — code walkthrough, gotchas, things I'd do differently._
+
+# Results
+
+_TODO — numbers, plots, final model quality._
+
+# What I Learned
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

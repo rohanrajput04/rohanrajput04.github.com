@@ -1,0 +1,31 @@
+---
+title: "Lecture 19: Guest lecture (II)"
+author: "Rohan Rajput"
+date: "2026-06-03"
+order: 19
+description: "Second guest lecture."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Guest
+**Date:** 2026-06-03
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

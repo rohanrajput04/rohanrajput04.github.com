@@ -1,0 +1,92 @@
+---
+title: "Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm"
+author: "Rohan Rajput"
+date: "2026-08-02"
+description: "Byte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is."
+categories: [cs336, tokenization, bpe, language-models]
+toc: true
+---
+
+*This is Part 1 of **Building a Language Model from Scratch**, a four-part series working through Stanford's [CS 336](https://cs336.stanford.edu/) Assignment 1 — a byte-level BPE tokenizer, a Transformer LM, a training loop, and a fixed-budget leaderboard run, all written from nothing but PyTorch primitives.*
+
+We measured our tokenizer's throughput at **1.04 MB/s**. The Pile is 825 GB. At that rate, just turning the Pile into token IDs — no model, no gradients, no GPU — takes about **9.2 days** of wall clock.
+
+That number is the reason this post exists. Tokenization gets described as preprocessing, a thing you do before the interesting part starts. It is not. It is a compression algorithm with a training phase, a throughput budget, and failure modes that leak directly into everything downstream.
+
+# Why bytes, not characters
+
+The first decision is what the tokenizer's alphabet is. Unicode has ~150,000 assigned code points, so a character-level vocabulary is both enormous and full of symbols you will see once. Bytes are the alternative: 256 symbols, and every possible input is representable.
+
+That still leaves *which* byte encoding. We train on **UTF-8** for three reasons. It is variable-width, so ordinary English text costs one byte per character rather than the two or four that UTF-16 and UTF-32 spend — shorter byte sequences mean fewer merges to learn and shorter token sequences at the end. It is self-synchronizing: the high bits of each byte mark whether it starts a character or continues one, so a decoder that lands mid-stream can recover, and a corrupted region does not desynchronize the rest of the file. And it is endianness-free, so there is no byte-order mark to strip and no ambiguity about how a file was written.
+
+The cost of the byte-level choice is that the tokenizer must learn, from scratch, that certain byte pairs are worth grouping. That is exactly what BPE does.
+
+# Training BPE: parallel up front, serial after
+
+Training has two phases with completely different performance characteristics.
+
+**Pre-tokenization** splits the corpus into word-like chunks on a regex, so merges can never cross a word boundary, and counts how often each chunk occurs. This is embarrassingly parallel — we chunk the file on special-token boundaries and fan the pieces out to worker processes.
+
+**The merge loop** is the actual BPE algorithm: count adjacent byte-pair frequencies, merge the most frequent pair into a new token, repeat until the vocabulary hits its target size. Every merge changes the counts for the next one, so this phase is inherently sequential.
+
+On TinyStories with a 10,000-token vocabulary, the whole thing takes **43.7 seconds** and peaks at **0.18 GB** of memory. Profiling splits that as:
+
+| phase | wall clock | CPU time |
+|---|---|---|
+| pre-tokenization | 19 s | ~200 s across 12 workers |
+| merge loop | 25 s | 25 s (single-threaded) |
+
+Pre-tokenization burns ten times more CPU than the merge loop but finishes faster, because it can spend that CPU in parallel. The merge loop cannot. That asymmetry is the whole story of BPE training performance: throwing cores at it helps right up until the merge loop, and then stops helping entirely.
+
+Scale changes the picture dramatically. The same code on OpenWebText at a 32,000-token vocabulary ran for **126,519 seconds — about 35 hours — and peaked at 27.67 GB**. Roughly 3,000× the wall clock and 150× the memory of the TinyStories run, for a corpus that is larger and a vocabulary that is only 3× bigger.
+
+# The vocabulary is a mirror of your corpus
+
+The most useful thing we learned came from a throwaway diagnostic: print the longest token in each vocabulary.
+
+TinyStories' longest token is `b' accomplishment'` — 15 bytes, a real English word with its leading space. That is BPE working exactly as advertised. The corpus is synthetic children's stories with a small, clean, regular vocabulary, so the merges spend themselves on genuinely frequent words.
+
+OpenWebText's longest token is 64 bytes long, and it is this:
+
+`b'\xc3\x83\xc3\x82\xc3\x83\xc3\x82...'` — the two-byte sequences for `Ã` and `Â`, alternating, sixteen times over.
+
+There is no word in there. That is **mojibake**: the residue of a non-breaking space that was UTF-8 encoded and then decoded as Latin-1, more than once, somewhere upstream in the scraping pipeline. It appeared often enough in OpenWebText that BPE decided a 64-byte run of it deserved a dedicated slot in a 32,000-token vocabulary.
+
+This is worth sitting with. BPE has no notion of meaning; it allocates vocabulary to whatever is frequent. So the vocabulary is a direct readout of your corpus's statistics, artifacts included. If your data-cleaning pipeline leaks encoding bugs, the tokenizer will find them, and it will spend capacity memorizing them. Printing the longest few tokens after training is a five-second data-quality audit, and we now run it by default.
+
+# What the compression actually buys
+
+Compression ratio — bytes of input per token of output — is the number that determines how much text fits in a context window and how much compute a training run costs.
+
+| tokenizer | vocab | bytes/token | longest token |
+|---|---|---|---|
+| TinyStories | 10,000 | 4.05 | `b' accomplishment'` (15 bytes) |
+| OpenWebText | 32,000 | 4.25 | 64-byte mojibake run |
+| OpenWebText text through the **TinyStories** tokenizer | 10,000 | 3.16 | — |
+
+Two things stand out.
+
+First, tripling the vocabulary bought almost nothing: 4.05 → 4.25 bytes per token. That is not a bug. OpenWebText is vastly more diverse than TinyStories in topic, style, and formatting, so the extra 22,000 slots go on *covering variety* — rare words, code, punctuation patterns, encoding artifacts — rather than on compressing any one domain harder. Vocabulary size trades coverage against compression, and past a point you are buying coverage.
+
+Second, mismatched tokenizers degrade gracefully but expensively. Running OpenWebText text through the TinyStories tokenizer drops the ratio to 3.16 bytes/token: the merges it learned do not cover this text, so words fragment back toward byte-level pieces. Nothing breaks — byte-level BPE can encode any input — you just pay about 35% more tokens for the same text, forever.
+
+Those numbers come from a 10-document sample. Encoding the full OpenWebText training split gives a cleaner figure: 11.92 GB of text became 2,727,120,452 tokens, or **4.37 bytes/token** across the whole corpus.
+
+# Storing 2.7 billion tokens
+
+Once encoded, token IDs get serialized as NumPy arrays and memory-mapped by the training loop, so the on-disk dtype matters.
+
+We use `uint16`. Both vocabularies fit comfortably inside 0–65,535, so 16 bits is sufficient and anything wider is pure waste. At 2.73 billion tokens, that is a **5.45 GB** file; `uint32` would have made it 10.9 GB for identical information. The training loop never materializes it — it memory-maps the array and slices batches out of it — but halving the file still halves the page cache pressure and the transfer time to a cloud GPU.
+
+That is the tokenizer: a compression algorithm whose training is half-parallel, whose vocabulary is an honest mirror of your data, and whose throughput sets a hard floor on how fast you can start training at all.
+
+*Next: [Part 2 — Where the FLOPs Actually Go](../llm-from-scratch-2-flops/index.qmd), in which we count every matmul in GPT-2 XL and find that attention is not where the compute lives.*
+
+# References
+
+- Sennrich, R., Haddow, B., Birch, A. (2015). [Neural Machine Translation of Rare Words with Subword Units](https://arxiv.org/abs/1508.07909). *arXiv:1508.07909* — the original BPE-for-NLP paper.
+- Radford, A., et al. (2019). [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — introduced byte-level BPE with the regex pre-tokenizer this assignment follows.
+- Eldan, R., Li, Y. (2023). [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). *arXiv:2305.07759*
+- Gao, L., et al. (2020). [The Pile: An 800GB Dataset of Diverse Text for Language Modeling](https://arxiv.org/abs/2101.00027). *arXiv:2101.00027*
+- Yergeau, F. (2003). [RFC 3629: UTF-8, a transformation format of ISO 10646](https://datatracker.ietf.org/doc/html/rfc3629)
+- [Stanford CS 336: Language Modeling from Scratch](https://cs336.stanford.edu/)

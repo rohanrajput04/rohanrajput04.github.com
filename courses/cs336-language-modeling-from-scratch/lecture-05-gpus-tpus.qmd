@@ -1,0 +1,31 @@
+---
+title: "Lecture 5: GPUs, TPUs"
+author: "Rohan Rajput"
+date: "2026-04-13"
+order: 5
+description: "Hardware characteristics that drive training performance."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Tatsunori Hashimoto
+**Date:** 2026-04-13
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

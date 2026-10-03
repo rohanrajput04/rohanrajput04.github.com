@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>AI With Rohan</title>
+<link>https://rohanrajput04.github.io/courses.html</link>
+<atom:link href="https://rohanrajput04.github.io/courses.xml" rel="self" type="application/rss+xml"/>
+<description>Deep dives into AI, ML, and distributed systems</description>
+<generator>quarto-1.8.24</generator>
+<lastBuildDate>Fri, 17 Apr 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Example Course</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/courses/example-course/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Replace this paragraph with a short overview of the course — instructor, source (e.g.&nbsp;university, MOOC link), why you took it, and what you plan to capture in these notes.</p>
+<section id="lectures" class="level2">
+<h2 class="anchored" data-anchor-id="lectures">Lectures</h2>
+<p>Each lecture below is its own page of notes. The listing is sorted by the <code>order:</code> field in each lecture’s frontmatter.</p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="ZXhhbXBsZQ==" data-listing-date-sort="1776402000000" data-listing-file-modified-sort="1777864645413" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="27">
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../../courses/example-course/lecture-01-intro.html" class="no-external">Lecture 1: Introduction</a>
+</h3>
+<div class="delink listing-description"><a href="../../courses/example-course/lecture-01-intro.html" class="no-external">
+<p>Kick-off lecture — replace with a one-line summary of what the lecture covered.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../../courses/example-course/lecture-01-intro.html" class="no-external">
+<div class="listing-reading-time">1 min</div>
+<div class="metadata-value listing-order">
+1
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div> ]]></description>
+  <category>example</category>
+  <guid>https://rohanrajput04.github.io/courses/example-course/</guid>
+  <pubDate>Fri, 17 Apr 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>CS 336: Language Modeling from Scratch</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/courses/cs336-language-modeling-from-scratch/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Stanford <a href="https://cs336.stanford.edu/">CS 336 — Language Modeling from Scratch</a>, Spring 2026. Instructors: Tatsunori Hashimoto and Percy Liang.</p>
+<p>The course walks through building a modern language model end-to-end: tokenization, architecture, optimization, parallel training, inference, scaling laws, data curation, and post-training alignment (SFT, RLHF, DPO, RL for reasoning).</p>
+<p>My notes for each lecture and assignment live on the pages below. They’re placeholders until I’ve actually worked through the material.</p>
+<section id="lectures" class="level2">
+<h2 class="anchored" data-anchor-id="lectures">Lectures</h2>
+<div id="listing-lectures" class="quarto-listing quarto-listing-container-table">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+
+<th>
+#
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Title
+</th>
+
+</tr>
+</thead>
+<tbody class="list">
+
+<tr data-index="0" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1774846800000" data-listing-file-modified-sort="1777864645419" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 1: Overview, tokenization" data-listing-filename-sort="lecture-01-overview-tokenization.qmd">
+<td>
+<span class="listing-order">1</span>
+</td>
+<td>
+<span class="listing-date">Mar 30, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-01-overview-tokenization.html" class="title listing-title">Lecture 1: Overview, tokenization</a>
+</td>
+
+</tr>
+
+<tr data-index="1" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1775019600000" data-listing-file-modified-sort="1777864645423" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 2: PyTorch, resource accounting" data-listing-filename-sort="lecture-02-pytorch-resource-accounting.qmd">
+<td>
+<span class="listing-order">2</span>
+</td>
+<td>
+<span class="listing-date">Apr 1, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-02-pytorch-resource-accounting.html" class="title listing-title">Lecture 2: PyTorch, resource accounting</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1775451600000" data-listing-file-modified-sort="1777864645421" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 3: Architectures, hyperparameters" data-listing-filename-sort="lecture-03-architectures-hyperparameters.qmd">
+<td>
+<span class="listing-order">3</span>
+</td>
+<td>
+<span class="listing-date">Apr 6, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-03-architectures-hyperparameters.html" class="title listing-title">Lecture 3: Architectures, hyperparameters</a>
+</td>
+
+</tr>
+
+<tr data-index="3" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1775624400000" data-listing-file-modified-sort="1777864645417" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 4: Attention alternatives, mixture of experts" data-listing-filename-sort="lecture-04-attention-alternatives-moe.qmd">
+<td>
+<span class="listing-order">4</span>
+</td>
+<td>
+<span class="listing-date">Apr 8, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-04-attention-alternatives-moe.html" class="title listing-title">Lecture 4: Attention alternatives, mixture of experts</a>
+</td>
+
+</tr>
+
+<tr data-index="4" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1776056400000" data-listing-file-modified-sort="1777864645424" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 5: GPUs, TPUs" data-listing-filename-sort="lecture-05-gpus-tpus.qmd">
+<td>
+<span class="listing-order">5</span>
+</td>
+<td>
+<span class="listing-date">Apr 13, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-05-gpus-tpus.html" class="title listing-title">Lecture 5: GPUs, TPUs</a>
+</td>
+
+</tr>
+
+<tr data-index="5" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1776229200000" data-listing-file-modified-sort="1777864645422" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 6: Kernels, Triton, XLA" data-listing-filename-sort="lecture-06-kernels-triton-xla.qmd">
+<td>
+<span class="listing-order">6</span>
+</td>
+<td>
+<span class="listing-date">Apr 15, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-06-kernels-triton-xla.html" class="title listing-title">Lecture 6: Kernels, Triton, XLA</a>
+</td>
+
+</tr>
+
+<tr data-index="6" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1776661200000" data-listing-file-modified-sort="1777864645421" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 7: Parallelism (I)" data-listing-filename-sort="lecture-07-parallelism-i.qmd">
+<td>
+<span class="listing-order">7</span>
+</td>
+<td>
+<span class="listing-date">Apr 20, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-07-parallelism-i.html" class="title listing-title">Lecture 7: Parallelism (I)</a>
+</td>
+
+</tr>
+
+<tr data-index="7" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1776834000000" data-listing-file-modified-sort="1777864645425" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 8: Parallelism (II)" data-listing-filename-sort="lecture-08-parallelism-ii.qmd">
+<td>
+<span class="listing-order">8</span>
+</td>
+<td>
+<span class="listing-date">Apr 22, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-08-parallelism-ii.html" class="title listing-title">Lecture 8: Parallelism (II)</a>
+</td>
+
+</tr>
+
+<tr data-index="8" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1777266000000" data-listing-file-modified-sort="1777864645418" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 9: Scaling laws (I)" data-listing-filename-sort="lecture-09-scaling-laws-i.qmd">
+<td>
+<span class="listing-order">9</span>
+</td>
+<td>
+<span class="listing-date">Apr 27, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-09-scaling-laws-i.html" class="title listing-title">Lecture 9: Scaling laws (I)</a>
+</td>
+
+</tr>
+
+<tr data-index="9" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1777438800000" data-listing-file-modified-sort="1777864645421" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 10: Inference" data-listing-filename-sort="lecture-10-inference.qmd">
+<td>
+<span class="listing-order">10</span>
+</td>
+<td>
+<span class="listing-date">Apr 29, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-10-inference.html" class="title listing-title">Lecture 10: Inference</a>
+</td>
+
+</tr>
+
+<tr data-index="10" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1777870800000" data-listing-file-modified-sort="1777864645425" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 11: Scaling laws (II)" data-listing-filename-sort="lecture-11-scaling-laws-ii.qmd">
+<td>
+<span class="listing-order">11</span>
+</td>
+<td>
+<span class="listing-date">May 4, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-11-scaling-laws-ii.html" class="title listing-title">Lecture 11: Scaling laws (II)</a>
+</td>
+
+</tr>
+
+<tr data-index="11" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1778043600000" data-listing-file-modified-sort="1777864645420" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 12: Evaluation" data-listing-filename-sort="lecture-12-evaluation.qmd">
+<td>
+<span class="listing-order">12</span>
+</td>
+<td>
+<span class="listing-date">May 6, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-12-evaluation.html" class="title listing-title">Lecture 12: Evaluation</a>
+</td>
+
+</tr>
+
+<tr data-index="12" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1778475600000" data-listing-file-modified-sort="1777864645416" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 13: Data sources, transformation, filtering" data-listing-filename-sort="lecture-13-data-sources-filtering.qmd">
+<td>
+<span class="listing-order">13</span>
+</td>
+<td>
+<span class="listing-date">May 11, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-13-data-sources-filtering.html" class="title listing-title">Lecture 13: Data sources, transformation, filtering</a>
+</td>
+
+</tr>
+
+<tr data-index="13" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1778648400000" data-listing-file-modified-sort="1777864645423" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 14: Data mixing, rewriting, SFT" data-listing-filename-sort="lecture-14-data-mixing-sft.qmd">
+<td>
+<span class="listing-order">14</span>
+</td>
+<td>
+<span class="listing-date">May 13, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-14-data-mixing-sft.html" class="title listing-title">Lecture 14: Data mixing, rewriting, SFT</a>
+</td>
+
+</tr>
+
+<tr data-index="14" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1779080400000" data-listing-file-modified-sort="1777864645419" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 15: Alignment — RLHF / DPO" data-listing-filename-sort="lecture-15-alignment-rlhf-dpo.qmd">
+<td>
+<span class="listing-order">15</span>
+</td>
+<td>
+<span class="listing-date">May 18, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-15-alignment-rlhf-dpo.html" class="title listing-title">Lecture 15: Alignment — RLHF / DPO</a>
+</td>
+
+</tr>
+
+<tr data-index="15" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1779253200000" data-listing-file-modified-sort="1777864645420" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 16: Alignment — RL algorithms" data-listing-filename-sort="lecture-16-alignment-rl-algorithms.qmd">
+<td>
+<span class="listing-order">16</span>
+</td>
+<td>
+<span class="listing-date">May 20, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-16-alignment-rl-algorithms.html" class="title listing-title">Lecture 16: Alignment — RL algorithms</a>
+</td>
+
+</tr>
+
+<tr data-index="16" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1779858000000" data-listing-file-modified-sort="1777864645416" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25" data-listing-title-sort="Lecture 17: Alignment — RL systems" data-listing-filename-sort="lecture-17-alignment-rl-systems.qmd">
+<td>
+<span class="listing-order">17</span>
+</td>
+<td>
+<span class="listing-date">May 27, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-17-alignment-rl-systems.html" class="title listing-title">Lecture 17: Alignment — RL systems</a>
+</td>
+
+</tr>
+
+<tr data-index="17" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1780290000000" data-listing-file-modified-sort="1777864645415" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="24" data-listing-title-sort="Lecture 18: Guest lecture (I)" data-listing-filename-sort="lecture-18-guest-lecture-i.qmd">
+<td>
+<span class="listing-order">18</span>
+</td>
+<td>
+<span class="listing-date">Jun 1, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-18-guest-lecture-i.html" class="title listing-title">Lecture 18: Guest lecture (I)</a>
+</td>
+
+</tr>
+
+<tr data-index="18" data-categories="Y3MzMzYlMkNsZWN0dXJl" data-listing-date-sort="1780462800000" data-listing-file-modified-sort="1777864645422" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="24" data-listing-title-sort="Lecture 19: Guest lecture (II)" data-listing-filename-sort="lecture-19-guest-lecture-ii.qmd">
+<td>
+<span class="listing-order">19</span>
+</td>
+<td>
+<span class="listing-date">Jun 3, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/lecture-19-guest-lecture-ii.html" class="title listing-title">Lecture 19: Guest lecture (II)</a>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+</section>
+<section id="assignments" class="level2">
+<h2 class="anchored" data-anchor-id="assignments">Assignments</h2>
+<div id="listing-assignments" class="quarto-listing quarto-listing-container-table">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+
+<th>
+#
+</th>
+
+<th>
+Due
+</th>
+
+<th>
+Title
+</th>
+
+</tr>
+</thead>
+<tbody class="list">
+
+<tr data-index="0" data-categories="Y3MzMzYlMkNhc3NpZ25tZW50" data-listing-date-sort="1776229200000" data-listing-file-modified-sort="1786290392010" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="564" data-listing-title-sort="Assignment 1: Basics" data-listing-filename-sort="assignment-1-basics.qmd">
+<td>
+<span class="listing-order">1</span>
+</td>
+<td>
+<span class="listing-date">Apr 15, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/assignment-1-basics.html" class="title listing-title">Assignment 1: Basics</a>
+</td>
+
+</tr>
+
+<tr data-index="1" data-categories="Y3MzMzYlMkNhc3NpZ25tZW50" data-listing-date-sort="1777438800000" data-listing-file-modified-sort="1777864645424" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Assignment 2: Systems" data-listing-filename-sort="assignment-2-systems.qmd">
+<td>
+<span class="listing-order">2</span>
+</td>
+<td>
+<span class="listing-date">Apr 29, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/assignment-2-systems.html" class="title listing-title">Assignment 2: Systems</a>
+</td>
+
+</tr>
+
+<tr data-index="2" data-categories="Y3MzMzYlMkNhc3NpZ25tZW50" data-listing-date-sort="1778043600000" data-listing-file-modified-sort="1777864645416" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Assignment 3: Scaling" data-listing-filename-sort="assignment-3-scaling.qmd">
+<td>
+<span class="listing-order">3</span>
+</td>
+<td>
+<span class="listing-date">May 6, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/assignment-3-scaling.html" class="title listing-title">Assignment 3: Scaling</a>
+</td>
+
+</tr>
+
+<tr data-index="3" data-categories="Y3MzMzYlMkNhc3NpZ25tZW50" data-listing-date-sort="1779253200000" data-listing-file-modified-sort="1777864645418" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Assignment 4: Data" data-listing-filename-sort="assignment-4-data.qmd">
+<td>
+<span class="listing-order">4</span>
+</td>
+<td>
+<span class="listing-date">May 20, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/assignment-4-data.html" class="title listing-title">Assignment 4: Data</a>
+</td>
+
+</tr>
+
+<tr data-index="4" data-categories="Y3MzMzYlMkNhc3NpZ25tZW50" data-listing-date-sort="1780462800000" data-listing-file-modified-sort="1777864645421" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Assignment 5: Alignment and Reasoning RL" data-listing-filename-sort="assignment-5-alignment-reasoning.qmd">
+<td>
+<span class="listing-order">5</span>
+</td>
+<td>
+<span class="listing-date">Jun 3, 2026</span>
+</td>
+<td>
+<a href="../../courses/cs336-language-modeling-from-scratch/assignment-5-alignment-reasoning.html" class="title listing-title">Assignment 5: Alignment and Reasoning RL</a>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+
+
+
+</section>
+
+ ]]></description>
+  <category>cs336</category>
+  <category>stanford</category>
+  <category>language-models</category>
+  <guid>https://rohanrajput04.github.io/courses/cs336-language-modeling-from-scratch/</guid>
+  <pubDate>Mon, 30 Mar 2026 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
