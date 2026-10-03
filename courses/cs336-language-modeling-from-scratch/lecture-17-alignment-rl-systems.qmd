@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 17: Alignment — RL systems"
+author: "Rohan Rajput"
+date: "2026-05-27"
+order: 17
+description: "Systems side of RL training at scale."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Percy Liang
+**Date:** 2026-05-27
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

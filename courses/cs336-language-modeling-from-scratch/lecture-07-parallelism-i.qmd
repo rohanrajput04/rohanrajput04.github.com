@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 7: Parallelism (I)"
+author: "Rohan Rajput"
+date: "2026-04-20"
+order: 7
+description: "Data / pipeline / tensor parallelism intuitions and tradeoffs."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Percy Liang
+**Date:** 2026-04-20
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

@@ -1,10 +1,15 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "**/*.qmd"
+    - "!CLAUDE.md"
+    - "!walkthrough.qmd"
+    - "!notes/_template/"
 
 website:
   title: "AI With Rohan"
-  description: "Deep dives into AI, ML, and distributed systems"
+  description: "Visual deep dives into how large AI systems are trained, served, and turned into agents."
   site-url: "https://rohanrajput04.github.io"
 
   # SEO: Open Graph & Twitter Cards
@@ -23,20 +28,35 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: series.qmd
+        text: Series
       - href: posts.qmd
-        text: Blog
+        text: All posts
+      - href: courses.qmd
+        text: Courses
+      # Enable Notes once notes.qmd is no longer a draft and notes/ has real entries.
+      # - href: notes.qmd
+      #   text: Notes
+      # Enable Talks once talks.qmd has real entries (remove `draft: true` there too).
+      # - href: talks.qmd
+      #   text: Talks
       - href: about.qmd
         text: About
     right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/rohan3
+        aria-label: LinkedIn
       - icon: github
         href: https://github.com/rohanrajput04
+        aria-label: GitHub
       - icon: rss
         href: posts.xml
+        aria-label: RSS
 
   # Footer
   page-footer:
-    left: "Built with [Quarto](https://quarto.org)"
-    right: "&copy; 2024 AI With Rohan"
+    left: "Built with [Quarto](https://quarto.org) · Views are my own"
+    right: "&copy; 2024–2026 Rohan Rajput"
 
 format:
   html:

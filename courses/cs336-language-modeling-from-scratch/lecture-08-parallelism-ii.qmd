@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 8: Parallelism (II)"
+author: "Rohan Rajput"
+date: "2026-04-22"
+order: 8
+description: "Advanced parallelism: FSDP, sequence parallelism, 3D combinations."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Tatsunori Hashimoto
+**Date:** 2026-04-22
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

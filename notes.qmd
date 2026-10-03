@@ -1,0 +1,14 @@
+---
+title: "Notes"
+draft: true
+listing:
+  contents: "notes/*/index.qmd"
+  sort: "date desc"
+  type: table
+  sort-ui: true
+  filter-ui: true
+  fields: [date, title, description, categories]
+page-layout: full
+---
+
+Short notes on papers, tools, and ideas in agentic AI.

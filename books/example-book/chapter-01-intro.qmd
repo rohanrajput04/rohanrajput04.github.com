@@ -1,0 +1,23 @@
+---
+draft: true
+title: "Chapter 1: Introduction"
+author: "Rohan Rajput"
+date: "2026-04-17"
+order: 1
+description: "Opening chapter — replace with a one-line summary of what the chapter covered."
+categories: [example]
+---
+
+# Overview
+
+Replace this with your notes from the chapter.
+
+# Key Ideas
+
+- Point one.
+- Point two.
+- Point three.
+
+# Takeaways
+
+Summarize what you learned and any follow-up threads worth pulling on.

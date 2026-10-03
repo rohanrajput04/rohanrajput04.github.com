@@ -1,27 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rohanrajput04.github.io/walkthrough.html</loc>
-    <lastmod>2025-09-11T02:22:00.568Z</lastmod>
+    <loc>https://rohanrajput04.github.io/posts/pipeline-parallelism/index.html</loc>
+    <lastmod>2026-10-03T11:50:59.939Z</lastmod>
   </url>
   <url>
-    <loc>https://rohanrajput04.github.io/about.html</loc>
-    <lastmod>2026-03-12T00:21:33.381Z</lastmod>
+    <loc>https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/index.html</loc>
+    <lastmod>2026-08-09T15:45:14.947Z</lastmod>
   </url>
   <url>
-    <loc>https://rohanrajput04.github.io/posts/welcome-post.html</loc>
-    <lastmod>2026-03-12T00:21:33.384Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rohanrajput04.github.io/index.html</loc>
-    <lastmod>2026-03-12T00:39:20.571Z</lastmod>
+    <loc>https://rohanrajput04.github.io/posts/llm-from-scratch-1-tokenizer/index.html</loc>
+    <lastmod>2026-08-09T15:43:01.269Z</lastmod>
   </url>
   <url>
     <loc>https://rohanrajput04.github.io/posts.html</loc>
     <lastmod>2026-03-12T00:39:20.571Z</lastmod>
   </url>
   <url>
+    <loc>https://rohanrajput04.github.io/index.html</loc>
+    <lastmod>2026-10-03T11:51:47.562Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/courses/cs336-language-modeling-from-scratch/index.html</loc>
+    <lastmod>2026-10-03T11:50:59.939Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/courses.html</loc>
+    <lastmod>2026-05-04T03:17:25.432Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/about.html</loc>
+    <lastmod>2026-10-03T11:56:54.142Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/courses/cs336-language-modeling-from-scratch/assignment-1-basics.html</loc>
+    <lastmod>2026-08-09T15:46:32.010Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/posts/data-parallelism/index.html</loc>
+    <lastmod>2026-10-03T11:50:59.939Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/posts/llm-from-scratch-2-flops/index.html</loc>
+    <lastmod>2026-08-09T15:43:58.249Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/posts/llm-from-scratch-4-leaderboard/index.html</loc>
+    <lastmod>2026-08-09T15:46:09.268Z</lastmod>
+  </url>
+  <url>
     <loc>https://rohanrajput04.github.io/posts/tensor-parallelism/index.html</loc>
-    <lastmod>2026-03-12T00:42:54.799Z</lastmod>
+    <lastmod>2026-10-03T11:50:59.939Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rohanrajput04.github.io/series.html</loc>
+    <lastmod>2026-10-03T11:56:54.142Z</lastmod>
   </url>
 </urlset>

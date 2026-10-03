@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 15: Alignment — RLHF / DPO"
+author: "Rohan Rajput"
+date: "2026-05-18"
+order: 15
+description: "Post-training with preference data via RLHF and DPO."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Tatsunori Hashimoto
+**Date:** 2026-05-18
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

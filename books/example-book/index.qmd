@@ -1,0 +1,21 @@
+---
+draft: true
+title: "Example Book"
+author: "Rohan Rajput"
+date: "2026-04-17"
+description: "Replace this with the book title, author, and a one-line summary."
+categories: [example]
+listing:
+  contents: "*.qmd"
+  sort: "order asc"
+  type: default
+  sort-ui: false
+  filter-ui: false
+  fields: [order, title, description, reading-time]
+---
+
+Replace this paragraph with a short overview of the book — author, why you picked it up, and what you plan to capture in these notes.
+
+## Chapters
+
+Each chapter below is its own page of notes. The listing is sorted by the `order:` field in each chapter's frontmatter.

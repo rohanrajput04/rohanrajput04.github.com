@@ -1,0 +1,26 @@
+---
+title: "Note title"
+description: "One sentence on what this note covers."
+date: "2026-01-01"
+categories: [note, agents]
+---
+
+<!-- Copy this folder to notes/<slug>/ and aim for 400–900 words. -->
+
+**Takeaway:** one sentence that someone could remember without reading the rest.
+
+## Context
+
+What is this about, and why did I look at it?
+
+## What matters
+
+The few details that actually change how you'd build or evaluate something.
+
+## So what?
+
+What I'd do differently, or what to watch next.
+
+## References
+
+- [Reference title](https://example.com)

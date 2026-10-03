@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Rohan Rajput">
+<meta name="dcterms.date" content="2026-08-02">
+<meta name="description" content="Byte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.">
 
-<title>Hello, Quarto – AI With Rohan</title>
+<title>Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm – AI With Rohan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,66 +23,31 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-45e8e462cd760eca75dbd85b13f1b7a2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6d66bb246098060941dc6f5dff282878.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-01eb03202637ef4d1baf4413660be9bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,42 +75,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Hello, Quarto – AI With Rohan">
-<meta property="og:description" content="Deep dives into AI, ML, and distributed systems">
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm – AI With Rohan">
+<meta property="og:description" content="Byte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.">
 <meta property="og:site_name" content="AI With Rohan">
-<meta name="twitter:title" content="Hello, Quarto – AI With Rohan">
-<meta name="twitter:description" content="Deep dives into AI, ML, and distributed systems">
+<meta name="twitter:title" content="Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm – AI With Rohan">
+<meta name="twitter:description" content="Byte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -315,9 +254,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">AI With Rohan</span>
     </a>
   </div>
@@ -328,26 +267,39 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../series.html"> 
+<span class="menu-text">Series</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">All posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../courses.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rohanrajput04"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rohan3"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="https://github.com/rohanrajput04"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../posts.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -368,10 +320,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#markdown" id="toc-markdown" class="nav-link active" data-scroll-target="#markdown">Markdown</a></li>
-  <li><a href="#code-cell" id="toc-code-cell" class="nav-link" data-scroll-target="#code-cell">Code Cell</a></li>
-  <li><a href="#equation" id="toc-equation" class="nav-link" data-scroll-target="#equation">Equation</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#why-bytes-not-characters" id="toc-why-bytes-not-characters" class="nav-link active" data-scroll-target="#why-bytes-not-characters">Why bytes, not characters</a></li>
+  <li><a href="#training-bpe-parallel-up-front-serial-after" id="toc-training-bpe-parallel-up-front-serial-after" class="nav-link" data-scroll-target="#training-bpe-parallel-up-front-serial-after">Training BPE: parallel up front, serial after</a></li>
+  <li><a href="#the-vocabulary-is-a-mirror-of-your-corpus" id="toc-the-vocabulary-is-a-mirror-of-your-corpus" class="nav-link" data-scroll-target="#the-vocabulary-is-a-mirror-of-your-corpus">The vocabulary is a mirror of your corpus</a></li>
+  <li><a href="#what-the-compression-actually-buys" id="toc-what-the-compression-actually-buys" class="nav-link" data-scroll-target="#what-the-compression-actually-buys">What the compression actually buys</a></li>
+  <li><a href="#storing-2.7-billion-tokens" id="toc-storing-2.7-billion-tokens" class="nav-link" data-scroll-target="#storing-2.7-billion-tokens">Storing 2.7 billion tokens</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -381,14 +335,37 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hello, Quarto</h1>
-</div>
+<h1 class="title">Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">cs336</div>
+    <div class="quarto-category">tokenization</div>
+    <div class="quarto-category">bpe</div>
+    <div class="quarto-category">language-models</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    Byte-level BPE from scratch: why UTF-8, what the merge loop actually costs, and why the longest token in your vocabulary tells you how clean your corpus is.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Rohan Rajput </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 2, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -398,57 +375,115 @@ window.Quarto = {
 </header>
 
 
-<section id="markdown" class="level2">
-<h2 class="anchored" data-anchor-id="markdown">Markdown</h2>
-<p>Markdown is an easy to read and write text format:</p>
+<p><em>This is Part 1 of <strong>Building a Language Model from Scratch</strong>, a four-part series working through Stanford’s <a href="https://cs336.stanford.edu/">CS 336</a> Assignment 1 — a byte-level BPE tokenizer, a Transformer LM, a training loop, and a fixed-budget leaderboard run, all written from nothing but PyTorch primitives.</em></p>
+<p>We measured our tokenizer’s throughput at <strong>1.04 MB/s</strong>. The Pile is 825 GB. At that rate, just turning the Pile into token IDs — no model, no gradients, no GPU — takes about <strong>9.2 days</strong> of wall clock.</p>
+<p>That number is the reason this post exists. Tokenization gets described as preprocessing, a thing you do before the interesting part starts. It is not. It is a compression algorithm with a training phase, a throughput budget, and failure modes that leak directly into everything downstream.</p>
+<section id="why-bytes-not-characters" class="level1">
+<h1>Why bytes, not characters</h1>
+<p>The first decision is what the tokenizer’s alphabet is. Unicode has ~150,000 assigned code points, so a character-level vocabulary is both enormous and full of symbols you will see once. Bytes are the alternative: 256 symbols, and every possible input is representable.</p>
+<p>That still leaves <em>which</em> byte encoding. We train on <strong>UTF-8</strong> for three reasons. It is variable-width, so ordinary English text costs one byte per character rather than the two or four that UTF-16 and UTF-32 spend — shorter byte sequences mean fewer merges to learn and shorter token sequences at the end. It is self-synchronizing: the high bits of each byte mark whether it starts a character or continues one, so a decoder that lands mid-stream can recover, and a corrupted region does not desynchronize the rest of the file. And it is endianness-free, so there is no byte-order mark to strip and no ambiguity about how a file was written.</p>
+<p>The cost of the byte-level choice is that the tokenizer must learn, from scratch, that certain byte pairs are worth grouping. That is exactly what BPE does.</p>
+</section>
+<section id="training-bpe-parallel-up-front-serial-after" class="level1">
+<h1>Training BPE: parallel up front, serial after</h1>
+<p>Training has two phases with completely different performance characteristics.</p>
+<p><strong>Pre-tokenization</strong> splits the corpus into word-like chunks on a regex, so merges can never cross a word boundary, and counts how often each chunk occurs. This is embarrassingly parallel — we chunk the file on special-token boundaries and fan the pieces out to worker processes.</p>
+<p><strong>The merge loop</strong> is the actual BPE algorithm: count adjacent byte-pair frequencies, merge the most frequent pair into a new token, repeat until the vocabulary hits its target size. Every merge changes the counts for the next one, so this phase is inherently sequential.</p>
+<p>On TinyStories with a 10,000-token vocabulary, the whole thing takes <strong>43.7 seconds</strong> and peaks at <strong>0.18 GB</strong> of memory. Profiling splits that as:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>phase</th>
+<th>wall clock</th>
+<th>CPU time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pre-tokenization</td>
+<td>19 s</td>
+<td>~200 s across 12 workers</td>
+</tr>
+<tr class="even">
+<td>merge loop</td>
+<td>25 s</td>
+<td>25 s (single-threaded)</td>
+</tr>
+</tbody>
+</table>
+<p>Pre-tokenization burns ten times more CPU than the merge loop but finishes faster, because it can spend that CPU in parallel. The merge loop cannot. That asymmetry is the whole story of BPE training performance: throwing cores at it helps right up until the merge loop, and then stops helping entirely.</p>
+<p>Scale changes the picture dramatically. The same code on OpenWebText at a 32,000-token vocabulary ran for <strong>126,519 seconds — about 35 hours — and peaked at 27.67 GB</strong>. Roughly 3,000× the wall clock and 150× the memory of the TinyStories run, for a corpus that is larger and a vocabulary that is only 3× bigger.</p>
+</section>
+<section id="the-vocabulary-is-a-mirror-of-your-corpus" class="level1">
+<h1>The vocabulary is a mirror of your corpus</h1>
+<p>The most useful thing we learned came from a throwaway diagnostic: print the longest token in each vocabulary.</p>
+<p>TinyStories’ longest token is <code>b' accomplishment'</code> — 15 bytes, a real English word with its leading space. That is BPE working exactly as advertised. The corpus is synthetic children’s stories with a small, clean, regular vocabulary, so the merges spend themselves on genuinely frequent words.</p>
+<p>OpenWebText’s longest token is 64 bytes long, and it is this:</p>
+<p><code>b'\xc3\x83\xc3\x82\xc3\x83\xc3\x82...'</code> — the two-byte sequences for <code>Ã</code> and <code>Â</code>, alternating, sixteen times over.</p>
+<p>There is no word in there. That is <strong>mojibake</strong>: the residue of a non-breaking space that was UTF-8 encoded and then decoded as Latin-1, more than once, somewhere upstream in the scraping pipeline. It appeared often enough in OpenWebText that BPE decided a 64-byte run of it deserved a dedicated slot in a 32,000-token vocabulary.</p>
+<p>This is worth sitting with. BPE has no notion of meaning; it allocates vocabulary to whatever is frequent. So the vocabulary is a direct readout of your corpus’s statistics, artifacts included. If your data-cleaning pipeline leaks encoding bugs, the tokenizer will find them, and it will spend capacity memorizing them. Printing the longest few tokens after training is a five-second data-quality audit, and we now run it by default.</p>
+</section>
+<section id="what-the-compression-actually-buys" class="level1">
+<h1>What the compression actually buys</h1>
+<p>Compression ratio — bytes of input per token of output — is the number that determines how much text fits in a context window and how much compute a training run costs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>tokenizer</th>
+<th>vocab</th>
+<th>bytes/token</th>
+<th>longest token</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TinyStories</td>
+<td>10,000</td>
+<td>4.05</td>
+<td><code>b' accomplishment'</code> (15 bytes)</td>
+</tr>
+<tr class="even">
+<td>OpenWebText</td>
+<td>32,000</td>
+<td>4.25</td>
+<td>64-byte mojibake run</td>
+</tr>
+<tr class="odd">
+<td>OpenWebText text through the <strong>TinyStories</strong> tokenizer</td>
+<td>10,000</td>
+<td>3.16</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Two things stand out.</p>
+<p>First, tripling the vocabulary bought almost nothing: 4.05 → 4.25 bytes per token. That is not a bug. OpenWebText is vastly more diverse than TinyStories in topic, style, and formatting, so the extra 22,000 slots go on <em>covering variety</em> — rare words, code, punctuation patterns, encoding artifacts — rather than on compressing any one domain harder. Vocabulary size trades coverage against compression, and past a point you are buying coverage.</p>
+<p>Second, mismatched tokenizers degrade gracefully but expensively. Running OpenWebText text through the TinyStories tokenizer drops the ratio to 3.16 bytes/token: the merges it learned do not cover this text, so words fragment back toward byte-level pieces. Nothing breaks — byte-level BPE can encode any input — you just pay about 35% more tokens for the same text, forever.</p>
+<p>Those numbers come from a 10-document sample. Encoding the full OpenWebText training split gives a cleaner figure: 11.92 GB of text became 2,727,120,452 tokens, or <strong>4.37 bytes/token</strong> across the whole corpus.</p>
+</section>
+<section id="storing-2.7-billion-tokens" class="level1">
+<h1>Storing 2.7 billion tokens</h1>
+<p>Once encoded, token IDs get serialized as NumPy arrays and memory-mapped by the training loop, so the on-disk dtype matters.</p>
+<p>We use <code>uint16</code>. Both vocabularies fit comfortably inside 0–65,535, so 16 bits is sufficient and anything wider is pure waste. At 2.73 billion tokens, that is a <strong>5.45 GB</strong> file; <code>uint32</code> would have made it 10.9 GB for identical information. The training loop never materializes it — it memory-maps the array and slices batches out of it — but halving the file still halves the page cache pressure and the transfer time to a cloud GPU.</p>
+<p>That is the tokenizer: a compression algorithm whose training is half-parallel, whose vocabulary is an honest mirror of your data, and whose throughput sets a hard floor on how fast you can start training at all.</p>
+<p><em>Next: <a href="../../posts/llm-from-scratch-2-flops/index.html">Part 2 — Where the FLOPs Actually Go</a>, in which we count every matmul in GPT-2 XL and find that attention is not where the compute lives.</em></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li>It’s <em>plain text</em> so works well with version control</li>
-<li>It can be <strong>rendered</strong> into HTML, PDF, and more</li>
-<li>Learn more at: <a href="https://quarto.org/docs/authoring/" class="uri">https://quarto.org/docs/authoring/</a></li>
+<li>Sennrich, R., Haddow, B., Birch, A. (2015). <a href="https://arxiv.org/abs/1508.07909">Neural Machine Translation of Rare Words with Subword Units</a>. <em>arXiv:1508.07909</em> — the original BPE-for-NLP paper.</li>
+<li>Radford, A., et al.&nbsp;(2019). <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a> — introduced byte-level BPE with the regex pre-tokenizer this assignment follows.</li>
+<li>Eldan, R., Li, Y. (2023). <a href="https://arxiv.org/abs/2305.07759">TinyStories: How Small Can Language Models Be and Still Speak Coherent English?</a>. <em>arXiv:2305.07759</em></li>
+<li>Gao, L., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2101.00027">The Pile: An 800GB Dataset of Diverse Text for Language Modeling</a>. <em>arXiv:2101.00027</em></li>
+<li>Yergeau, F. (2003). <a href="https://datatracker.ietf.org/doc/html/rfc3629">RFC 3629: UTF-8, a transformation format of ISO 10646</a></li>
+<li><a href="https://cs336.stanford.edu/">Stanford CS 336: Language Modeling from Scratch</a></li>
 </ul>
-</section>
-<section id="code-cell" class="level2">
-<h2 class="anchored" data-anchor-id="code-cell">Code Cell</h2>
-<p>Here is a Python code cell:</p>
-<div id="b290897a" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2"></a>os.cpu_count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>12</code></pre>
-</div>
-</div>
-</section>
-<section id="equation" class="level2">
-<h2 class="anchored" data-anchor-id="equation">Equation</h2>
-<p>Use LaTeX to write equations:</p>
-<p><span class="math display">\[
-\chi' = \sum_{i=1}^n k_i s_i^2
-\]</span></p>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="84c315f6" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    <span class="bu">print</span>(i<span class="op">+</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>1
-2
-3
-4
-5
-6
-7
-8
-9
-10</code></pre>
-</div>
-</div>
 
 
 </section>
@@ -871,13 +906,13 @@ window.Quarto = {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built with <a href="https://quarto.org">Quarto</a></p>
+<p>Built with <a href="https://quarto.org">Quarto</a> · Views are my own</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>© 2024 AI With Rohan</p>
+<p>© 2024–2026 Rohan Rajput</p>
 </div>
   </div>
 </footer>

@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 18: Guest lecture (I)"
+author: "Rohan Rajput"
+date: "2026-06-01"
+order: 18
+description: "First guest lecture."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Guest
+**Date:** 2026-06-01
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

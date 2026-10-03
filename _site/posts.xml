@@ -8,9 +8,655 @@
 <title>AI With Rohan</title>
 <link>https://rohanrajput04.github.io/posts.html</link>
 <atom:link href="https://rohanrajput04.github.io/posts.xml" rel="self" type="application/rss+xml"/>
-<description>Deep dives into AI, ML, and distributed systems</description>
+<description>Visual deep dives into how large AI systems are trained, served, and turned into agents.</description>
 <generator>quarto-1.8.24</generator>
-<lastBuildDate>Wed, 11 Mar 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 09 Aug 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Building a Language Model from Scratch - Part 4: 45 Minutes on a B200</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/posts/llm-from-scratch-4-leaderboard/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>This is the last part of <strong>Building a Language Model from Scratch</strong>. <a href="../../posts/llm-from-scratch-1-tokenizer/index.html">Part 1</a> built the tokenizer, <a href="../../posts/llm-from-scratch-2-flops/index.html">Part 2</a> counted the FLOPs, <a href="../../posts/llm-from-scratch-3-training-dynamics/index.html">Part 3</a> ranked the architecture choices. This one throws a stopwatch at all of it.</em></p>
+<p>Every experiment so far ran for a fixed number of steps. That is the right way to isolate a variable, and it is not how anyone actually trains. Real training runs have a budget, and the budget is time.</p>
+<p>The leaderboard task changes the objective to exactly that: <strong>one B200, at most 45 minutes wall clock, OpenWebText only, validated at context length 512 with the 32k vocabulary.</strong> Minimize validation loss. The public baseline to beat is around 3.3; competitive entries sit near 3.0.</p>
+<p>The single most useful thing this taught us: under a time budget, the biggest lever was not architectural at all.</p>
+<section id="the-naive-attempt-and-why-it-failed-twice" class="level1">
+<h1>The naive attempt, and why it failed twice</h1>
+<p>The obvious starting point is the model from Part 3 — 4 layers, <code>d_model</code> 512 — pointed at OpenWebText instead of TinyStories.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-4-leaderboard/figures/owt_curve.png" class="img-fluid figure-img"></p>
+<figcaption>OpenWebText vs.&nbsp;TinyStories with identical architecture and step budget. The red curve (OWT) plateaus around 4.5; the green curve (TinyStories) settles near 1.5.</figcaption>
+</figure>
+</div>
+<p>It reached roughly <strong>4.5</strong> validation loss and stopped improving. That is nowhere near 3.3.</p>
+<p>It also failed a second time, more embarrassingly: it was validated at context length 256, not the required 512. Loss depends on how much context each prediction gets to condition on, so a number measured at 256 is not comparable to a leaderboard measured at 512. Worth stating plainly, because it is the kind of mistake that produces a confident wrong answer rather than an error message.</p>
+<p>The model was simply too small for the data. TinyStories is narrow and regular; OpenWebText is scraped web text spanning every topic, register, and formatting convention on the internet. A 4-layer model can memorize the first and can only smear itself thinly across the second.</p>
+</section>
+<section id="scaling-up" class="level1">
+<h1>Scaling up</h1>
+<p>The fix was to stop being clever and build a GPT-2-small-shaped model:</p>
+<ul>
+<li>12 layers, <code>d_model</code> 768, 12 heads, <code>d_ff</code> 2,048 — about <strong>134 M parameters</strong></li>
+<li>Pre-norm blocks with SwiGLU, RoPE, and RMSNorm — i.e.&nbsp;every ablation from Part 3, all of which we now know are worth keeping</li>
+<li>Context length 512, OpenWebText’s 32k vocabulary</li>
+<li>AdamW, cosine schedule with 1,000 warmup steps, gradient clipping at ℓ2-norm 1.0, <code>lr_max</code> 8e-4, batch size 64</li>
+</ul>
+<p>Nothing exotic. Under a time budget, a bigger well-understood model beats a smaller model with a clever modification, because the clever modification has to be debugged and the budget does not care.</p>
+</section>
+<section id="the-lever-was-data-loading" class="level1">
+<h1>The lever was data loading</h1>
+<p>This is the part worth generalizing from.</p>
+<p>We did the expected throughput work: <code>torch.compile</code> for kernel fusion, <code>bfloat16</code> autocast, TF32 matmuls via <code>set_float32_matmul_precision("high")</code>, and memory-mapped <code>uint16</code> streaming so batches come out of the page cache rather than a Python loop. All of it helped.</p>
+<p>Then we changed batch size from 32 to 64 and got <strong>≈2.2× the tokens per second</strong>.</p>
+<p>A 2× batch increase should not give a 2.2× throughput increase. That it did means the run was not compute-bound at batch 32 — it was bound on overhead and data loading, with the GPU idling between batches. Doubling the batch amortized that fixed per-step cost across twice the work, and the B200 finally got to do what it is for.</p>
+<p>That one change is what let ~0.7 B tokens fit into 45 minutes. It was worth more than any architectural decision in this post, and we found it by looking at tokens/second rather than at loss.</p>
+<p>The general lesson: <strong>before optimizing the model, check whether the accelerator is actually busy.</strong> <a href="../../posts/llm-from-scratch-2-flops/index.html">Part 2</a> counted FLOPs on the assumption that FLOPs are the constraint. Under a wall-clock budget on a very fast GPU, they frequently are not — the data path is.</p>
+</section>
+<section id="the-result-stated-honestly" class="level1">
+<h1>The result, stated honestly</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-4-leaderboard/figures/leaderboard_curve.png" class="img-fluid figure-img"></p>
+<figcaption>Validation loss against wall-clock time for the leaderboard run. The dashed line is the ~3.3 baseline; the run crosses the 45-minute cutoff at 3.42.</figcaption>
+</figure>
+</div>
+<p>At the 45-minute mark: <strong>3.42</strong>. The best single-batch estimate during the run was 3.34, and the measurement fluctuates between roughly 3.34 and 3.47.</p>
+<p>Some care with that number is warranted, so:</p>
+<ul>
+<li>It is a <strong>single-batch estimate</strong>, not a full validation-set pass. A complete pass would give a cleaner, less noisy figure, and it is the number we would report if the budget allowed it.</li>
+<li>3.42 is <em>at</em> the ~3.3 baseline, not comfortably past it, and not in the ~3.0 competitive range.</li>
+<li>The improvement over the small model is real and large — roughly 4.5 → 3.4 — but it came from scaling to a known-good configuration, which is the least surprising possible way to improve a result.</li>
+</ul>
+<p>The obvious next moves would be batch 128, which is still throughput-limited by data loading, and budgeting the step count so that <code>torch.compile</code>’s warmup plus training finish comfortably inside 45 minutes rather than right at the edge.</p>
+</section>
+<section id="why-the-tinystories-number-is-not-the-comparison" class="level1">
+<h1>Why the TinyStories number is not the comparison</h1>
+<p>It is tempting to put Part 3’s 1.5 next to this post’s 3.4 and conclude something about the model. That comparison is meaningless, for two reasons.</p>
+<p><strong>The entropy floors are different.</strong> Loss is measured in nats per token, and a random-initialized model sits at the log of the vocabulary size: <code>ln 10,000 ≈ 9.2</code> for TinyStories, <code>ln 32,000 ≈ 10.4</code> for OpenWebText. The two runs start from different places and are measured against different-sized prediction problems. You can see both starting points in the figures above.</p>
+<p><strong>The data is differently predictable.</strong> TinyStories is generated text with a constrained vocabulary and repetitive structure — genuinely low-entropy. OpenWebText is the open internet. Cross-entropy measures how surprising the data is under the model, so a higher number on harder data is not a worse model; it may be a much better one.</p>
+<p>Comparing loss across tokenizers or corpora is one of the easier ways to fool yourself in this field. The only fair comparisons in this series are the ones inside a single dataset and vocabulary.</p>
+</section>
+<section id="the-infrastructure-that-made-the-sweeps-possible" class="level1">
+<h1>The infrastructure that made the sweeps possible</h1>
+<p>None of Part 3’s experiments would have happened at this pace without a bit of plumbing, and it is the most reusable thing here.</p>
+<p>Training runs execute on <strong><a href="https://modal.com/">Modal</a></strong>, which gives per-run cloud GPUs from a Python decorator, with the pre-tokenized arrays on a persistent volume so nothing re-uploads. Logging goes to <strong><a href="https://wandb.ai/">Weights &amp; Biases</a></strong> — train loss, validation loss, and wall-clock time every 100 steps, with the full model and optimizer config captured at init so a run is reconstructable months later.</p>
+<p>The piece that mattered most was the sweep pattern. Each experiment is a local entrypoint that loops over hyperparameter values and calls <code>train.spawn(...)</code> per setting, so the whole learning-rate sweep launches as five concurrent GPU jobs instead of five sequential ones. The five-point LR sweep and the five-point batch-size sweep in Part 3 each cost about as much wall clock as a single run. When experiments are cheap to fan out, you run the sweep instead of guessing the hyperparameter — and that is the actual difference between having an opinion about learning rates and having a chart.</p>
+<p>That is the series: a tokenizer that is really a compression algorithm, a FLOP budget that inverts as context grows, four architecture choices ranked by what they are worth, and a training run whose bottleneck turned out to be the disk. The parts everyone talks about are rarely the parts that decide the outcome.</p>
+<p><em>The full experiment log for these runs is on <a href="https://wandb.ai/rohan0401/cs336-tinystories/reports/Experiment-Log--VmlldzoxNzUyMDYxMw">Weights &amp; Biases</a>.</em></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Radford, A., et al.&nbsp;(2019). <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a> — the GPT-2 architecture this run copies.</li>
+<li>Gokaslan, A., Cohen, V. (2019). <a href="https://skylion007.github.io/OpenWebTextCorpus/">OpenWebText Corpus</a></li>
+<li>Micikevicius, P., et al.&nbsp;(2017). <a href="https://arxiv.org/abs/1710.03740">Mixed Precision Training</a>. <em>arXiv:1710.03740</em></li>
+<li>Ansel, J., et al.&nbsp;(2024). <a href="https://pytorch.org/assets/pytorch2-2.pdf">PyTorch 2: Faster Machine Learning Through Dynamic Python Bytecode Transformation and Graph Compilation</a> — <code>torch.compile</code> and TorchInductor.</li>
+<li>Hoffmann, J., et al.&nbsp;(2022). <a href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models</a>. <em>arXiv:2203.15556</em> — on spending a fixed budget between model size and tokens.</li>
+<li><a href="https://cs336.stanford.edu/">Stanford CS 336: Language Modeling from Scratch</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>cs336</category>
+  <category>training</category>
+  <category>systems</category>
+  <category>language-models</category>
+  <guid>https://rohanrajput04.github.io/posts/llm-from-scratch-4-leaderboard/</guid>
+  <pubDate>Sun, 09 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Building a Language Model from Scratch - Part 3: Training Dynamics</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>This is Part 3 of <strong>Building a Language Model from Scratch</strong>. <a href="../../posts/llm-from-scratch-1-tokenizer/index.html">Part 1</a> built the tokenizer; <a href="../../posts/llm-from-scratch-2-flops/index.html">Part 2</a> counted the FLOPs. Now we actually train the thing and find out which of its parts matter.</em></p>
+<p>Modern Transformer blocks are a pile of accumulated decisions: pre-norm rather than post-norm, RMSNorm rather than LayerNorm, SwiGLU rather than a plain MLP, RoPE rather than learned positions. Every one is defensible from a paper. None of them tells you <em>how much</em> it is worth on your model, on your data, at your scale.</p>
+<p>So we measured. Everything below is the same 4-layer, <code>d_model</code> 512 model on TinyStories, trained for 5,000 steps with AdamW and a cosine schedule (500 warmup steps), batch size 32. The baseline lands at <strong>validation loss 1.564</strong>, and every number is a delta against it.</p>
+<section id="the-learning-rate-sits-at-the-edge-of-stability" class="level1">
+<h1>The learning rate sits at the edge of stability</h1>
+<p>We swept <code>lr_max</code> over a geometric grid spanning two orders of magnitude, holding everything else fixed:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><code>lr_max</code></th>
+<th>final val loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1e-4</td>
+<td>2.32</td>
+</tr>
+<tr class="even">
+<td>3e-4</td>
+<td>1.88</td>
+</tr>
+<tr class="odd">
+<td><strong>1e-3</strong></td>
+<td><strong>1.56</strong></td>
+</tr>
+<tr class="even">
+<td>3e-3</td>
+<td>1.86</td>
+</tr>
+<tr class="odd">
+<td>1e-2</td>
+<td>2.55</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/lr_sweep.png" class="img-fluid figure-img"></p>
+<figcaption>Learning-rate sweep on TinyStories. The middle panel is validation loss; 1e-3 (green) settles lowest, while 1e-2 (pink) plateaus around 2.5 and never recovers.</figcaption>
+</figure>
+</div>
+<p>The curve is U-shaped, and both arms fail for different reasons. Below the optimum, training is <em>stable but too slow</em> — 1e-4 is still descending cleanly at step 5,000, it simply has not arrived. Above it, steps start overshooting: 3e-3 is visibly noisier, and 1e-2 flattens out around 2.5 and stays there.</p>
+<p>The best rate sits directly below where things break. This is the “edge of stability” story, and its practical form is a rule: <strong>the fastest useful learning rate is the largest one that does not degrade training.</strong> Not the largest that survives — 1e-2 survived, in that it produced a finite loss and never NaN’d.&nbsp;It just trained badly. Divergence is the obvious failure; quiet degradation is the one that costs you a week.</p>
+</section>
+<section id="batch-size-and-an-honest-caveat" class="level1">
+<h1>Batch size, and an honest caveat</h1>
+<p>Next we varied batch size from 1 to 256, scaling the learning rate as <code>lr = 1e-3 · √(B/32)</code> on the theory that lower-variance gradients tolerate — and want — bigger steps.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>batch size</th>
+<th><code>lr_max</code></th>
+<th>final val loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1.8e-4</td>
+<td>≈ 2.6–3.0</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>7.1e-4</td>
+<td>1.91</td>
+</tr>
+<tr class="odd">
+<td>64</td>
+<td>1.4e-3</td>
+<td>1.58</td>
+</tr>
+<tr class="even">
+<td><strong>128</strong></td>
+<td>2.0e-3</td>
+<td><strong>1.48</strong></td>
+</tr>
+<tr class="odd">
+<td>256</td>
+<td>2.8e-3</td>
+<td>diverged</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/batch_size.png" class="img-fluid figure-img"></p>
+<figcaption>Batch-size sweep. Validation loss (middle panel) improves monotonically from batch 1 (orange, noisy, hovering near 3) down to batch 128 (magenta). The left panel shows wall-clock time, which grows accordingly.</figcaption>
+</figure>
+</div>
+<p>Batch 1 never settles — its loss oscillates roughly between 2.6 and 3.0, so quoting a single final number would be false precision. Batch 128 gives the best result of any run in this post, 1.48.</p>
+<p>Two caveats keep this from being “bigger batches are better.”</p>
+<p>First, <strong>this is a fixed-<em>steps</em> comparison, not fixed-<em>compute</em></strong>. A batch-128 step processes 128× the tokens of a batch-1 step, so a good chunk of the improvement is simply that the bigger runs did more work. The left panel of the figure makes this concrete: batch 128 took about 3,500 seconds where the baseline took under 200. Under a fixed <em>time</em> budget — which is exactly the constraint in <a href="../../posts/llm-from-scratch-4-leaderboard/index.html">Part 4</a> — the ranking changes.</p>
+<p>Second, the √-scaling rule <strong>overshot at 256</strong>. It worked for three doublings and then handed us a learning rate that diverged. Batch-size scaling laws are heuristics that need re-tuning at their edges, not formulas you can extrapolate.</p>
+</section>
+<section id="the-ablation-ranking" class="level1">
+<h1>The ablation ranking</h1>
+<p>Now the centerpiece. Four components, removed one at a time, each trained with the identical recipe:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/ablation_ranking.png" class="img-fluid figure-img"></p>
+<figcaption>Removing RoPE costs the most (+0.24 validation loss), then post-norm (+0.21), then RMSNorm (+0.15), then SwiGLU’s gate (+0.08).</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>removed</th>
+<th>val loss</th>
+<th>Δ vs baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RoPE → NoPE (no positional information)</td>
+<td>1.802</td>
+<td>+0.24</td>
+</tr>
+<tr class="even">
+<td>pre-norm → post-norm</td>
+<td>1.769</td>
+<td>+0.21</td>
+</tr>
+<tr class="odd">
+<td>RMSNorm → none</td>
+<td>1.715</td>
+<td>+0.15</td>
+</tr>
+<tr class="even">
+<td>SwiGLU → plain SiLU FFN</td>
+<td>1.642</td>
+<td>+0.08</td>
+</tr>
+</tbody>
+</table>
+<p>The ordering is the interesting part. <strong>Positional information and residual-stream design each cost roughly three times what the FFN’s gating mechanism does.</strong> SwiGLU is the change people talk about most — it is a named architectural feature with a paper behind it — and at this scale it is the smallest effect of the four. Meanwhile pre-norm, which is close to a formatting detail in how you write the block, is worth 0.21.</p>
+<p>One methodological note on the SwiGLU comparison: swapping the gated FFN (<code>d_ff</code> 1,344, three matrices) for a plain SiLU FFN (<code>d_ff</code> 2,048, two matrices) keeps parameter count nearly identical — about 2.06 M vs 2.10 M per block. So the +0.08 is attributable to gating itself, not to a smaller model.</p>
+</section>
+<section id="the-two-results-worth-dwelling-on" class="level1">
+<h1>The two results worth dwelling on</h1>
+<p>The headline numbers are less interesting than two things that happened around them.</p>
+<p><strong>Removing all normalization did not destabilize training.</strong> We expected the no-RMSNorm run to need a lower learning rate; textbook framing is that normalization is what keeps deep networks trainable. It trained fine at the baseline 1e-3 and simply landed 0.15 worse. What normalization bought here was <em>quality</em>, not survival.</p>
+<p>The one place instability shows is at initialization. The no-norm run starts from a validation loss around <strong>17</strong>, where a well-scaled random init should start near <code>ln 10,000 ≈ 9.2</code> — the entropy of a uniform distribution over the vocabulary. Without RMSNorm the activation magnitudes at init are simply wrong, and the first few hundred steps get spent fixing that instead of learning. Normalization is doing real work; at four layers, that work is worth 0.15 rather than the difference between training and not.</p>
+<p><strong>NoPE degrades but does not collapse.</strong> Self-attention is permutation-invariant, so with no positional signal at all the model should not be able to distinguish “dog bites man” from “man bites dog”. It should be much worse than +0.24.</p>
+<p>The reason it is not: <strong>causal masking leaks position</strong>. Token <em>i</em> attends to exactly <em>i</em> previous tokens, so the size of each position’s visible prefix is itself a positional signal, and a decoder-only model can learn to read it. This is why NoPE results exist in the literature at all, and it is a genuinely non-obvious property of decoder-only architectures — encoder models with bidirectional attention have no such fallback.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Individual ablation curves
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Each ablation run on its own axes, from the Weights &amp; Biases sweep. The comparison against baseline is the table and chart above; these show that every ablated variant trained cleanly to convergence rather than falling over.</p>
+<p>The no-RMSNorm run is the one to look at — note the y-axis starting near 17 rather than 9.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/ablation_rmsnorm.png" class="img-fluid figure-img"></p>
+<figcaption>No RMSNorm anywhere.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/ablation_prenorm.png" class="img-fluid figure-img"></p>
+<figcaption>Post-norm instead of pre-norm.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/ablation_nope.png" class="img-fluid figure-img"></p>
+<figcaption>NoPE — no positional embedding.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/figures/ablation_swiglu.png" class="img-fluid figure-img"></p>
+<figcaption>Plain SiLU FFN instead of SwiGLU.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-1.5-nats-of-loss-sounds-like" class="level1">
+<h1>What 1.5 nats of loss sounds like</h1>
+<p>Numbers are abstract; here is the baseline model, prompted with “Once upon a time” at temperature 0.8 and top-p 0.9, sampling to the first end-of-text token:</p>
+<blockquote class="blockquote">
+<p>Once upon a time, there was a beautiful fairy. She lived in a big, pretty garden. The fairy had a pretty garden with many flowers. She liked to look at the flowers and the bugs. One day, the fairy met a boy. The boy was deaf. He could not hear her. The fairy wanted to help the boy. She said, “Please let me play with you. I will teach you how to be nice.” The boy was happy. He started to play with the fairy. They played and had fun. The fairy and the boy became good friends. They played together every day. And they lived happily ever after.</p>
+</blockquote>
+<p>That is a 4-layer model, trained for under four minutes. It is grammatical, correctly punctuates dialogue, keeps a consistent cast, and produces a complete arc — setup, complication, resolution, ending — then stops on its own. The repetition (“a pretty garden with many flowers”, right after “a big, pretty garden”) is the tell, and so is the fact that the boy’s deafness is introduced and then quietly dropped.</p>
+<p>Decoding parameters change the character of the failure more than its severity. At temperature 0.1 the model collapses toward greedy decoding and repeats itself outright. At 1.0 it invents freely and loses the thread — non-sequiturs, characters that appear once. Temperature 0.8 with top-p 0.9 is the setting where diversity and coherence are both tolerable, and it is what produced the sample above.</p>
+<p>The honest framing is that TinyStories is a narrow, regular distribution, and a small model can fit it well. The next post is what happens when the data stops cooperating.</p>
+<p><em>Next: <a href="../../posts/llm-from-scratch-4-leaderboard/index.html">Part 4 — 45 Minutes on a B200</a>, in which a fixed wall-clock budget turns training into a throughput problem and the biggest lever turns out not to be the architecture.</em></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Zhang, B., Sennrich, R. (2019). <a href="https://arxiv.org/abs/1910.07467">Root Mean Square Layer Normalization</a>. <em>arXiv:1910.07467</em></li>
+<li>Xiong, R., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2002.04745">On Layer Normalization in the Transformer Architecture</a>. <em>arXiv:2002.04745</em> — the pre-norm vs.&nbsp;post-norm analysis.</li>
+<li>Shazeer, N. (2020). <a href="https://arxiv.org/abs/2002.05202">GLU Variants Improve Transformer</a>. <em>arXiv:2002.05202</em></li>
+<li>Su, J., et al.&nbsp;(2021). <a href="https://arxiv.org/abs/2104.09864">RoFormer: Enhanced Transformer with Rotary Position Embedding</a>. <em>arXiv:2104.09864</em></li>
+<li>Haviv, A., et al.&nbsp;(2022). <a href="https://arxiv.org/abs/2203.16634">Transformer Language Models without Positional Encodings Still Learn Positional Information</a>. <em>arXiv:2203.16634</em> — why NoPE works at all.</li>
+<li>Holtzman, A., et al.&nbsp;(2019). <a href="https://arxiv.org/abs/1904.09751">The Curious Case of Neural Text Degeneration</a>. <em>arXiv:1904.09751</em> — top-p sampling.</li>
+<li>Cohen, J., et al.&nbsp;(2021). <a href="https://arxiv.org/abs/2103.00065">Gradient Descent on Neural Networks Typically Occurs at the Edge of Stability</a>. <em>arXiv:2103.00065</em></li>
+<li><a href="https://cs336.stanford.edu/">Stanford CS 336: Language Modeling from Scratch</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>cs336</category>
+  <category>training</category>
+  <category>ablations</category>
+  <category>language-models</category>
+  <guid>https://rohanrajput04.github.io/posts/llm-from-scratch-3-training-dynamics/</guid>
+  <pubDate>Fri, 07 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Building a Language Model from Scratch - Part 2: Where the FLOPs Actually Go</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/posts/llm-from-scratch-2-flops/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>This is Part 2 of <strong>Building a Language Model from Scratch</strong>. In <a href="../../posts/llm-from-scratch-1-tokenizer/index.html">Part 1</a> we built a byte-level BPE tokenizer and found that its throughput alone puts a floor under how fast training can start. Now we count what the model itself costs.</em></p>
+<p>Take GPT-2 XL, train it the way the original paper did — 400,000 steps at batch size 1,024 — and run it on a single H100 rated at 495 TFLOP/s, achieving a respectable 50% model FLOPs utilization. That run takes <strong>4,854 hours. About 202 days.</strong></p>
+<p>Nobody trains that way, which is the point. Resource accounting is what turns “we need more GPUs” from a vibe into a number, and the numbers have a shape that is not obvious until you write them down.</p>
+<section id="the-pieces-we-are-counting" class="level1">
+<h1>The pieces we are counting</h1>
+<p>The architecture here is a modern pre-norm decoder-only Transformer, which differs from GPT-2 as published in several ways worth naming.</p>
+<p><strong>RMSNorm</strong> replaces LayerNorm: it rescales activations by their root-mean-square without subtracting the mean, dropping the bias term and one reduction. <strong>SwiGLU</strong> replaces the standard two-matrix MLP with three matrices — a gate projection, an up projection multiplied elementwise by the SiLU-activated gate, and a down projection. <strong>RoPE</strong> replaces learned positional embeddings by rotating query and key vectors by a position-dependent angle, so attention scores depend on relative position by construction. Attention itself is standard <strong>causal multi-head self-attention</strong>. And the block is <strong>pre-norm</strong>: normalization sits inside each residual branch, leaving the residual stream itself untouched from embedding to output.</p>
+<p>Every one of those choices earns its keep in <a href="../../posts/llm-from-scratch-3-training-dynamics/index.html">Part 3</a>. Here they only matter as things that cost FLOPs.</p>
+</section>
+<section id="billion-parameters-6.56-gb-to-load" class="level1">
+<h1>1.64 billion parameters, 6.56 GB to load</h1>
+<p>Parameter counting is arithmetic, but it is arithmetic that catches errors. For GPT-2 XL’s shape — vocabulary 50,257, 48 layers, <code>d_model</code> 1,600, 25 heads, <code>d_ff</code> 4,288 — the parts are: a token embedding of <code>vocab × d_model</code>; per block, <code>2 · d_model</code> RMSNorm gains, <code>4 · d_model²</code> for the Q/K/V/output projections, and <code>3 · d_model · d_ff</code> for SwiGLU; a final RMSNorm; and an untied LM head of <code>vocab × d_model</code>.</p>
+<p>That totals <strong>1.64 billion trainable parameters</strong>, or <strong>6.56 GB</strong> at fp32 — just to have the weights resident, before a single activation exists.</p>
+<p>(Real GPT-2 XL is 1.5 B. The gap is SwiGLU’s third matrix and the untied LM head, both of which this architecture adds.)</p>
+</section>
+<section id="attention-is-not-where-the-compute-goes" class="level1">
+<h1>Attention is not where the compute goes</h1>
+<p>Counting a matmul of shape <code>(m×n)·(n×p)</code> as <code>2mnp</code> FLOPs, and ignoring elementwise work like norms and softmax, one forward pass through one block at sequence length 1,024 breaks down like this:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>matmul</th>
+<th>formula</th>
+<th>FLOPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Q, K, V projections</td>
+<td><code>3 · 2 · seq · d²</code></td>
+<td>15.73 B</td>
+</tr>
+<tr class="even">
+<td>Attention scores <code>QKᵀ</code></td>
+<td><code>2 · seq² · d</code></td>
+<td>3.36 B</td>
+</tr>
+<tr class="odd">
+<td>Attention × V</td>
+<td><code>2 · seq² · d</code></td>
+<td>3.36 B</td>
+</tr>
+<tr class="even">
+<td>Output projection</td>
+<td><code>2 · seq · d²</code></td>
+<td>5.24 B</td>
+</tr>
+<tr class="odd">
+<td>SwiGLU FFN</td>
+<td><code>6 · seq · d · d_ff</code></td>
+<td>42.15 B</td>
+</tr>
+<tr class="even">
+<td><strong>per block</strong></td>
+<td></td>
+<td><strong>69.84 B</strong></td>
+</tr>
+<tr class="odd">
+<td>× 48 layers</td>
+<td></td>
+<td>3.352 T</td>
+</tr>
+<tr class="even">
+<td>LM head</td>
+<td><code>2 · seq · d · vocab</code></td>
+<td>164.7 B</td>
+</tr>
+<tr class="odd">
+<td><strong>total forward pass</strong></td>
+<td></td>
+<td><strong>3.52 T</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Grouped, that is <strong>~60% feed-forward, ~30% QKVO projections, ~10% attention proper</strong>. The two <code>seq²</code> matmuls that everyone means when they say “attention is quadratic” are the <em>smallest</em> line item in the block.</p>
+<p>This is a useful corrective. At GPT-2-scale context lengths, a Transformer is a stack of position-wise matrix multiplies with a comparatively cheap mixing step bolted on. If you are optimizing kernels or estimating cost, the FFN is where the money is.</p>
+<p>As a sanity check, the rule of thumb <code>2 · params · tokens</code> gives <code>2 × 1.64B × 1024 ≈ 3.4</code> TFLOPs against our counted 3.52 — close enough to confirm the arithmetic, and a reminder that the rule of thumb is doing real work.</p>
+</section>
+<section id="bigger-models-make-attention-matter-less" class="level1">
+<h1>Bigger models make attention matter <em>less</em></h1>
+<p>Repeating the count for the four GPT-2 sizes, holding sequence length at 1,024:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>model</th>
+<th><code>d_model</code></th>
+<th>FFN</th>
+<th>QKVO projections</th>
+<th>attention scores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>small</td>
+<td>768</td>
+<td>54.5%</td>
+<td>27.3%</td>
+<td>18.2%</td>
+</tr>
+<tr class="even">
+<td>medium</td>
+<td>1,024</td>
+<td>57.3%</td>
+<td>28.4%</td>
+<td>14.2%</td>
+</tr>
+<tr class="odd">
+<td>large</td>
+<td>1,280</td>
+<td>58.7%</td>
+<td>29.5%</td>
+<td>11.8%</td>
+</tr>
+<tr class="even">
+<td>XL</td>
+<td>1,600</td>
+<td>60.3%</td>
+<td>30.0%</td>
+<td>9.6%</td>
+</tr>
+</tbody>
+</table>
+<p>Attention’s share halves from small to XL. The reason is in the formulas: projections and FFN scale as <code>d_model²</code>, while the attention matmuls scale as <code>seq² · d_model</code> — only <em>linear</em> in width. Widen the model and the quadratic-in-width terms pull away.</p>
+<p>So at fixed context length, scaling up makes attention relatively cheaper. Which is the exact opposite of the thing everyone knows about attention — and the next section is why.</p>
+</section>
+<section id="bigger-context-makes-attention-everything" class="level1">
+<h1>Bigger context makes attention everything</h1>
+<p>Now hold GPT-2 XL fixed and push its context length from 1,024 to 16,384.</p>
+<p>That is a 16× increase in sequence length. It is a <strong>38× increase in FLOPs</strong>: 3.52 TFLOPs → <strong>133.6 TFLOPs</strong> for a single forward pass. The projections, FFN, and LM head all scale linearly with <code>seq</code> (×16), but the attention score and value matmuls scale with <code>seq²</code> (×256), and they drag the total past linear.</p>
+<p>The composition inverts completely. Attention’s share of a block goes from <strong>9.6% to 63%</strong>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rohanrajput04.github.io/posts/llm-from-scratch-2-flops/figures/attention_share_vs_context.png" class="img-fluid figure-img"></p>
+<figcaption>Share of per-block forward FLOPs for GPT-2 XL as context length grows from 512 to 32,768 tokens. The SwiGLU FFN starts at 63% and falls to 15%; the attention score and value matmuls start at 5% and rise to 77%, crossing the FFN at roughly 6,400 tokens.</figcaption>
+</figure>
+</div>
+<p>Everything the previous section said stops being true somewhere around a context length of 6,400 tokens. Below that, you are building a matmul machine and attention is a rounding error. Above it, you are building an attention machine and everything else is overhead.</p>
+<p>This single crossover explains a decade of systems work. FlashAttention, sliding-window and sparse attention, grouped-query and multi-query attention, KV-cache quantization — none of it would be worth the complexity at context 1,024, where attention is a tenth of the budget. All of it becomes unavoidable at 16k, 128k, 1M. <strong>Long context is not “the same model, but longer.” It is a different optimization problem, and the chart above is where it changes.</strong></p>
+</section>
+<section id="memory-three-parameters-worth-of-state-per-parameter" class="level1">
+<h1>Memory: three parameters’ worth of state per parameter</h1>
+<p>FLOPs decide how long training takes; memory decides whether it runs at all. Training with AdamW in fp32 costs <code>4P</code> bytes for parameters, <code>4P</code> for gradients, and <code>8P</code> for the optimizer’s first and second moments — <strong>16 bytes per parameter</strong>, before activations.</p>
+<p>For GPT-2 XL that fixed cost is <strong>26.24 GB</strong>. Adding the activation term — the per-layer norms, projections, attention scores, and SwiGLU intermediates, which scale with batch size — gives total memory as:</p>
+<p><code>16.37 · batch_size + 26.24 GB</code></p>
+<p>On an 80 GB H100, solving <code>16.37 · B + 26.24 ≤ 80</code> gives <code>B ≤ 3.28</code>. The <strong>maximum batch size is 3</strong>.</p>
+<p>Three sequences. On a flagship datacenter GPU. That is why nobody trains a 1.6 B model on one card, and why the very first thing a real training stack reaches for is mixed precision, activation checkpointing, an optimizer whose state does not cost <code>8P</code>, and — when those run out — splitting the model across devices.</p>
+<p>Which is precisely where the <a href="../../posts/data-parallelism/index.html">Parallelism in AI</a> series picks up: <a href="../../posts/data-parallelism/index.html">data parallelism and FSDP</a> to shard that 26 GB of optimizer state, <a href="../../posts/pipeline-parallelism/index.html">pipeline parallelism</a> to split the 48 layers across nodes, and <a href="../../posts/tensor-parallelism/index.html">tensor parallelism</a> to split the individual matmuls this post spent its time counting.</p>
+<p><em>Next: <a href="../../posts/llm-from-scratch-3-training-dynamics/index.html">Part 3 — Training Dynamics: What Actually Moved the Loss</a>, in which four architecture choices get ranked by how much validation loss each one is worth.</em></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Zhang, B., Sennrich, R. (2019). <a href="https://arxiv.org/abs/1910.07467">Root Mean Square Layer Normalization</a>. <em>arXiv:1910.07467</em></li>
+<li>Shazeer, N. (2020). <a href="https://arxiv.org/abs/2002.05202">GLU Variants Improve Transformer</a>. <em>arXiv:2002.05202</em></li>
+<li>Su, J., et al.&nbsp;(2021). <a href="https://arxiv.org/abs/2104.09864">RoFormer: Enhanced Transformer with Rotary Position Embedding</a>. <em>arXiv:2104.09864</em></li>
+<li>Kaplan, J., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2001.08361">Scaling Laws for Neural Language Models</a>. <em>arXiv:2001.08361</em> — the source of the <code>2 · params · tokens</code> rule of thumb.</li>
+<li>Dao, T., et al.&nbsp;(2022). <a href="https://arxiv.org/abs/2205.14135">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</a>. <em>arXiv:2205.14135</em></li>
+<li>Loshchilov, I., Hutter, F. (2017). <a href="https://arxiv.org/abs/1711.05101">Decoupled Weight Decay Regularization</a>. <em>arXiv:1711.05101</em> — AdamW.</li>
+<li><a href="https://cs336.stanford.edu/">Stanford CS 336: Language Modeling from Scratch</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>cs336</category>
+  <category>transformers</category>
+  <category>performance</category>
+  <category>language-models</category>
+  <guid>https://rohanrajput04.github.io/posts/llm-from-scratch-2-flops/</guid>
+  <pubDate>Wed, 05 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Building a Language Model from Scratch - Part 1: The Tokenizer Is a Compression Algorithm</title>
+  <dc:creator>Rohan Rajput</dc:creator>
+  <link>https://rohanrajput04.github.io/posts/llm-from-scratch-1-tokenizer/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>This is Part 1 of <strong>Building a Language Model from Scratch</strong>, a four-part series working through Stanford’s <a href="https://cs336.stanford.edu/">CS 336</a> Assignment 1 — a byte-level BPE tokenizer, a Transformer LM, a training loop, and a fixed-budget leaderboard run, all written from nothing but PyTorch primitives.</em></p>
+<p>We measured our tokenizer’s throughput at <strong>1.04 MB/s</strong>. The Pile is 825 GB. At that rate, just turning the Pile into token IDs — no model, no gradients, no GPU — takes about <strong>9.2 days</strong> of wall clock.</p>
+<p>That number is the reason this post exists. Tokenization gets described as preprocessing, a thing you do before the interesting part starts. It is not. It is a compression algorithm with a training phase, a throughput budget, and failure modes that leak directly into everything downstream.</p>
+<section id="why-bytes-not-characters" class="level1">
+<h1>Why bytes, not characters</h1>
+<p>The first decision is what the tokenizer’s alphabet is. Unicode has ~150,000 assigned code points, so a character-level vocabulary is both enormous and full of symbols you will see once. Bytes are the alternative: 256 symbols, and every possible input is representable.</p>
+<p>That still leaves <em>which</em> byte encoding. We train on <strong>UTF-8</strong> for three reasons. It is variable-width, so ordinary English text costs one byte per character rather than the two or four that UTF-16 and UTF-32 spend — shorter byte sequences mean fewer merges to learn and shorter token sequences at the end. It is self-synchronizing: the high bits of each byte mark whether it starts a character or continues one, so a decoder that lands mid-stream can recover, and a corrupted region does not desynchronize the rest of the file. And it is endianness-free, so there is no byte-order mark to strip and no ambiguity about how a file was written.</p>
+<p>The cost of the byte-level choice is that the tokenizer must learn, from scratch, that certain byte pairs are worth grouping. That is exactly what BPE does.</p>
+</section>
+<section id="training-bpe-parallel-up-front-serial-after" class="level1">
+<h1>Training BPE: parallel up front, serial after</h1>
+<p>Training has two phases with completely different performance characteristics.</p>
+<p><strong>Pre-tokenization</strong> splits the corpus into word-like chunks on a regex, so merges can never cross a word boundary, and counts how often each chunk occurs. This is embarrassingly parallel — we chunk the file on special-token boundaries and fan the pieces out to worker processes.</p>
+<p><strong>The merge loop</strong> is the actual BPE algorithm: count adjacent byte-pair frequencies, merge the most frequent pair into a new token, repeat until the vocabulary hits its target size. Every merge changes the counts for the next one, so this phase is inherently sequential.</p>
+<p>On TinyStories with a 10,000-token vocabulary, the whole thing takes <strong>43.7 seconds</strong> and peaks at <strong>0.18 GB</strong> of memory. Profiling splits that as:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>phase</th>
+<th>wall clock</th>
+<th>CPU time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pre-tokenization</td>
+<td>19 s</td>
+<td>~200 s across 12 workers</td>
+</tr>
+<tr class="even">
+<td>merge loop</td>
+<td>25 s</td>
+<td>25 s (single-threaded)</td>
+</tr>
+</tbody>
+</table>
+<p>Pre-tokenization burns ten times more CPU than the merge loop but finishes faster, because it can spend that CPU in parallel. The merge loop cannot. That asymmetry is the whole story of BPE training performance: throwing cores at it helps right up until the merge loop, and then stops helping entirely.</p>
+<p>Scale changes the picture dramatically. The same code on OpenWebText at a 32,000-token vocabulary ran for <strong>126,519 seconds — about 35 hours — and peaked at 27.67 GB</strong>. Roughly 3,000× the wall clock and 150× the memory of the TinyStories run, for a corpus that is larger and a vocabulary that is only 3× bigger.</p>
+</section>
+<section id="the-vocabulary-is-a-mirror-of-your-corpus" class="level1">
+<h1>The vocabulary is a mirror of your corpus</h1>
+<p>The most useful thing we learned came from a throwaway diagnostic: print the longest token in each vocabulary.</p>
+<p>TinyStories’ longest token is <code>b' accomplishment'</code> — 15 bytes, a real English word with its leading space. That is BPE working exactly as advertised. The corpus is synthetic children’s stories with a small, clean, regular vocabulary, so the merges spend themselves on genuinely frequent words.</p>
+<p>OpenWebText’s longest token is 64 bytes long, and it is this:</p>
+<p><code>b'\xc3\x83\xc3\x82\xc3\x83\xc3\x82...'</code> — the two-byte sequences for <code>Ã</code> and <code>Â</code>, alternating, sixteen times over.</p>
+<p>There is no word in there. That is <strong>mojibake</strong>: the residue of a non-breaking space that was UTF-8 encoded and then decoded as Latin-1, more than once, somewhere upstream in the scraping pipeline. It appeared often enough in OpenWebText that BPE decided a 64-byte run of it deserved a dedicated slot in a 32,000-token vocabulary.</p>
+<p>This is worth sitting with. BPE has no notion of meaning; it allocates vocabulary to whatever is frequent. So the vocabulary is a direct readout of your corpus’s statistics, artifacts included. If your data-cleaning pipeline leaks encoding bugs, the tokenizer will find them, and it will spend capacity memorizing them. Printing the longest few tokens after training is a five-second data-quality audit, and we now run it by default.</p>
+</section>
+<section id="what-the-compression-actually-buys" class="level1">
+<h1>What the compression actually buys</h1>
+<p>Compression ratio — bytes of input per token of output — is the number that determines how much text fits in a context window and how much compute a training run costs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>tokenizer</th>
+<th>vocab</th>
+<th>bytes/token</th>
+<th>longest token</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TinyStories</td>
+<td>10,000</td>
+<td>4.05</td>
+<td><code>b' accomplishment'</code> (15 bytes)</td>
+</tr>
+<tr class="even">
+<td>OpenWebText</td>
+<td>32,000</td>
+<td>4.25</td>
+<td>64-byte mojibake run</td>
+</tr>
+<tr class="odd">
+<td>OpenWebText text through the <strong>TinyStories</strong> tokenizer</td>
+<td>10,000</td>
+<td>3.16</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Two things stand out.</p>
+<p>First, tripling the vocabulary bought almost nothing: 4.05 → 4.25 bytes per token. That is not a bug. OpenWebText is vastly more diverse than TinyStories in topic, style, and formatting, so the extra 22,000 slots go on <em>covering variety</em> — rare words, code, punctuation patterns, encoding artifacts — rather than on compressing any one domain harder. Vocabulary size trades coverage against compression, and past a point you are buying coverage.</p>
+<p>Second, mismatched tokenizers degrade gracefully but expensively. Running OpenWebText text through the TinyStories tokenizer drops the ratio to 3.16 bytes/token: the merges it learned do not cover this text, so words fragment back toward byte-level pieces. Nothing breaks — byte-level BPE can encode any input — you just pay about 35% more tokens for the same text, forever.</p>
+<p>Those numbers come from a 10-document sample. Encoding the full OpenWebText training split gives a cleaner figure: 11.92 GB of text became 2,727,120,452 tokens, or <strong>4.37 bytes/token</strong> across the whole corpus.</p>
+</section>
+<section id="storing-2.7-billion-tokens" class="level1">
+<h1>Storing 2.7 billion tokens</h1>
+<p>Once encoded, token IDs get serialized as NumPy arrays and memory-mapped by the training loop, so the on-disk dtype matters.</p>
+<p>We use <code>uint16</code>. Both vocabularies fit comfortably inside 0–65,535, so 16 bits is sufficient and anything wider is pure waste. At 2.73 billion tokens, that is a <strong>5.45 GB</strong> file; <code>uint32</code> would have made it 10.9 GB for identical information. The training loop never materializes it — it memory-maps the array and slices batches out of it — but halving the file still halves the page cache pressure and the transfer time to a cloud GPU.</p>
+<p>That is the tokenizer: a compression algorithm whose training is half-parallel, whose vocabulary is an honest mirror of your data, and whose throughput sets a hard floor on how fast you can start training at all.</p>
+<p><em>Next: <a href="../../posts/llm-from-scratch-2-flops/index.html">Part 2 — Where the FLOPs Actually Go</a>, in which we count every matmul in GPT-2 XL and find that attention is not where the compute lives.</em></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li>Sennrich, R., Haddow, B., Birch, A. (2015). <a href="https://arxiv.org/abs/1508.07909">Neural Machine Translation of Rare Words with Subword Units</a>. <em>arXiv:1508.07909</em> — the original BPE-for-NLP paper.</li>
+<li>Radford, A., et al.&nbsp;(2019). <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a> — introduced byte-level BPE with the regex pre-tokenizer this assignment follows.</li>
+<li>Eldan, R., Li, Y. (2023). <a href="https://arxiv.org/abs/2305.07759">TinyStories: How Small Can Language Models Be and Still Speak Coherent English?</a>. <em>arXiv:2305.07759</em></li>
+<li>Gao, L., et al.&nbsp;(2020). <a href="https://arxiv.org/abs/2101.00027">The Pile: An 800GB Dataset of Diverse Text for Language Modeling</a>. <em>arXiv:2101.00027</em></li>
+<li>Yergeau, F. (2003). <a href="https://datatracker.ietf.org/doc/html/rfc3629">RFC 3629: UTF-8, a transformation format of ISO 10646</a></li>
+<li><a href="https://cs336.stanford.edu/">Stanford CS 336: Language Modeling from Scratch</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>cs336</category>
+  <category>tokenization</category>
+  <category>bpe</category>
+  <category>language-models</category>
+  <guid>https://rohanrajput04.github.io/posts/llm-from-scratch-1-tokenizer/</guid>
+  <pubDate>Sun, 02 Aug 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parallelism in AI - Part 3: Tensor Parallelism</title>
   <dc:creator>Rohan Rajput</dc:creator>
@@ -67,7 +713,7 @@
 <audio controls="" class="section-audio">
 <source src="audio/allreduce_cost.wav" type="audio/wav">
 </audio>
-<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>all-to-all communication</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
+<p>Tensor parallelism relies on <strong>AllReduce</strong> operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires <strong>collective communication across every device in the tensor-parallel group</strong> within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.</p>
 <p><img src="https://rohanrajput04.github.io/posts/tensor-parallelism/assets/AllReduceVisualization_ManimCE_v0.19.2.gif" class="img-fluid"></p>
 </section>
 <section id="tensor-vs-pipeline-vs-data-parallelism" class="level1">
@@ -166,6 +812,9 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>tensor-parallelism</category>
   <guid>https://rohanrajput04.github.io/posts/tensor-parallelism/</guid>
   <pubDate>Wed, 11 Mar 2026 05:00:00 GMT</pubDate>
 </item>
@@ -307,6 +956,9 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>pipeline-parallelism</category>
   <guid>https://rohanrajput04.github.io/posts/pipeline-parallelism/</guid>
   <pubDate>Sun, 08 Mar 2026 06:00:00 GMT</pubDate>
 </item>
@@ -453,31 +1105,17 @@
 </section>
 
  ]]></description>
+  <category>parallelism</category>
+  <category>distributed-training</category>
+  <category>fsdp</category>
   <guid>https://rohanrajput04.github.io/posts/data-parallelism/</guid>
   <pubDate>Fri, 13 Feb 2026 06:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Welcome to My Blog</title>
+  <title></title>
   <dc:creator>Rohan Rajput</dc:creator>
   <link>https://rohanrajput04.github.io/posts/welcome-post/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="welcome" class="level1">
-<h1>Welcome!</h1>
-<p>This is my first blog post on this new site built with Quarto.</p>
-<section id="what-to-expect" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-expect">What to expect</h2>
-<p>I’ll be sharing: - Programming tutorials - Technology insights - Personal projects - Thoughts on software development</p>
-<p>Stay tuned for more content!</p>
-
-
-</section>
-</section>
-
- ]]></description>
+  <description><![CDATA[ undefined ]]></description>
   <category>general</category>
   <guid>https://rohanrajput04.github.io/posts/welcome-post/</guid>
   <pubDate>Fri, 13 Sep 2024 05:00:00 GMT</pubDate>

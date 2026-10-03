@@ -1,0 +1,23 @@
+---
+draft: true
+title: "Lecture 1: Introduction"
+author: "Rohan Rajput"
+date: "2026-04-17"
+order: 1
+description: "Kick-off lecture — replace with a one-line summary of what the lecture covered."
+categories: [example]
+---
+
+# Overview
+
+Replace this with your notes from the lecture.
+
+# Key Ideas
+
+- Point one.
+- Point two.
+- Point three.
+
+# Takeaways
+
+Summarize what you learned and any follow-up questions to chase down.

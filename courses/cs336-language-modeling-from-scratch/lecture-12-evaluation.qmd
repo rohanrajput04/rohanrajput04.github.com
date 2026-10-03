@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 12: Evaluation"
+author: "Rohan Rajput"
+date: "2026-05-06"
+order: 12
+description: "How to measure model quality — benchmarks, perplexity, held-out tasks."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Percy Liang
+**Date:** 2026-05-06
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

@@ -1,0 +1,32 @@
+---
+draft: true
+title: "Lecture 1: Overview, tokenization"
+author: "Rohan Rajput"
+date: "2026-03-30"
+order: 1
+description: "Course overview and how text is turned into tokens the model consumes."
+categories: [cs336, lecture]
+---
+
+*Placeholder — fill in as I work through the lecture.*
+
+**Instructor:** Percy Liang
+**Date:** 2026-03-30
+
+# Notes
+
+_TODO_
+
+# Key Ideas
+
+- _TODO_
+- _TODO_
+- _TODO_
+
+# Questions / Follow-ups
+
+- _TODO_
+
+# References
+
+- [Course page](https://cs336.stanford.edu/)

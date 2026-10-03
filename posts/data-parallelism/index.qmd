@@ -2,6 +2,8 @@
 title: "Parallelism in AI - Part 1: Data Parallelism & FSDP"
 author: "Rohan Singh Rajput"
 date: "2026-02-13"
+description: "Why a single GPU is never enough, how data parallelism splits the batch across devices, and how FSDP shards the model itself to break the memory wall."
+categories: [parallelism, distributed-training, fsdp]
 ---
 
 

@@ -2,6 +2,8 @@
 title: "Parallelism in AI - Part 3: Tensor Parallelism"
 author: "Rohan Rajput"
 date: "2026-03-11"
+description: "Splitting individual weight matrices across GPUs: column- and row-parallel layers, how Megatron-LM shards attention and MLP blocks, and what the AllReduce costs."
+categories: [parallelism, distributed-training, tensor-parallelism]
 ---
 
 *This is Part 3 of the **Parallelism in AI** series. In [Part 1](../data-parallelism/index.qmd), we covered Data Parallelism & FSDP, and in [Part 2](../pipeline-parallelism/index.qmd), we explored Pipeline Parallelism. Now, we dive into Tensor Parallelism by splitting individual layers across devices.*
@@ -62,7 +64,7 @@ The multi-head attention mechanism is naturally suited for tensor parallelism be
   <source src="audio/allreduce_cost.wav" type="audio/wav">
 </audio>
 
-Tensor parallelism relies on **AllReduce** operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires **all-to-all communication** within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.
+Tensor parallelism relies on **AllReduce** operations to synchronize partial results across devices. In each transformer layer, there are two AllReduce operations in the forward pass (one for the attention block and one for the MLP block) and two in the backward pass. Unlike pipeline parallelism, which only communicates between adjacent stages, tensor parallelism requires **collective communication across every device in the tensor-parallel group** within each layer. This makes tensor parallelism most effective when devices are connected via high-bandwidth interconnects (e.g., NVLink within a single node), as the communication latency directly impacts throughput.
 
 ![](assets/AllReduceVisualization_ManimCE_v0.19.2.gif)
 

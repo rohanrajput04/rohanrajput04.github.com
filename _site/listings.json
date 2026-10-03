@@ -1,7 +1,11 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/posts.html",
     "items": [
+      "/posts/llm-from-scratch-4-leaderboard/index.html",
+      "/posts/llm-from-scratch-3-training-dynamics/index.html",
+      "/posts/llm-from-scratch-2-flops/index.html",
+      "/posts/llm-from-scratch-1-tokenizer/index.html",
       "/posts/tensor-parallelism/index.html",
       "/posts/pipeline-parallelism/index.html",
       "/posts/data-parallelism/index.html",
@@ -9,12 +13,80 @@
     ]
   },
   {
-    "listing": "/posts.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/llm-from-scratch-4-leaderboard/index.html",
+      "/posts/llm-from-scratch-3-training-dynamics/index.html",
+      "/posts/llm-from-scratch-2-flops/index.html",
+      "/posts/llm-from-scratch-1-tokenizer/index.html",
       "/posts/tensor-parallelism/index.html",
       "/posts/pipeline-parallelism/index.html",
       "/posts/data-parallelism/index.html",
       "/posts/welcome-post/index.html"
+    ]
+  },
+  {
+    "listing": "/courses/example-course/index.html",
+    "items": []
+  },
+  {
+    "listing": "/courses/cs336-language-modeling-from-scratch/index.html",
+    "items": [
+      "/courses/cs336-language-modeling-from-scratch/lecture-01-overview-tokenization.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-02-pytorch-resource-accounting.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-03-architectures-hyperparameters.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-04-attention-alternatives-moe.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-05-gpus-tpus.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-06-kernels-triton-xla.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-07-parallelism-i.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-08-parallelism-ii.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-09-scaling-laws-i.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-10-inference.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-11-scaling-laws-ii.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-12-evaluation.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-13-data-sources-filtering.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-14-data-mixing-sft.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-15-alignment-rlhf-dpo.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-16-alignment-rl-algorithms.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-17-alignment-rl-systems.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-18-guest-lecture-i.html",
+      "/courses/cs336-language-modeling-from-scratch/lecture-19-guest-lecture-ii.html",
+      "/courses/cs336-language-modeling-from-scratch/assignment-1-basics.html",
+      "/courses/cs336-language-modeling-from-scratch/assignment-2-systems.html",
+      "/courses/cs336-language-modeling-from-scratch/assignment-3-scaling.html",
+      "/courses/cs336-language-modeling-from-scratch/assignment-4-data.html",
+      "/courses/cs336-language-modeling-from-scratch/assignment-5-alignment-reasoning.html"
+    ]
+  },
+  {
+    "listing": "/courses.html",
+    "items": [
+      "/courses/example-course/index.html",
+      "/courses/cs336-language-modeling-from-scratch/index.html"
+    ]
+  },
+  {
+    "listing": "/books.html",
+    "items": []
+  },
+  {
+    "listing": "/books/example-book/index.html",
+    "items": []
+  },
+  {
+    "listing": "/notes.html",
+    "items": []
+  },
+  {
+    "listing": "/series.html",
+    "items": [
+      "/posts/llm-from-scratch-1-tokenizer/index.html",
+      "/posts/llm-from-scratch-2-flops/index.html",
+      "/posts/llm-from-scratch-3-training-dynamics/index.html",
+      "/posts/llm-from-scratch-4-leaderboard/index.html",
+      "/posts/data-parallelism/index.html",
+      "/posts/pipeline-parallelism/index.html",
+      "/posts/tensor-parallelism/index.html"
     ]
   }
 ]
